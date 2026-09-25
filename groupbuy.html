@@ -147,6 +147,59 @@
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
     }
 
+    /* ========================
+   代購卡片
+======================== */
+
+.groupbuy-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+.groupbuy-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.groupbuy-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.groupbuy-content {
+  padding: 18px;
+}
+
+.groupbuy-name {
+  font-size: 17px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.groupbuy-group {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 12px;
+}
+
+.groupbuy-deadline {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 10px;
+}
+
+.groupbuy-note {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.6;
+}
+    
 
     /* ========================
        Modal 背景
@@ -473,34 +526,41 @@
     </div>
 
 
-    <!-- 進行中 -->
+<!-- 進行中 -->
 
-    <section class="section">
+<section class="section">
 
-      <div class="section-title">
-        進行中
-      </div>
+  <div class="section-title">
+    進行中
+  </div>
 
-      <div class="empty-box">
-        目前沒有進行中的代購 ✨
-      </div>
+  <div id="activeGroupBuys">
 
-    </section>
+    <div class="empty-box">
+      載入中...
+    </div>
 
+  </div>
 
-    <!-- 已結束 -->
+</section>
 
-    <section class="section">
+<!-- 已結束 -->
 
-      <div class="section-title">
-        已結束
-      </div>
+<section class="section">
 
-      <div class="empty-box">
-        目前沒有已結束的代購
-      </div>
+  <div class="section-title">
+    已結束
+  </div>
 
-    </section>
+  <div id="endedGroupBuys">
+
+    <div class="empty-box">
+      載入中...
+    </div>
+
+  </div>
+
+</section>
 
   </main>
 
@@ -693,6 +753,171 @@
   
   const API_URL = 'https://script.google.com/macros/s/AKfycbz7CVrbddXxIvd86Z3PeMyM9MT6q7QBe7EJ5n1uQU7pTkwCYgc-4gjcg7EmRmz5itDSJQ/exec';
 
+  // =========================
+// 讀取周邊代購資料
+// =========================
+
+async function loadGroupBuys() {
+
+  try {
+
+    const response =
+      await fetch(
+        API_URL + '?action=getGroupBuys'
+      );
+
+    const result =
+      await response.json();
+
+    if (!result.success) {
+      throw new Error(
+        result.message || '讀取代購失敗'
+      );
+    }
+
+    console.log(
+      'FanFlow 代購資料：',
+      result.data
+    );
+
+    renderGroupBuys(result.data);
+    
+  } catch (error) {
+
+    console.error(
+      '讀取代購失敗：',
+      error
+    );
+
+  }
+
+}
+
+  // =========================
+// 顯示周邊代購卡片
+// =========================
+
+function renderGroupBuys(groupBuys) {
+
+  const activeContainer =
+    document.getElementById('activeGroupBuys');
+
+  const endedContainer =
+    document.getElementById('endedGroupBuys');
+
+
+  // 分成進行中／已結束
+  const activeGroupBuys =
+    groupBuys.filter(function(item) {
+      return item.status === '🟢 進行中';
+    });
+
+  const endedGroupBuys =
+    groupBuys.filter(function(item) {
+      return item.status === '🔴 已結束';
+    });
+
+
+  // 產生卡片
+  function createCards(items, emptyText) {
+
+    if (items.length === 0) {
+
+      return `
+        <div class="empty-box">
+          ${emptyText}
+        </div>
+      `;
+
+    }
+
+
+    const cards =
+      items.map(function(item) {
+
+        const imageHtml =
+          item.imageUrl
+            ? `
+              <img
+                class="groupbuy-image"
+                src="${item.imageUrl}"
+                alt="${item.name}">
+            `
+            : '';
+
+
+        const deadlineHtml =
+          item.deadline
+            ? `
+              <div class="groupbuy-deadline">
+                📅 登記截止：${item.deadline}
+              </div>
+            `
+            : '';
+
+
+        const noteHtml =
+          item.note
+            ? `
+              <div class="groupbuy-note">
+                ${item.note}
+              </div>
+            `
+            : '';
+
+
+        return `
+          <div class="groupbuy-card">
+
+            ${imageHtml}
+
+            <div class="groupbuy-content">
+
+              <div class="groupbuy-name">
+                ${item.name}
+              </div>
+
+              <div class="groupbuy-group">
+                🎤 ${item.group || '未設定團體／活動'}
+              </div>
+
+              ${deadlineHtml}
+
+              ${noteHtml}
+
+            </div>
+
+          </div>
+        `;
+
+      })
+      .join('');
+
+
+    return `
+      <div class="groupbuy-grid">
+        ${cards}
+      </div>
+    `;
+
+  }
+
+
+  activeContainer.innerHTML =
+    createCards(
+      activeGroupBuys,
+      '目前沒有進行中的代購 ✨'
+    );
+
+
+  endedContainer.innerHTML =
+    createCards(
+      endedGroupBuys,
+      '目前沒有已結束的代購'
+    );
+
+}
+  
   function compressImage(file) {
 
   return new Promise((resolve, reject) => {
@@ -909,6 +1134,13 @@ async function saveGroupBuy() {
       closeCreateModal();
     }
   });
+
+  // =========================
+// 網頁開啟時讀取代購資料
+// =========================
+
+loadGroupBuys();
+  
 </script>
 
 
