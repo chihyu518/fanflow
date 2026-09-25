@@ -1099,7 +1099,9 @@ async function saveGroupBuy() {
     
     closeCreateModal();
 
-    loadGroupBuys();
+    setTimeout(function() {
+  loadGroupBuys();
+}, 1500);
 
   } catch (error) {
 
