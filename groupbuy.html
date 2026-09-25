@@ -774,6 +774,60 @@
       載入中...
     </div>
 
+    <!-- ========================
+     📦 代購商品
+======================== -->
+
+<div
+  id="productSection"
+  style="
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid #eeeeee;
+  ">
+
+  <div
+    style="
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    ">
+
+    <div
+      style="
+        font-size: 18px;
+        font-weight: 800;
+      ">
+      📦 代購商品
+    </div>
+
+    <button
+      class="save-button"
+      type="button"
+      onclick="openNewProduct()">
+      ＋ 新增商品
+    </button>
+
+  </div>
+
+
+  <div id="productList">
+
+    <div
+      style="
+        padding: 20px;
+        text-align: center;
+        color: #999;
+      ">
+      載入商品中...
+    </div>
+
+  </div>
+
+</div>
+    
 
 <div class="modal-actions">
 
@@ -1052,11 +1106,241 @@ function openGroupBuyDetail(id) {
 
   `;
 
-  modal.style.display = 'block';
+modal.style.display = 'block';
+
+// 讀取這筆代購底下的商品
+loadProducts(id);
+
+}
+
+  // =========================
+// 📦 讀取代購商品
+// =========================
+
+async function loadProducts(groupBuyId) {
+
+  const productList =
+    document.getElementById('productList');
+
+
+  productList.innerHTML = `
+    <div
+      style="
+        padding: 20px;
+        text-align: center;
+        color: #999;
+      ">
+      載入商品中...
+    </div>
+  `;
+
+
+  try {
+
+    const response =
+      await fetch(
+        API_URL +
+        '?action=getProducts&groupBuyId=' +
+        encodeURIComponent(groupBuyId)
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+
+      throw new Error(
+        result.message || '讀取商品失敗'
+      );
+
+    }
+
+
+    // 記住目前商品
+    window.currentProducts =
+      result.data || [];
+
+
+    renderProducts(
+      window.currentProducts
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      '讀取商品失敗：',
+      error
+    );
+
+
+    productList.innerHTML = `
+      <div
+        style="
+          padding: 20px;
+          text-align: center;
+          color: #999;
+        ">
+        商品讀取失敗
+      </div>
+    `;
+
+  }
 
 }
 
 
+// =========================
+// 📦 顯示商品
+// =========================
+
+function renderProducts(products) {
+
+  const productList =
+    document.getElementById('productList');
+
+
+  // 沒有商品
+  if (!products || products.length === 0) {
+
+    productList.innerHTML = `
+      <div
+        style="
+          padding: 24px 15px;
+          text-align: center;
+          color: #aaa;
+          background: #f8f9fc;
+          border-radius: 12px;
+        ">
+        目前還沒有商品 📦
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  const productCards =
+    products.map(function(product) {
+
+
+      // 商品圖片
+      const imageHtml =
+        product.imageUrl
+          ? `
+            <img
+              src="${product.imageUrl}"
+              alt="${product.name}"
+              style="
+                width: 72px;
+                height: 72px;
+                object-fit: cover;
+                border-radius: 10px;
+                flex-shrink: 0;
+              ">
+          `
+          : `
+            <div
+              style="
+                width: 72px;
+                height: 72px;
+                border-radius: 10px;
+                background: #f1f2f6;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 28px;
+                flex-shrink: 0;
+              ">
+              📦
+            </div>
+          `;
+
+
+      // 單價
+      const priceHtml =
+        product.price !== null &&
+        product.price !== undefined
+          ? `
+            <div
+              style="
+                margin-top: 5px;
+                font-weight: 800;
+                color: #5360f5;
+              ">
+              NT$ ${Number(product.price).toLocaleString()}
+            </div>
+          `
+          : '';
+
+
+      // 備註
+      const noteHtml =
+        product.note
+          ? `
+            <div
+              style="
+                margin-top: 5px;
+                font-size: 13px;
+                color: #888;
+              ">
+              ${product.note}
+            </div>
+          `
+          : '';
+
+
+      return `
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 13px;
+            margin-bottom: 10px;
+            border: 1px solid #eeeeee;
+            border-radius: 13px;
+            background: white;
+          ">
+
+          ${imageHtml}
+
+
+          <div
+            style="
+              min-width: 0;
+              flex: 1;
+            ">
+
+            <div
+              style="
+                font-weight: 800;
+                line-height: 1.4;
+              ">
+              ${product.name}
+            </div>
+
+            ${priceHtml}
+
+            ${noteHtml}
+
+          </div>
+
+        </div>
+      `;
+
+    })
+    .join('');
+
+
+  productList.innerHTML =
+    productCards;
+
+}
+  
 // =========================
 // 關閉代購詳細資料
 // =========================
