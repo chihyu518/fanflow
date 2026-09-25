@@ -1877,6 +1877,26 @@ async function saveProduct() {
 // 🧾 讀取登記名單
 // =========================
 
+// =========================
+// 🛡️ 安全顯示文字
+// =========================
+
+function escapeHtml(text) {
+
+  return String(text ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+
+}
+
+
+// =========================
+// 🧾 讀取登記名單
+// =========================
+
 async function loadOrders(groupBuyName) {
 
   const orderList =
