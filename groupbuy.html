@@ -20,6 +20,7 @@
       color: #222;
     }
 
+
     /* ========================
        左側選單
     ======================== */
@@ -147,59 +148,61 @@
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
     }
 
+
     /* ========================
-   代購卡片
-======================== */
+       代購卡片
+    ======================== */
 
-.groupbuy-grid {
-  display: grid;
-  grid-template-columns:
-    repeat(auto-fill, minmax(260px, 1fr));
-  gap: 18px;
-}
+    .groupbuy-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fill, minmax(260px, 1fr));
+      gap: 18px;
+    }
 
-.groupbuy-card {
-  background: white;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-}
+    .groupbuy-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      cursor: pointer;
+    }
 
-.groupbuy-image {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  display: block;
-}
+    .groupbuy-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
 
-.groupbuy-content {
-  padding: 18px;
-}
+    .groupbuy-content {
+      padding: 18px;
+    }
 
-.groupbuy-name {
-  font-size: 17px;
-  font-weight: 800;
-  margin-bottom: 8px;
-}
+    .groupbuy-name {
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
 
-.groupbuy-group {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 12px;
-}
+    .groupbuy-group {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 12px;
+    }
 
-.groupbuy-deadline {
-  font-size: 13px;
-  color: #888;
-  margin-bottom: 10px;
-}
+    .groupbuy-deadline {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 10px;
+    }
 
-.groupbuy-note {
-  font-size: 14px;
-  color: #555;
-  line-height: 1.6;
-}
-    
+    .groupbuy-note {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.6;
+    }
+
 
     /* ========================
        Modal 背景
@@ -208,27 +211,21 @@
     .modal {
       display: none;
       position: fixed;
-
       z-index: 1000;
-
       left: 0;
       top: 0;
-
       width: 100%;
       height: 100%;
-
       padding: 30px 20px;
-
       background: rgba(0, 0, 0, 0.35);
-
       overflow-y: auto;
     }
 
-    /* 商品 Modal 要顯示在代購詳細資料上方 */
-#productModal {
-  z-index: 2000;
-}
-    
+    /* 商品 Modal 顯示在詳細資料上方 */
+    #productModal {
+      z-index: 2000;
+    }
+
 
     /* ========================
        Modal 白色視窗
@@ -237,23 +234,17 @@
     .modal-box {
       width: 100%;
       max-width: 520px;
-
       margin: 40px auto;
-
       background: white;
-
       border-radius: 18px;
       padding: 26px;
-
       box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
     }
-
 
     .modal-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-
       margin-bottom: 24px;
     }
 
@@ -262,18 +253,12 @@
       font-size: 22px;
     }
 
-
-    /* X */
-
     .close-button {
       border: none;
       background: transparent;
-
       font-size: 28px;
       color: #888;
-
       cursor: pointer;
-
       padding: 0;
       line-height: 1;
     }
@@ -293,12 +278,9 @@
 
     .form-group label {
       display: block;
-
       margin-bottom: 8px;
-
       font-size: 14px;
       font-weight: 700;
-
       color: #444;
     }
 
@@ -306,18 +288,13 @@
     .form-group select,
     .form-group textarea {
       width: 100%;
-
       border: 1px solid #ddd;
       border-radius: 10px;
-
       padding: 12px 13px;
-
       font-size: 15px;
       font-family: inherit;
-
       background: white;
       color: #333;
-
       outline: none;
     }
 
@@ -340,9 +317,7 @@
     .modal-actions {
       display: flex;
       justify-content: flex-end;
-
       gap: 10px;
-
       margin-top: 26px;
     }
 
@@ -350,12 +325,9 @@
     .save-button {
       border: none;
       border-radius: 10px;
-
       padding: 11px 18px;
-
       font-size: 14px;
       font-weight: 700;
-
       cursor: pointer;
     }
 
@@ -457,41 +429,33 @@
       </span>
     </div>
 
-
     <a href="index.html" class="menu-item">
       🏠 <span class="menu-text">首頁</span>
     </a>
-
 
     <a href="groupbuy.html" class="menu-item active">
       🛍️ <span class="menu-text">周邊代購</span>
     </a>
 
-
     <div class="menu-item">
       🃏 <span class="menu-text">小卡交易</span>
     </div>
-
 
     <div class="menu-item">
       💰 <span class="menu-text">帳務中心</span>
     </div>
 
-
     <div class="menu-item">
       ♡ <span class="menu-text">收藏庫</span>
     </div>
-
 
     <div class="menu-item">
       👥 <span class="menu-text">成員管理</span>
     </div>
 
-
     <div class="menu-item">
       🔔 <span class="menu-text">通知中心</span>
     </div>
-
 
     <div class="menu-item">
       ⚙️ <span class="menu-text">設定</span>
@@ -518,7 +482,6 @@
 
       </div>
 
-
       <button
         class="create-button"
         type="button"
@@ -531,59 +494,55 @@
     </div>
 
 
-<!-- 進行中 -->
+    <!-- 進行中 -->
 
-<section class="section">
+    <section class="section">
 
-  <div class="section-title">
-    進行中
-  </div>
+      <div class="section-title">
+        進行中
+      </div>
 
-  <div id="activeGroupBuys">
+      <div id="activeGroupBuys">
 
-    <div class="empty-box">
-      載入中...
-    </div>
+        <div class="empty-box">
+          載入中...
+        </div>
 
-  </div>
+      </div>
 
-</section>
+    </section>
 
-<!-- 已結束 -->
 
-<section class="section">
+    <!-- 已結束 -->
 
-  <div class="section-title">
-    已結束
-  </div>
+    <section class="section">
 
-  <div id="endedGroupBuys">
+      <div class="section-title">
+        已結束
+      </div>
 
-    <div class="empty-box">
-      載入中...
-    </div>
+      <div id="endedGroupBuys">
 
-  </div>
+        <div class="empty-box">
+          載入中...
+        </div>
 
-</section>
+      </div>
+
+    </section>
 
   </main>
 
 
-
   <!-- ========================
-       建立新代購 Modal
+       建立／編輯代購 Modal
   ======================== -->
 
   <div
     id="createModal"
     class="modal">
 
-
     <div class="modal-box">
-
-
-      <!-- 標題 -->
 
       <div class="modal-header">
 
@@ -591,45 +550,35 @@
           建立新代購
         </h2>
 
-
         <button
           class="close-button"
           type="button"
           onclick="closeCreateModal()">
-
           ×
-
         </button>
 
       </div>
 
 
-<!-- 代購圖片 -->
+      <div class="form-group">
 
-<div class="form-group">
+        <label for="groupBuyImage">
+          代購圖片
+        </label>
 
-  <label for="groupBuyImage">
-    代購圖片
-  </label>
+        <input
+          id="groupBuyImage"
+          type="file"
+          accept="image/*">
 
-  <input
-    id="groupBuyImage"
-    type="file"
-    accept="image/*">
+      </div>
 
-</div>
-
-
-<!-- 代購名稱 -->
-      
-      <!-- 代購名稱 -->
 
       <div class="form-group">
 
         <label for="groupBuyName">
           代購名稱
         </label>
-
 
         <input
           id="groupBuyName"
@@ -639,15 +588,11 @@
       </div>
 
 
-
-      <!-- 團體 -->
-
       <div class="form-group">
 
         <label for="groupName">
           團體／活動
         </label>
-
 
         <input
           id="groupName"
@@ -657,15 +602,11 @@
       </div>
 
 
-
-      <!-- 截止日 -->
-
       <div class="form-group">
 
         <label for="deadline">
           登記截止日
         </label>
-
 
         <input
           id="deadline"
@@ -674,15 +615,11 @@
       </div>
 
 
-
-      <!-- 狀態 -->
-
       <div class="form-group">
 
         <label for="groupBuyStatus">
           狀態
         </label>
-
 
         <select id="groupBuyStatus">
 
@@ -699,15 +636,11 @@
       </div>
 
 
-
-      <!-- 備註 -->
-
       <div class="form-group">
 
         <label for="groupBuyNote">
           備註
         </label>
-
 
         <textarea
           id="groupBuyNote"
@@ -717,1552 +650,2036 @@
       </div>
 
 
-
-      <!-- 按鈕 -->
-
       <div class="modal-actions">
 
         <button
           class="cancel-button"
           type="button"
           onclick="closeCreateModal()">
-
           取消
-
         </button>
-
 
         <button
           id="groupBuySaveButton"
           class="save-button"
           type="button"
           onclick="saveGroupBuy()">
-
           建立代購
+        </button>
 
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================
+       代購詳細資料 Modal
+  ======================== -->
+
+  <div
+    id="groupBuyDetailModal"
+    class="modal">
+
+    <div class="modal-box">
+
+      <div class="modal-header">
+
+        <h2>
+          代購詳細資料
+        </h2>
+
+        <button
+          class="close-button"
+          type="button"
+          onclick="closeGroupBuyDetail()">
+          ×
         </button>
 
       </div>
 
 
+      <div id="groupBuyDetailContent">
+        載入中...
+      </div>
+
+
+      <!-- ========================
+           📦 代購商品
+      ======================== -->
+
+      <div
+        id="productSection"
+        style="
+          margin-top: 28px;
+          padding-top: 22px;
+          border-top: 1px solid #eeeeee;
+        ">
+
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+          ">
+
+          <div
+            style="
+              font-size: 18px;
+              font-weight: 800;
+            ">
+            📦 代購商品
+          </div>
+
+          <button
+            class="save-button"
+            type="button"
+            onclick="openNewProduct()">
+            ＋ 新增商品
+          </button>
+
+        </div>
+
+
+        <div id="productList">
+
+          <div
+            style="
+              padding: 20px;
+              text-align: center;
+              color: #999;
+            ">
+            載入商品中...
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="modal-actions">
+
+        <button
+          class="cancel-button"
+          type="button"
+          onclick="closeGroupBuyDetail()">
+          關閉
+        </button>
+
+        <button
+          class="save-button"
+          type="button"
+          onclick="openEditGroupBuy()">
+          ✏️ 編輯
+        </button>
+
+        <button
+          class="cancel-button"
+          type="button"
+          onclick="deleteCurrentGroupBuy()">
+          🗑️ 刪除
+        </button>
+
+      </div>
+
     </div>
 
   </div>
+
 
   <!-- ========================
-     代購詳細資料 Modal
-======================== -->
-
-<div
-  id="groupBuyDetailModal"
-  class="modal">
-
-  <div class="modal-box">
-
-    <div class="modal-header">
-
-      <h2>
-        代購詳細資料
-      </h2>
-
-      <button
-        class="close-button"
-        type="button"
-        onclick="closeGroupBuyDetail()">
-        ×
-      </button>
-
-    </div>
-
-
-    <div id="groupBuyDetailContent">
-      載入中...
-    </div>
-
-    <!-- ========================
-     📦 代購商品
-======================== -->
-
-<div
-  id="productSection"
-  style="
-    margin-top: 28px;
-    padding-top: 22px;
-    border-top: 1px solid #eeeeee;
-  ">
+       📦 新增／編輯商品 Modal
+  ======================== -->
 
   <div
-    style="
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 16px;
-    ">
+    id="productModal"
+    class="modal">
 
-    <div
-      style="
-        font-size: 18px;
-        font-weight: 800;
-      ">
-      📦 代購商品
-    </div>
+    <div class="modal-box">
 
-    <button
-      class="save-button"
-      type="button"
-      onclick="openNewProduct()">
-      ＋ 新增商品
-    </button>
+      <div class="modal-header">
 
-  </div>
+        <h2 id="productModalTitle">
+          新增商品
+        </h2>
+
+        <button
+          class="close-button"
+          type="button"
+          onclick="closeProductModal()">
+          ×
+        </button>
+
+      </div>
 
 
-  <div id="productList">
+      <div class="form-group">
 
-    <div
-      style="
-        padding: 20px;
-        text-align: center;
-        color: #999;
-      ">
-      載入商品中...
-    </div>
+        <label for="productImage">
+          商品圖片
+        </label>
 
-  </div>
+        <input
+          id="productImage"
+          type="file"
+          accept="image/*">
 
-</div>
-    
-
-<div class="modal-actions">
-
-  <button
-    class="cancel-button"
-    type="button"
-    onclick="closeGroupBuyDetail()">
-    關閉
-  </button>
-
-  <button
-    class="save-button"
-    type="button"
-    onclick="openEditGroupBuy()">
-    ✏️ 編輯
-  </button>
-
-  <button
-  class="cancel-button"
-  type="button"
-  onclick="deleteCurrentGroupBuy()">
-  🗑️ 刪除
-</button>
-  
-</div>
-
-  </div>
-
-</div>
-  
-
-<!-- ========================
-     📦 新增／編輯商品 Modal
-======================== -->
-
-<div
-  id="productModal"
-  class="modal">
-
-  <div class="modal-box">
-
-    <!-- 標題 -->
-
-    <div class="modal-header">
-
-      <h2 id="productModalTitle">
-        新增商品
-      </h2>
-
-      <button
-        class="close-button"
-        type="button"
-        onclick="closeProductModal()">
-        ×
-      </button>
-
-    </div>
+      </div>
 
 
-    <!-- 商品圖片 -->
+      <div class="form-group">
 
-    <div class="form-group">
+        <label for="productName">
+          商品名稱
+        </label>
 
-      <label for="productImage">
-        商品圖片
-      </label>
+        <input
+          id="productName"
+          type="text"
+          placeholder="例如：成淏小卡">
 
-      <input
-        id="productImage"
-        type="file"
-        accept="image/*">
-
-    </div>
+      </div>
 
 
-    <!-- 商品名稱 -->
+      <div class="form-group">
 
-    <div class="form-group">
+        <label for="productPrice">
+          單價
+        </label>
 
-      <label for="productName">
-        商品名稱
-      </label>
+        <input
+          id="productPrice"
+          type="number"
+          min="0"
+          placeholder="例如：350">
 
-      <input
-        id="productName"
-        type="text"
-        placeholder="例如：成淏小卡">
-
-    </div>
-
-
-    <!-- 單價 -->
-
-    <div class="form-group">
-
-      <label for="productPrice">
-        單價
-      </label>
-
-      <input
-        id="productPrice"
-        type="number"
-        min="0"
-        placeholder="例如：350">
-
-    </div>
+      </div>
 
 
-    <!-- 排序 -->
+      <div class="form-group">
 
-    <div class="form-group">
+        <label for="productSort">
+          排序
+        </label>
 
-      <label for="productSort">
-        排序
-      </label>
+        <input
+          id="productSort"
+          type="number"
+          min="0"
+          value="0"
+          placeholder="例如：1">
 
-      <input
-        id="productSort"
-        type="number"
-        min="0"
-        value="0"
-        placeholder="例如：1">
-
-    </div>
+      </div>
 
 
-    <!-- 備註 -->
+      <div class="form-group">
 
-    <div class="form-group">
+        <label for="productNote">
+          備註
+        </label>
 
-      <label for="productNote">
-        備註
-      </label>
+        <textarea
+          id="productNote"
+          rows="4"
+          placeholder="例如：特典款／限量商品"></textarea>
 
-      <textarea
-        id="productNote"
-        rows="4"
-        placeholder="例如：特典款／限量商品"></textarea>
-
-    </div>
+      </div>
 
 
-    <!-- 按鈕 -->
+      <div class="modal-actions">
 
-    <div class="modal-actions">
+        <button
+          class="cancel-button"
+          type="button"
+          onclick="closeProductModal()">
+          取消
+        </button>
 
-      <button
-        class="cancel-button"
-        type="button"
-        onclick="closeProductModal()">
-        取消
-      </button>
+        <button
+          id="productSaveButton"
+          class="save-button"
+          type="button"
+          onclick="saveProduct()">
+          新增商品
+        </button>
 
-      <button
-        id="productSaveButton"
-        class="save-button"
-        type="button"
-        onclick="saveProduct()">
-        新增商品
-      </button>
+      </div>
 
     </div>
 
   </div>
 
-</div>
-  
+
   <!-- ========================
        JavaScript
   ======================== -->
 
-<script>
-  
-  const API_URL = 'https://script.google.com/macros/s/AKfycbz7CVrbddXxIvd86Z3PeMyM9MT6q7QBe7EJ5n1uQU7pTkwCYgc-4gjcg7EmRmz5itDSJQ/exec';
+  <script>
 
-  // =========================
-// 讀取周邊代購資料
-// =========================
+    const API_URL =
+      'https://script.google.com/macros/s/AKfycbz7CVrbddXxIvd86Z3PeMyM9MT6q7QBe7EJ5n1uQU7pTkwCYgc-4gjcg7EmRmz5itDSJQ/exec';
 
-async function loadGroupBuys() {
 
-  try {
+    // =========================
+    // 讀取周邊代購資料
+    // =========================
 
-    const response =
-      await fetch(
-        API_URL + '?action=getGroupBuys'
-      );
+    async function loadGroupBuys() {
 
-    const result =
-      await response.json();
+      try {
 
-    if (!result.success) {
-      throw new Error(
-        result.message || '讀取代購失敗'
-      );
-    }
-
-    console.log(
-      'FanFlow 代購資料：',
-      result.data
-    );
-
-    window.currentGroupBuys = result.data;
-    
-    renderGroupBuys(result.data);
-    
-  } catch (error) {
-
-    console.error(
-      '讀取代購失敗：',
-      error
-    );
-
-  }
-
-}
-
-  // =========================
-// 顯示周邊代購卡片
-// =========================
-
-function renderGroupBuys(groupBuys) {
-
-  const activeContainer =
-    document.getElementById('activeGroupBuys');
-
-  const endedContainer =
-    document.getElementById('endedGroupBuys');
-
-
-  // 分成進行中／已結束
-  const activeGroupBuys =
-    groupBuys.filter(function(item) {
-      return item.status === '🟢 進行中';
-    });
-
-  const endedGroupBuys =
-    groupBuys.filter(function(item) {
-      return item.status === '🔴 已結束';
-    });
-
-
-  // 產生卡片
-  function createCards(items, emptyText) {
-
-    if (items.length === 0) {
-
-      return `
-        <div class="empty-box">
-          ${emptyText}
-        </div>
-      `;
-
-    }
-
-
-    const cards =
-      items.map(function(item) {
-
-        const imageHtml =
-          item.imageUrl
-            ? `
-              <img
-                class="groupbuy-image"
-                src="${item.imageUrl}"
-                alt="${item.name}">
-            `
-            : '';
-
-
-        const deadlineHtml =
-          item.deadline
-            ? `
-              <div class="groupbuy-deadline">
-                📅 登記截止：${item.deadline}
-              </div>
-            `
-            : '';
-
-
-        const noteHtml =
-          item.note
-            ? `
-              <div class="groupbuy-note">
-                ${item.note}
-              </div>
-            `
-            : '';
-
-
-        return `
-          <div
-  class="groupbuy-card"
-  onclick="openGroupBuyDetail('${item.id}')">
-
-            ${imageHtml}
-
-            <div class="groupbuy-content">
-
-              <div class="groupbuy-name">
-                ${item.name}
-              </div>
-
-              <div class="groupbuy-group">
-                🎤 ${item.group || '未設定團體／活動'}
-              </div>
-
-              ${deadlineHtml}
-
-            ${noteHtml}
-
-<div
-  style="
-    display: flex;
-    gap: 8px;
-    margin-top: 10px;
-  ">
-
-  <button
-    type="button"
-    class="cancel-button"
-    onclick="openEditProduct('${product.id}')"
-    style="
-      padding: 7px 10px;
-      font-size: 12px;
-    ">
-    ✏️ 編輯
-  </button>
-
-  <button
-    type="button"
-    class="cancel-button"
-    onclick="deleteCurrentProduct('${product.id}')"
-    style="
-      padding: 7px 10px;
-      font-size: 12px;
-    ">
-    🗑️ 刪除
-  </button>
-
-</div>
-
-</div>
-
-          </div>
-        `;
-
-      })
-      .join('');
-
-
-    return `
-      <div class="groupbuy-grid">
-        ${cards}
-      </div>
-    `;
-
-  }
-
-
-  activeContainer.innerHTML =
-    createCards(
-      activeGroupBuys,
-      '目前沒有進行中的代購 ✨'
-    );
-
-
-  endedContainer.innerHTML =
-    createCards(
-      endedGroupBuys,
-      '目前沒有已結束的代購'
-    );
-
-}
-
-  // =========================
-// 開啟代購詳細資料
-// =========================
-
-function openGroupBuyDetail(id) {
-
-  const item =
-    window.currentGroupBuys.find(function(groupBuy) {
-      return groupBuy.id === id;
-    });
-
-  if (!item) {
-    alert('找不到這筆代購資料');
-    return;
-  }
-
-  window.currentGroupBuyId = id;
-  
-  const modal =
-    document.getElementById('groupBuyDetailModal');
-
-  const content =
-    document.getElementById('groupBuyDetailContent');
-
-
-  const imageHtml =
-    item.imageUrl
-      ? `
-        <img
-          src="${item.imageUrl}"
-          alt="${item.name}"
-          style="
-            width: 100%;
-            max-height: 320px;
-            object-fit: cover;
-            border-radius: 14px;
-            margin-bottom: 20px;
-          ">
-      `
-      : '';
-
-
-  content.innerHTML = `
-
-    ${imageHtml}
-
-    <div style="font-size: 22px; font-weight: 800; margin-bottom: 18px;">
-      ${item.name}
-    </div>
-
-    <div style="margin-bottom: 12px;">
-      🎤 ${item.group || '未設定團體／活動'}
-    </div>
-
-    <div style="margin-bottom: 12px;">
-      📅 登記截止：
-      ${item.deadline || '未設定'}
-    </div>
-
-    <div style="margin-bottom: 12px;">
-      ${item.status || '未設定狀態'}
-    </div>
-
-    <div style="margin-top: 18px; line-height: 1.7;">
-      📝 ${item.note || '沒有備註'}
-    </div>
-
-  `;
-
-modal.style.display = 'block';
-
-// 讀取這筆代購底下的商品
-loadProducts(id);
-
-}
-
-  // =========================
-// 📦 開啟新增商品
-// =========================
-
-function openNewProduct() {
-
-  // 清除商品編輯模式
-  window.editingProductId = '';
-
-
-  // 清空表單
-  document.getElementById('productImage').value = '';
-
-  document.getElementById('productName').value = '';
-
-  document.getElementById('productPrice').value = '';
-
-  document.getElementById('productSort').value = '0';
-
-  document.getElementById('productNote').value = '';
-
-
-  // 標題
-  document
-    .getElementById('productModalTitle')
-    .textContent = '新增商品';
-
-
-  // 按鈕
-  document
-    .getElementById('productSaveButton')
-    .textContent = '新增商品';
-
-
-  // 開啟 Modal
-  document
-    .getElementById('productModal')
-    .style.display = 'block';
-
-}
-
-
-// =========================
-// 📦 關閉商品 Modal
-// =========================
-
-function closeProductModal() {
-
-  document
-    .getElementById('productModal')
-    .style.display = 'none';
-
-}
-
-  // =========================
-// 📦 儲存商品
-// =========================
-
-async function saveProduct() {
-
-  const name =
-    document
-      .getElementById('productName')
-      .value
-      .trim();
-
-
-  const price =
-    document
-      .getElementById('productPrice')
-      .value;
-
-
-  const sort =
-    document
-      .getElementById('productSort')
-      .value;
-
-
-  const note =
-    document
-      .getElementById('productNote')
-      .value
-      .trim();
-
-
-  const imageInput =
-    document.getElementById('productImage');
-
-
-  const imageFile =
-    imageInput.files[0];
-
-
-  // 商品名稱必填
-  if (!name) {
-
-    alert('請輸入商品名稱');
-
-    return;
-
-  }
-
-
-  // 確認目前是哪一筆代購
-  if (!window.currentGroupBuyId) {
-
-    alert('找不到目前的代購資料');
-
-    return;
-
-  }
-
-
-  // =========================
-  // 處理商品圖片
-  // =========================
-
-  let imageData = '';
-  let imageName = '';
-  let imageType = '';
-
-
-  if (imageFile) {
-
-    imageData =
-      await compressImage(imageFile);
-
-
-    imageName =
-      'product-' +
-      Date.now() +
-      '.jpg';
-
-
-    imageType =
-      'image/jpeg';
-
-  }
-
-
-  // =========================
-  // 準備送到 GAS
-  // =========================
-
-  const data = {
-
-    action: 'createProduct',
-
-    groupBuyId:
-      window.currentGroupBuyId,
-
-    name: name,
-
-    price: price,
-
-    sort: sort,
-
-    note: note,
-
-    imageData: imageData,
-
-    imageName: imageName,
-
-    imageType: imageType
-
-  };
-
-
-  const saveButton =
-    document.getElementById(
-      'productSaveButton'
-    );
-
-
-  try {
-
-    saveButton.disabled = true;
-
-    saveButton.textContent =
-      '新增中...';
-
-
-    const response =
-      await fetch(API_URL, {
-
-        method: 'POST',
-
-        body: JSON.stringify(data)
-
-      });
-
-
-    const result =
-      await response.json();
-
-
-    if (!result.success) {
-
-      throw new Error(
-        result.message ||
-        '新增商品失敗'
-      );
-
-    }
-
-
-    alert('新增商品成功！');
-
-
-    // 關閉商品視窗
-    closeProductModal();
-
-
-    // 清空表單
-    document
-      .getElementById('productImage')
-      .value = '';
-
-    document
-      .getElementById('productName')
-      .value = '';
-
-    document
-      .getElementById('productPrice')
-      .value = '';
-
-    document
-      .getElementById('productSort')
-      .value = '0';
-
-    document
-      .getElementById('productNote')
-      .value = '';
-
-
-    // 等 Notion 更新後重新讀取商品
-    setTimeout(function() {
-
-      loadProducts(
-        window.currentGroupBuyId
-      );
-
-    }, 1000);
-
-
-  } catch (error) {
-
-    console.error(
-      '新增商品失敗：',
-      error
-    );
-
-
-    alert(
-      '新增商品失敗：' +
-      error.message
-    );
-
-
-  } finally {
-
-    saveButton.disabled = false;
-
-    saveButton.textContent =
-      '新增商品';
-
-  }
-
-}
-  
-  // =========================
-// 📦 讀取代購商品
-// =========================
-
-async function loadProducts(groupBuyId) {
-
-  const productList =
-    document.getElementById('productList');
-
-
-  productList.innerHTML = `
-    <div
-      style="
-        padding: 20px;
-        text-align: center;
-        color: #999;
-      ">
-      載入商品中...
-    </div>
-  `;
-
-
-  try {
-
-    const response =
-      await fetch(
-        API_URL +
-        '?action=getProducts&groupBuyId=' +
-        encodeURIComponent(groupBuyId)
-      );
-
-
-    const result =
-      await response.json();
-
-
-    if (!result.success) {
-
-      throw new Error(
-        result.message || '讀取商品失敗'
-      );
-
-    }
-
-
-    // 記住目前商品
-    window.currentProducts =
-      result.data || [];
-
-
-    renderProducts(
-      window.currentProducts
-    );
-
-
-  } catch (error) {
-
-    console.error(
-      '讀取商品失敗：',
-      error
-    );
-
-
-    productList.innerHTML = `
-      <div
-        style="
-          padding: 20px;
-          text-align: center;
-          color: #999;
-        ">
-        商品讀取失敗
-      </div>
-    `;
-
-  }
-
-}
-
-
-// =========================
-// 📦 顯示商品
-// =========================
-
-function renderProducts(products) {
-
-  const productList =
-    document.getElementById('productList');
-
-
-  // 沒有商品
-  if (!products || products.length === 0) {
-
-    productList.innerHTML = `
-      <div
-        style="
-          padding: 24px 15px;
-          text-align: center;
-          color: #aaa;
-          background: #f8f9fc;
-          border-radius: 12px;
-        ">
-        目前還沒有商品 📦
-      </div>
-    `;
-
-    return;
-
-  }
-
-
-  const productCards =
-    products.map(function(product) {
-
-
-      // 商品圖片
-      const imageHtml =
-        product.imageUrl
-          ? `
-            <img
-              src="${product.imageUrl}"
-              alt="${product.name}"
-              style="
-                width: 72px;
-                height: 72px;
-                object-fit: cover;
-                border-radius: 10px;
-                flex-shrink: 0;
-              ">
-          `
-          : `
-            <div
-              style="
-                width: 72px;
-                height: 72px;
-                border-radius: 10px;
-                background: #f1f2f6;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 28px;
-                flex-shrink: 0;
-              ">
-              📦
-            </div>
-          `;
-
-
-      // 單價
-      const priceHtml =
-        product.price !== null &&
-        product.price !== undefined
-          ? `
-            <div
-              style="
-                margin-top: 5px;
-                font-weight: 800;
-                color: #5360f5;
-              ">
-              NT$ ${Number(product.price).toLocaleString()}
-            </div>
-          `
-          : '';
-
-
-      // 備註
-      const noteHtml =
-        product.note
-          ? `
-            <div
-              style="
-                margin-top: 5px;
-                font-size: 13px;
-                color: #888;
-              ">
-              ${product.note}
-            </div>
-          `
-          : '';
-
-
-      return `
-        <div
-          style="
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 13px;
-            margin-bottom: 10px;
-            border: 1px solid #eeeeee;
-            border-radius: 13px;
-            background: white;
-          ">
-
-          ${imageHtml}
-
-
-          <div
-            style="
-              min-width: 0;
-              flex: 1;
-            ">
-
-            <div
-              style="
-                font-weight: 800;
-                line-height: 1.4;
-              ">
-              ${product.name}
-            </div>
-
-            ${priceHtml}
-
-            ${noteHtml}
-
-          </div>
-
-        </div>
-      `;
-
-    })
-    .join('');
-
-
-  productList.innerHTML =
-    productCards;
-
-}
-  
-// =========================
-// 關閉代購詳細資料
-// =========================
-
-function closeGroupBuyDetail() {
-
-  document
-    .getElementById('groupBuyDetailModal')
-    .style.display = 'none';
-
-}
-
-  // =========================
-// 開啟編輯代購
-// =========================
-
-function openEditGroupBuy() {
-
-  const id =
-    window.currentGroupBuyId;
-
-  const item =
-    window.currentGroupBuys.find(function(groupBuy) {
-      return groupBuy.id === id;
-    });
-
-  if (!item) {
-    alert('找不到這筆代購資料');
-    return;
-  }
-
-
-  // 把原本資料帶回表單
-  document.getElementById('groupBuyName').value =
-    item.name || '';
-
-  document.getElementById('groupName').value =
-    item.group || '';
-
-  document.getElementById('deadline').value =
-    item.deadline || '';
-
-  document.getElementById('groupBuyStatus').value =
-    item.status === '🔴 已結束'
-      ? '已結束'
-      : '進行中';
-
-  document.getElementById('groupBuyNote').value =
-    item.note || '';
-
-
-// 記住目前正在編輯哪一筆
-window.editingGroupBuyId =
-  item.id;
-
-
-// 編輯模式時改變按鈕文字
-document.getElementById('groupBuySaveButton').textContent =
-  '儲存修改';
-
-
-// 關閉詳細資料
-closeGroupBuyDetail();
-
-// 開啟原本的建立／編輯視窗
-openCreateModal();
-
-}
-
-  // =========================
-// 刪除目前的代購
-// =========================
-
-async function deleteCurrentGroupBuy() {
-
-  const id =
-    window.currentGroupBuyId;
-
-  const item =
-    window.currentGroupBuys.find(function(groupBuy) {
-      return groupBuy.id === id;
-    });
-
-
-  if (!item) {
-    alert('找不到這筆代購資料');
-    return;
-  }
-
-
-  // 刪除前再次確認
-  const confirmed =
-    confirm(
-      '確定要刪除「' +
-      item.name +
-      '」嗎？\n\n刪除後會移到 Notion 垃圾桶。'
-    );
-
-
-  if (!confirmed) {
-    return;
-  }
-
-
-  try {
-
-    const response =
-      await fetch(API_URL, {
-
-        method: 'POST',
-
-        body: JSON.stringify({
-          action: 'deleteGroupBuy',
-          id: id
-        })
-
-      });
-
-
-    const result =
-      await response.json();
-
-
-    if (!result.success) {
-
-      throw new Error(
-        result.message ||
-        '刪除代購失敗'
-      );
-
-    }
-
-
-    alert('刪除代購成功！');
-
-    closeGroupBuyDetail();
-
-
-    // 等 Notion 更新後重新讀取
-    setTimeout(function() {
-      loadGroupBuys();
-    }, 1500);
-
-
-  } catch (error) {
-
-    console.error(error);
-
-    alert(
-      '刪除代購失敗：' +
-      error.message
-    );
-
-  }
-
-}
-  
-  function compressImage(file) {
-
-  return new Promise((resolve, reject) => {
-
-    const reader = new FileReader();
-
-    reader.onload = function(event) {
-
-      const img = new Image();
-
-      img.onload = function() {
-
-        const maxWidth = 1200;
-        const maxHeight = 1200;
-
-        let width = img.width;
-        let height = img.height;
-
-        if (width > maxWidth || height > maxHeight) {
-
-          const ratio = Math.min(
-            maxWidth / width,
-            maxHeight / height
+        const response =
+          await fetch(
+            API_URL + '?action=getGroupBuys'
           );
 
-          width = Math.round(width * ratio);
-          height = Math.round(height * ratio);
+        const result =
+          await response.json();
+
+        if (!result.success) {
+
+          throw new Error(
+            result.message ||
+            '讀取代購失敗'
+          );
 
         }
 
-        const canvas = document.createElement('canvas');
+        window.currentGroupBuys =
+          result.data || [];
 
-        canvas.width = width;
-        canvas.height = height;
-
-        const ctx = canvas.getContext('2d');
-
-        ctx.drawImage(
-          img,
-          0,
-          0,
-          width,
-          height
+        renderGroupBuys(
+          window.currentGroupBuys
         );
 
-        const compressedData =
-          canvas.toDataURL('image/jpeg', 0.8);
+      } catch (error) {
 
-        resolve(compressedData);
+        console.error(
+          '讀取代購失敗：',
+          error
+        );
 
-      };
+      }
 
-      img.onerror = function() {
-        reject(new Error('圖片處理失敗'));
-      };
-
-      img.src = event.target.result;
-
-    };
-
-    reader.onerror = function() {
-      reject(new Error('圖片讀取失敗'));
-    };
-
-    reader.readAsDataURL(file);
-
-  });
-
-}
-  
-async function saveGroupBuy() {
-
-  const name =
-    document.getElementById('groupBuyName').value.trim();
-
-  const group =
-    document.getElementById('groupName').value.trim();
-
-  const deadline =
-    document.getElementById('deadline').value;
-
-  const statusValue =
-    document.getElementById('groupBuyStatus').value;
-
-  const note =
-    document.getElementById('groupBuyNote').value.trim();
-
-  const imageInput =
-    document.getElementById('groupBuyImage');
-
-  const imageFile =
-    imageInput.files[0];
+    }
 
 
-  // 判斷現在是不是編輯模式
-  const isEditing =
-    !!window.editingGroupBuyId;
+    // =========================
+    // 顯示周邊代購卡片
+    // =========================
+
+    function renderGroupBuys(groupBuys) {
+
+      const activeContainer =
+        document.getElementById(
+          'activeGroupBuys'
+        );
+
+      const endedContainer =
+        document.getElementById(
+          'endedGroupBuys'
+        );
 
 
-  // 代購名稱必填
-  if (!name) {
-    alert('請輸入代購名稱');
-    return;
-  }
+      const activeGroupBuys =
+        groupBuys.filter(function(item) {
+
+          return item.status ===
+            '🟢 進行中';
+
+        });
 
 
-  // 將網站狀態轉成 Notion 使用的名稱
-  const status =
-    statusValue === '已結束'
-      ? '🔴 已結束'
-      : '🟢 進行中';
+      const endedGroupBuys =
+        groupBuys.filter(function(item) {
+
+          return item.status ===
+            '🔴 已結束';
+
+        });
 
 
-  // 圖片資料
-  let imageData = '';
-  let imageName = '';
-  let imageType = '';
+      function createCards(
+        items,
+        emptyText
+      ) {
 
-  if (imageFile) {
+        if (items.length === 0) {
 
-    imageData =
-      await compressImage(imageFile);
+          return `
+            <div class="empty-box">
+              ${emptyText}
+            </div>
+          `;
 
-    imageName =
-      'fanflow-' + Date.now() + '.jpg';
-
-    imageType =
-      'image/jpeg';
-
-  }
+        }
 
 
-  const data = {
+        const cards =
+          items.map(function(item) {
 
-    action:
-      isEditing
-        ? 'updateGroupBuy'
-        : 'createGroupBuy',
-
-    id:
-      isEditing
-        ? window.editingGroupBuyId
-        : '',
-
-    name: name,
-    group: group,
-    deadline: deadline,
-    status: status,
-    note: note,
-
-    imageData: imageData,
-    imageName: imageName,
-    imageType: imageType
-
-  };
+            const imageHtml =
+              item.imageUrl
+                ? `
+                  <img
+                    class="groupbuy-image"
+                    src="${item.imageUrl}"
+                    alt="${item.name}">
+                `
+                : '';
 
 
-  try {
-
-    const response =
-      await fetch(API_URL, {
-
-        method: 'POST',
-
-        body: JSON.stringify(data)
-
-      });
+            const deadlineHtml =
+              item.deadline
+                ? `
+                  <div class="groupbuy-deadline">
+                    📅 登記截止：${item.deadline}
+                  </div>
+                `
+                : '';
 
 
-    const result =
-      await response.json();
+            const noteHtml =
+              item.note
+                ? `
+                  <div class="groupbuy-note">
+                    ${item.note}
+                  </div>
+                `
+                : '';
 
 
-    if (!result.success) {
+            return `
+              <div
+                class="groupbuy-card"
+                onclick="openGroupBuyDetail('${item.id}')">
 
-      throw new Error(
-        result.message ||
-        (
-          isEditing
-            ? '修改代購失敗'
-            : '建立代購失敗'
+                ${imageHtml}
+
+                <div class="groupbuy-content">
+
+                  <div class="groupbuy-name">
+                    ${item.name}
+                  </div>
+
+                  <div class="groupbuy-group">
+                    🎤 ${item.group || '未設定團體／活動'}
+                  </div>
+
+                  ${deadlineHtml}
+
+                  ${noteHtml}
+
+                </div>
+
+              </div>
+            `;
+
+          })
+          .join('');
+
+
+        return `
+          <div class="groupbuy-grid">
+            ${cards}
+          </div>
+        `;
+
+      }
+
+
+      activeContainer.innerHTML =
+        createCards(
+          activeGroupBuys,
+          '目前沒有進行中的代購 ✨'
+        );
+
+
+      endedContainer.innerHTML =
+        createCards(
+          endedGroupBuys,
+          '目前沒有已結束的代購'
+        );
+
+    }
+
+
+    // =========================
+    // 開啟代購詳細資料
+    // =========================
+
+    function openGroupBuyDetail(id) {
+
+      const item =
+        window.currentGroupBuys.find(
+          function(groupBuy) {
+
+            return groupBuy.id === id;
+
+          }
+        );
+
+
+      if (!item) {
+
+        alert(
+          '找不到這筆代購資料'
+        );
+
+        return;
+
+      }
+
+
+      window.currentGroupBuyId = id;
+
+
+      const modal =
+        document.getElementById(
+          'groupBuyDetailModal'
+        );
+
+
+      const content =
+        document.getElementById(
+          'groupBuyDetailContent'
+        );
+
+
+      const imageHtml =
+        item.imageUrl
+          ? `
+            <img
+              src="${item.imageUrl}"
+              alt="${item.name}"
+              style="
+                width: 100%;
+                max-height: 320px;
+                object-fit: cover;
+                border-radius: 14px;
+                margin-bottom: 20px;
+              ">
+          `
+          : '';
+
+
+      content.innerHTML = `
+
+        ${imageHtml}
+
+        <div
+          style="
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 18px;
+          ">
+          ${item.name}
+        </div>
+
+        <div style="margin-bottom: 12px;">
+          🎤 ${item.group || '未設定團體／活動'}
+        </div>
+
+        <div style="margin-bottom: 12px;">
+          📅 登記截止：
+          ${item.deadline || '未設定'}
+        </div>
+
+        <div style="margin-bottom: 12px;">
+          ${item.status || '未設定狀態'}
+        </div>
+
+        <div
+          style="
+            margin-top: 18px;
+            line-height: 1.7;
+          ">
+          📝 ${item.note || '沒有備註'}
+        </div>
+
+      `;
+
+
+      modal.style.display =
+        'block';
+
+
+      loadProducts(id);
+
+    }
+
+
+    // =========================
+    // 📦 開啟新增商品
+    // =========================
+
+    function openNewProduct() {
+
+      window.editingProductId = '';
+
+
+      document
+        .getElementById(
+          'productImage'
         )
+        .value = '';
+
+
+      document
+        .getElementById(
+          'productName'
+        )
+        .value = '';
+
+
+      document
+        .getElementById(
+          'productPrice'
+        )
+        .value = '';
+
+
+      document
+        .getElementById(
+          'productSort'
+        )
+        .value = '0';
+
+
+      document
+        .getElementById(
+          'productNote'
+        )
+        .value = '';
+
+
+      document
+        .getElementById(
+          'productModalTitle'
+        )
+        .textContent =
+          '新增商品';
+
+
+      document
+        .getElementById(
+          'productSaveButton'
+        )
+        .textContent =
+          '新增商品';
+
+
+      document
+        .getElementById(
+          'productModal'
+        )
+        .style.display =
+          'block';
+
+    }
+
+
+    // =========================
+    // 📦 關閉商品 Modal
+    // =========================
+
+    function closeProductModal() {
+
+      document
+        .getElementById(
+          'productModal'
+        )
+        .style.display =
+          'none';
+
+    }
+        // =========================
+    // 📦 儲存商品
+    // =========================
+
+    async function saveProduct() {
+
+      const name =
+        document
+          .getElementById('productName')
+          .value
+          .trim();
+
+
+      const price =
+        document
+          .getElementById('productPrice')
+          .value;
+
+
+      const sort =
+        document
+          .getElementById('productSort')
+          .value;
+
+
+      const note =
+        document
+          .getElementById('productNote')
+          .value
+          .trim();
+
+
+      const imageInput =
+        document.getElementById(
+          'productImage'
+        );
+
+
+      const imageFile =
+        imageInput.files[0];
+
+
+      // 商品名稱必填
+      if (!name) {
+
+        alert('請輸入商品名稱');
+
+        return;
+
+      }
+
+
+      // 確認目前是哪一筆代購
+      if (!window.currentGroupBuyId) {
+
+        alert('找不到目前的代購資料');
+
+        return;
+
+      }
+
+
+      // =========================
+      // 處理商品圖片
+      // =========================
+
+      let imageData = '';
+      let imageName = '';
+      let imageType = '';
+
+
+      if (imageFile) {
+
+        imageData =
+          await compressImage(
+            imageFile
+          );
+
+
+        imageName =
+          'product-' +
+          Date.now() +
+          '.jpg';
+
+
+        imageType =
+          'image/jpeg';
+
+      }
+
+
+      // =========================
+      // 準備送到 GAS
+      // =========================
+
+      const data = {
+
+        action:
+          'createProduct',
+
+        groupBuyId:
+          window.currentGroupBuyId,
+
+        name:
+          name,
+
+        price:
+          price,
+
+        sort:
+          sort,
+
+        note:
+          note,
+
+        imageData:
+          imageData,
+
+        imageName:
+          imageName,
+
+        imageType:
+          imageType
+
+      };
+
+
+      const saveButton =
+        document.getElementById(
+          'productSaveButton'
+        );
+
+
+      try {
+
+        saveButton.disabled =
+          true;
+
+        saveButton.textContent =
+          '新增中...';
+
+
+        const response =
+          await fetch(
+            API_URL,
+            {
+
+              method:
+                'POST',
+
+              body:
+                JSON.stringify(data)
+
+            }
+          );
+
+
+        const result =
+          await response.json();
+
+
+        if (!result.success) {
+
+          throw new Error(
+            result.message ||
+            '新增商品失敗'
+          );
+
+        }
+
+
+        alert(
+          '新增商品成功！'
+        );
+
+
+        closeProductModal();
+
+
+        // 清空表單
+        document
+          .getElementById(
+            'productImage'
+          )
+          .value = '';
+
+        document
+          .getElementById(
+            'productName'
+          )
+          .value = '';
+
+        document
+          .getElementById(
+            'productPrice'
+          )
+          .value = '';
+
+        document
+          .getElementById(
+            'productSort'
+          )
+          .value = '0';
+
+        document
+          .getElementById(
+            'productNote'
+          )
+          .value = '';
+
+
+        // 等 Notion 更新後重新讀取
+        setTimeout(
+          function() {
+
+            loadProducts(
+              window.currentGroupBuyId
+            );
+
+          },
+          1000
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          '新增商品失敗：',
+          error
+        );
+
+
+        alert(
+          '新增商品失敗：' +
+          error.message
+        );
+
+
+      } finally {
+
+        saveButton.disabled =
+          false;
+
+        saveButton.textContent =
+          '新增商品';
+
+      }
+
+    }
+
+
+    // =========================
+    // 📦 讀取代購商品
+    // =========================
+
+    async function loadProducts(
+      groupBuyId
+    ) {
+
+      const productList =
+        document.getElementById(
+          'productList'
+        );
+
+
+      productList.innerHTML = `
+        <div
+          style="
+            padding: 20px;
+            text-align: center;
+            color: #999;
+          ">
+          載入商品中...
+        </div>
+      `;
+
+
+      try {
+
+        const response =
+          await fetch(
+            API_URL +
+            '?action=getProducts&groupBuyId=' +
+            encodeURIComponent(
+              groupBuyId
+            )
+          );
+
+
+        const result =
+          await response.json();
+
+
+        if (!result.success) {
+
+          throw new Error(
+            result.message ||
+            '讀取商品失敗'
+          );
+
+        }
+
+
+        window.currentProducts =
+          result.data || [];
+
+
+        renderProducts(
+          window.currentProducts
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          '讀取商品失敗：',
+          error
+        );
+
+
+        productList.innerHTML = `
+          <div
+            style="
+              padding: 20px;
+              text-align: center;
+              color: #999;
+            ">
+            商品讀取失敗
+          </div>
+        `;
+
+      }
+
+    }
+
+
+    // =========================
+    // 📦 顯示商品
+    // =========================
+
+    function renderProducts(
+      products
+    ) {
+
+      const productList =
+        document.getElementById(
+          'productList'
+        );
+
+
+      // 沒有商品
+      if (
+        !products ||
+        products.length === 0
+      ) {
+
+        productList.innerHTML = `
+          <div
+            style="
+              padding: 24px 15px;
+              text-align: center;
+              color: #aaa;
+              background: #f8f9fc;
+              border-radius: 12px;
+            ">
+            目前還沒有商品 📦
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      const productCards =
+        products
+          .map(
+            function(product) {
+
+
+              // 商品圖片
+              const imageHtml =
+                product.imageUrl
+                  ? `
+                    <img
+                      src="${product.imageUrl}"
+                      alt="${product.name}"
+                      style="
+                        width: 72px;
+                        height: 72px;
+                        object-fit: cover;
+                        border-radius: 10px;
+                        flex-shrink: 0;
+                      ">
+                  `
+                  : `
+                    <div
+                      style="
+                        width: 72px;
+                        height: 72px;
+                        border-radius: 10px;
+                        background: #f1f2f6;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 28px;
+                        flex-shrink: 0;
+                      ">
+                      📦
+                    </div>
+                  `;
+
+
+              // 單價
+              const priceHtml =
+                product.price !== null &&
+                product.price !== undefined
+                  ? `
+                    <div
+                      style="
+                        margin-top: 5px;
+                        font-weight: 800;
+                        color: #5360f5;
+                      ">
+                      NT$ ${Number(
+                        product.price
+                      ).toLocaleString()}
+                    </div>
+                  `
+                  : '';
+
+
+              // 備註
+              const noteHtml =
+                product.note
+                  ? `
+                    <div
+                      style="
+                        margin-top: 5px;
+                        font-size: 13px;
+                        color: #888;
+                      ">
+                      ${product.note}
+                    </div>
+                  `
+                  : '';
+
+
+              return `
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 14px;
+                    padding: 13px;
+                    margin-bottom: 10px;
+                    border: 1px solid #eeeeee;
+                    border-radius: 13px;
+                    background: white;
+                  ">
+
+                  ${imageHtml}
+
+
+                  <div
+                    style="
+                      min-width: 0;
+                      flex: 1;
+                    ">
+
+                    <div
+                      style="
+                        font-weight: 800;
+                        line-height: 1.4;
+                      ">
+                      ${product.name}
+                    </div>
+
+                    ${priceHtml}
+
+                    ${noteHtml}
+
+                  </div>
+
+                </div>
+              `;
+
+            }
+          )
+          .join('');
+
+
+      productList.innerHTML =
+        productCards;
+
+    }
+
+
+    // =========================
+    // 關閉代購詳細資料
+    // =========================
+
+    function closeGroupBuyDetail() {
+
+      document
+        .getElementById(
+          'groupBuyDetailModal'
+        )
+        .style.display =
+          'none';
+
+    }
+
+
+    // =========================
+    // 開啟編輯代購
+    // =========================
+
+    function openEditGroupBuy() {
+
+      const id =
+        window.currentGroupBuyId;
+
+
+      const item =
+        window.currentGroupBuys.find(
+          function(groupBuy) {
+
+            return groupBuy.id === id;
+
+          }
+        );
+
+
+      if (!item) {
+
+        alert(
+          '找不到這筆代購資料'
+        );
+
+        return;
+
+      }
+
+
+      document
+        .getElementById(
+          'groupBuyName'
+        )
+        .value =
+          item.name || '';
+
+
+      document
+        .getElementById(
+          'groupName'
+        )
+        .value =
+          item.group || '';
+
+
+      document
+        .getElementById(
+          'deadline'
+        )
+        .value =
+          item.deadline || '';
+
+
+      document
+        .getElementById(
+          'groupBuyStatus'
+        )
+        .value =
+          item.status ===
+          '🔴 已結束'
+            ? '已結束'
+            : '進行中';
+
+
+      document
+        .getElementById(
+          'groupBuyNote'
+        )
+        .value =
+          item.note || '';
+
+
+      window.editingGroupBuyId =
+        item.id;
+
+
+      document
+        .getElementById(
+          'groupBuySaveButton'
+        )
+        .textContent =
+          '儲存修改';
+
+
+      closeGroupBuyDetail();
+
+      openCreateModal();
+
+    }
+
+
+    // =========================
+    // 刪除目前的代購
+    // =========================
+
+    async function deleteCurrentGroupBuy() {
+
+      const id =
+        window.currentGroupBuyId;
+
+
+      const item =
+        window.currentGroupBuys.find(
+          function(groupBuy) {
+
+            return groupBuy.id === id;
+
+          }
+        );
+
+
+      if (!item) {
+
+        alert(
+          '找不到這筆代購資料'
+        );
+
+        return;
+
+      }
+
+
+      const confirmed =
+        confirm(
+          '確定要刪除「' +
+          item.name +
+          '」嗎？\n\n' +
+          '刪除後會移到 Notion 垃圾桶。'
+        );
+
+
+      if (!confirmed) {
+
+        return;
+
+      }
+
+
+      try {
+
+        const response =
+          await fetch(
+            API_URL,
+            {
+
+              method:
+                'POST',
+
+              body:
+                JSON.stringify({
+
+                  action:
+                    'deleteGroupBuy',
+
+                  id:
+                    id
+
+                })
+
+            }
+          );
+
+
+        const result =
+          await response.json();
+
+
+        if (!result.success) {
+
+          throw new Error(
+            result.message ||
+            '刪除代購失敗'
+          );
+
+        }
+
+
+        alert(
+          '刪除代購成功！'
+        );
+
+
+        closeGroupBuyDetail();
+
+
+        setTimeout(
+          function() {
+
+            loadGroupBuys();
+
+          },
+          1500
+        );
+
+
+      } catch (error) {
+
+        console.error(error);
+
+
+        alert(
+          '刪除代購失敗：' +
+          error.message
+        );
+
+      }
+
+    }
+
+
+    // =========================
+    // 圖片壓縮
+    // =========================
+
+    function compressImage(file) {
+
+      return new Promise(
+        (
+          resolve,
+          reject
+        ) => {
+
+          const reader =
+            new FileReader();
+
+
+          reader.onload =
+            function(event) {
+
+              const img =
+                new Image();
+
+
+              img.onload =
+                function() {
+
+                  const maxWidth =
+                    1200;
+
+                  const maxHeight =
+                    1200;
+
+
+                  let width =
+                    img.width;
+
+                  let height =
+                    img.height;
+
+
+                  if (
+                    width > maxWidth ||
+                    height > maxHeight
+                  ) {
+
+                    const ratio =
+                      Math.min(
+                        maxWidth / width,
+                        maxHeight / height
+                      );
+
+
+                    width =
+                      Math.round(
+                        width * ratio
+                      );
+
+
+                    height =
+                      Math.round(
+                        height * ratio
+                      );
+
+                  }
+
+
+                  const canvas =
+                    document.createElement(
+                      'canvas'
+                    );
+
+
+                  canvas.width =
+                    width;
+
+                  canvas.height =
+                    height;
+
+
+                  const ctx =
+                    canvas.getContext(
+                      '2d'
+                    );
+
+
+                  ctx.drawImage(
+                    img,
+                    0,
+                    0,
+                    width,
+                    height
+                  );
+
+
+                  const compressedData =
+                    canvas.toDataURL(
+                      'image/jpeg',
+                      0.8
+                    );
+
+
+                  resolve(
+                    compressedData
+                  );
+
+                };
+
+
+              img.onerror =
+                function() {
+
+                  reject(
+                    new Error(
+                      '圖片處理失敗'
+                    )
+                  );
+
+                };
+
+
+              img.src =
+                event.target.result;
+
+            };
+
+
+          reader.onerror =
+            function() {
+
+              reject(
+                new Error(
+                  '圖片讀取失敗'
+                )
+              );
+
+            };
+
+
+          reader.readAsDataURL(
+            file
+          );
+
+        }
       );
 
     }
+        // =========================
+    // 儲存代購
+    // =========================
+
+    async function saveGroupBuy() {
+
+      const name =
+        document
+          .getElementById('groupBuyName')
+          .value
+          .trim();
 
 
-    if (isEditing) {
-      alert('修改代購成功！');
-    } else {
-      alert('建立代購成功！');
+      const group =
+        document
+          .getElementById('groupName')
+          .value
+          .trim();
+
+
+      const deadline =
+        document
+          .getElementById('deadline')
+          .value;
+
+
+      const statusValue =
+        document
+          .getElementById('groupBuyStatus')
+          .value;
+
+
+      const note =
+        document
+          .getElementById('groupBuyNote')
+          .value
+          .trim();
+
+
+      const imageInput =
+        document.getElementById(
+          'groupBuyImage'
+        );
+
+
+      const imageFile =
+        imageInput.files[0];
+
+
+      // 判斷是不是編輯模式
+      const isEditing =
+        !!window.editingGroupBuyId;
+
+
+      // 代購名稱必填
+      if (!name) {
+
+        alert('請輸入代購名稱');
+
+        return;
+
+      }
+
+
+      // 網站狀態轉成 Notion 狀態
+      const status =
+        statusValue === '已結束'
+          ? '🔴 已結束'
+          : '🟢 進行中';
+
+
+      // =========================
+      // 圖片處理
+      // =========================
+
+      let imageData = '';
+      let imageName = '';
+      let imageType = '';
+
+
+      if (imageFile) {
+
+        imageData =
+          await compressImage(
+            imageFile
+          );
+
+
+        imageName =
+          'fanflow-' +
+          Date.now() +
+          '.jpg';
+
+
+        imageType =
+          'image/jpeg';
+
+      }
+
+
+      // =========================
+      // 準備送到 GAS
+      // =========================
+
+      const data = {
+
+        action:
+          isEditing
+            ? 'updateGroupBuy'
+            : 'createGroupBuy',
+
+        id:
+          isEditing
+            ? window.editingGroupBuyId
+            : '',
+
+        name:
+          name,
+
+        group:
+          group,
+
+        deadline:
+          deadline,
+
+        status:
+          status,
+
+        note:
+          note,
+
+        imageData:
+          imageData,
+
+        imageName:
+          imageName,
+
+        imageType:
+          imageType
+
+      };
+
+
+      try {
+
+        const response =
+          await fetch(
+            API_URL,
+            {
+
+              method:
+                'POST',
+
+              body:
+                JSON.stringify(data)
+
+            }
+          );
+
+
+        const result =
+          await response.json();
+
+
+        if (!result.success) {
+
+          throw new Error(
+            result.message ||
+            (
+              isEditing
+                ? '修改代購失敗'
+                : '建立代購失敗'
+            )
+          );
+
+        }
+
+
+        if (isEditing) {
+
+          alert(
+            '修改代購成功！'
+          );
+
+        } else {
+
+          alert(
+            '建立代購成功！'
+          );
+
+        }
+
+
+        // 清空表單
+        document
+          .getElementById(
+            'groupBuyImage'
+          )
+          .value = '';
+
+
+        document
+          .getElementById(
+            'groupBuyName'
+          )
+          .value = '';
+
+
+        document
+          .getElementById(
+            'groupName'
+          )
+          .value = '';
+
+
+        document
+          .getElementById(
+            'deadline'
+          )
+          .value = '';
+
+
+        document
+          .getElementById(
+            'groupBuyStatus'
+          )
+          .value =
+            '進行中';
+
+
+        document
+          .getElementById(
+            'groupBuyNote'
+          )
+          .value = '';
+
+
+        // 離開編輯模式
+        window.editingGroupBuyId =
+          '';
+
+
+        document
+          .getElementById(
+            'groupBuySaveButton'
+          )
+          .textContent =
+            '建立代購';
+
+
+        closeCreateModal();
+
+
+        // 等 Notion 更新後重新讀取
+        setTimeout(
+          function() {
+
+            loadGroupBuys();
+
+          },
+          1500
+        );
+
+
+      } catch (error) {
+
+        console.error(error);
+
+
+        alert(
+          (
+            isEditing
+              ? '修改代購失敗：'
+              : '建立代購失敗：'
+          ) +
+          error.message
+        );
+
+      }
+
     }
 
 
-    // 清空表單
-    document.getElementById('groupBuyImage').value = '';
-    document.getElementById('groupBuyName').value = '';
-    document.getElementById('groupName').value = '';
-    document.getElementById('deadline').value = '';
-    document.getElementById('groupBuyStatus').value = '進行中';
-    document.getElementById('groupBuyNote').value = '';
+    // =========================
+    // 開啟全新的代購
+    // =========================
+
+    function openNewGroupBuy() {
+
+      // 清除編輯模式
+      window.editingGroupBuyId =
+        '';
 
 
-    // 離開編輯模式
-    window.editingGroupBuyId = '';
-
-    document
-      .getElementById('groupBuySaveButton')
-      .textContent = '建立代購';
-
-
-    closeCreateModal();
+      // 清空表單
+      document
+        .getElementById(
+          'groupBuyImage'
+        )
+        .value = '';
 
 
-    // 等 Notion 更新完成後重新讀取
-    setTimeout(function() {
-      loadGroupBuys();
-    }, 1500);
+      document
+        .getElementById(
+          'groupBuyName'
+        )
+        .value = '';
 
 
-  } catch (error) {
+      document
+        .getElementById(
+          'groupName'
+        )
+        .value = '';
 
-    console.error(error);
 
-    alert(
-      (
-        isEditing
-          ? '修改代購失敗：'
-          : '建立代購失敗：'
-      ) +
-      error.message
+      document
+        .getElementById(
+          'deadline'
+        )
+        .value = '';
+
+
+      document
+        .getElementById(
+          'groupBuyStatus'
+        )
+        .value =
+          '進行中';
+
+
+      document
+        .getElementById(
+          'groupBuyNote'
+        )
+        .value = '';
+
+
+      document
+        .getElementById(
+          'groupBuySaveButton'
+        )
+        .textContent =
+          '建立代購';
+
+
+      openCreateModal();
+
+    }
+
+
+    // =========================
+    // Modal 基本控制
+    // =========================
+
+    const createModal =
+      document.getElementById(
+        'createModal'
+      );
+
+
+    const groupBuyDetailModal =
+      document.getElementById(
+        'groupBuyDetailModal'
+      );
+
+
+    const productModal =
+      document.getElementById(
+        'productModal'
+      );
+
+
+    // 開啟建立代購視窗
+    function openCreateModal() {
+
+      createModal.style.display =
+        'block';
+
+    }
+
+
+    // 關閉建立代購視窗
+    function closeCreateModal() {
+
+      createModal.style.display =
+        'none';
+
+    }
+
+
+    // =========================
+    // 點灰色背景關閉
+    // =========================
+
+    createModal.addEventListener(
+      'click',
+      function(event) {
+
+        if (
+          event.target ===
+          createModal
+        ) {
+
+          closeCreateModal();
+
+        }
+
+      }
     );
 
-  }
 
-}
+    groupBuyDetailModal
+      .addEventListener(
+        'click',
+        function(event) {
 
-  // =========================
-// 開啟全新的代購
-// =========================
+          if (
+            event.target ===
+            groupBuyDetailModal
+          ) {
 
-function openNewGroupBuy() {
+            closeGroupBuyDetail();
 
-  // 清除編輯模式
-  window.editingGroupBuyId = '';
+          }
 
-  // 清空表單
-  document.getElementById('groupBuyImage').value = '';
-  document.getElementById('groupBuyName').value = '';
-  document.getElementById('groupName').value = '';
-  document.getElementById('deadline').value = '';
-  document.getElementById('groupBuyStatus').value = '進行中';
-  document.getElementById('groupBuyNote').value = '';
+        }
+      );
 
-  // 按鈕恢復成建立代購
-  document
-    .getElementById('groupBuySaveButton')
-    .textContent = '建立代購';
 
-  // 開啟視窗
-  openCreateModal();
+    productModal.addEventListener(
+      'click',
+      function(event) {
 
-}
-  
-  const createModal = document.getElementById("createModal");
+        if (
+          event.target ===
+          productModal
+        ) {
 
-  // 開啟建立代購視窗
-  function openCreateModal() {
-    createModal.style.display = "block";
-  }
+          closeProductModal();
 
-  // 關閉建立代購視窗
-  function closeCreateModal() {
-    createModal.style.display = "none";
-  }
+        }
 
-  // 點擊灰色背景關閉
-  createModal.addEventListener("click", function(event) {
-    if (event.target === createModal) {
-      closeCreateModal();
-    }
-  });
+      }
+    );
 
-  // 點擊詳細資料視窗外的灰色背景關閉
-const groupBuyDetailModal =
-  document.getElementById('groupBuyDetailModal');
 
-groupBuyDetailModal.addEventListener(
-  'click',
-  function(event) {
+    // =========================
+    // ESC 關閉視窗
+    // =========================
 
-    if (event.target === groupBuyDetailModal) {
-      closeGroupBuyDetail();
-    }
+    document.addEventListener(
+      'keydown',
+      function(event) {
 
-  }
-);
-  
-// 按 ESC 關閉視窗
-document.addEventListener("keydown", function(event) {
+        if (
+          event.key !== 'Escape'
+        ) {
 
-  if (event.key === "Escape") {
+          return;
 
-    if (createModal.style.display === "block") {
-      closeCreateModal();
-    }
+        }
 
-    if (groupBuyDetailModal.style.display === "block") {
-      closeGroupBuyDetail();
-    }
 
-  }
+        // 商品 Modal 在最上層，
+        // 所以先關商品 Modal
+        if (
+          productModal.style.display ===
+          'block'
+        ) {
 
-});
+          closeProductModal();
 
-  // =========================
-// 網頁開啟時讀取代購資料
-// =========================
+          return;
 
-loadGroupBuys();
-  
-</script>
+        }
 
+
+        if (
+          createModal.style.display ===
+          'block'
+        ) {
+
+          closeCreateModal();
+
+          return;
+
+        }
+
+
+        if (
+          groupBuyDetailModal
+            .style.display ===
+          'block'
+        ) {
+
+          closeGroupBuyDetail();
+
+        }
+
+      }
+    );
+
+
+    // =========================
+    // 網頁開啟時讀取資料
+    // =========================
+
+    loadGroupBuys();
+
+
+  </script>
 
 </body>
 
