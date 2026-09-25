@@ -791,6 +791,13 @@
     ✏️ 編輯
   </button>
 
+  <button
+  class="cancel-button"
+  type="button"
+  onclick="deleteCurrentGroupBuy()">
+  🗑️ 刪除
+</button>
+  
 </div>
 
   </div>
@@ -1116,6 +1123,94 @@ closeGroupBuyDetail();
 
 // 開啟原本的建立／編輯視窗
 openCreateModal();
+
+}
+
+  // =========================
+// 刪除目前的代購
+// =========================
+
+async function deleteCurrentGroupBuy() {
+
+  const id =
+    window.currentGroupBuyId;
+
+  const item =
+    window.currentGroupBuys.find(function(groupBuy) {
+      return groupBuy.id === id;
+    });
+
+
+  if (!item) {
+    alert('找不到這筆代購資料');
+    return;
+  }
+
+
+  // 刪除前再次確認
+  const confirmed =
+    confirm(
+      '確定要刪除「' +
+      item.name +
+      '」嗎？\n\n刪除後會移到 Notion 垃圾桶。'
+    );
+
+
+  if (!confirmed) {
+    return;
+  }
+
+
+  try {
+
+    const response =
+      await fetch(API_URL, {
+
+        method: 'POST',
+
+        body: JSON.stringify({
+          action: 'deleteGroupBuy',
+          id: id
+        })
+
+      });
+
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+
+      throw new Error(
+        result.message ||
+        '刪除代購失敗'
+      );
+
+    }
+
+
+    alert('刪除代購成功！');
+
+    closeGroupBuyDetail();
+
+
+    // 等 Notion 更新後重新讀取
+    setTimeout(function() {
+      loadGroupBuys();
+    }, 1500);
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      '刪除代購失敗：' +
+      error.message
+    );
+
+  }
 
 }
   
