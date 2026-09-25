@@ -671,57 +671,36 @@
        JavaScript
   ======================== -->
 
-  <script>
+<script>
+  const createModal = document.getElementById("createModal");
 
-    function openCreateModal() {
+  // 開啟建立代購視窗
+  function openCreateModal() {
+    createModal.style.display = "block";
+  }
 
-      document
-        .getElementById("createModal")
-        .style
-        .display = "block";
+  // 關閉建立代購視窗
+  function closeCreateModal() {
+    createModal.style.display = "none";
+  }
 
+  // 點擊灰色背景關閉
+  createModal.addEventListener("click", function(event) {
+    if (event.target === createModal) {
+      closeCreateModal();
     }
+  });
 
-
-    function closeCreateModal() {
-
-      document
-        .getElementById("createModal")
-        .style
-        .display = "none";
-
+  // 按 ESC 關閉
+  document.addEventListener("keydown", function(event) {
+    if (
+      event.key === "Escape" &&
+      createModal.style.display === "block"
+    ) {
+      closeCreateModal();
     }
-
-
-    /* 點擊黑色背景也可以關閉 */
-
-    window.addEventListener("click", function(event) {
-
-      const modal =
-        document.getElementById("createModal");
-
-      if (event.target === modal) {
-
-        closeCreateModal();
-
-      }
-
-    });
-
-
-    /* 按 ESC 也可以關閉 */
-
-    document.addEventListener("keydown", function(event) {
-
-      if (event.key === "Escape") {
-
-        closeCreateModal();
-
-      }
-
-    });
-
-  </script>
+  });
+</script>
 
 
 </body>
