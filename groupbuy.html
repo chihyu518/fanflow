@@ -517,7 +517,7 @@
       <button
         class="create-button"
         type="button"
-        onclick="openCreateModal()">
+        onclick="openNewGroupBuy()">
 
         ＋ 建立代購
 
@@ -1356,6 +1356,32 @@ async function saveGroupBuy() {
 
 }
 
+  // =========================
+// 開啟全新的代購
+// =========================
+
+function openNewGroupBuy() {
+
+  // 清除編輯模式
+  window.editingGroupBuyId = '';
+
+  // 清空表單
+  document.getElementById('groupBuyImage').value = '';
+  document.getElementById('groupBuyName').value = '';
+  document.getElementById('groupName').value = '';
+  document.getElementById('deadline').value = '';
+  document.getElementById('groupBuyStatus').value = '進行中';
+  document.getElementById('groupBuyNote').value = '';
+
+  // 按鈕恢復成建立代購
+  document
+    .getElementById('groupBuySaveButton')
+    .textContent = '建立代購';
+
+  // 開啟視窗
+  openCreateModal();
+
+}
   
   const createModal = document.getElementById("createModal");
 
