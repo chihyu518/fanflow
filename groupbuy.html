@@ -293,5 +293,95 @@
 
   </main>
 
+  <!-- ========================
+     建立代購視窗
+======================== -->
+
+<div id="createModal" class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+      <h2>建立新代購</h2>
+
+      <button
+        class="close-button"
+        onclick="closeCreateModal()"
+        type="button">
+        ×
+      </button>
+    </div>
+
+
+    <div class="form-group">
+      <label for="groupBuyName">代購名稱</label>
+
+      <input
+        id="groupBuyName"
+        type="text"
+        placeholder="例如：BOYNEXTDOOR 官方周邊">
+    </div>
+
+
+    <div class="form-group">
+      <label for="groupName">團體／活動</label>
+
+      <input
+        id="groupName"
+        type="text"
+        placeholder="例如：BOYNEXTDOOR">
+    </div>
+
+
+    <div class="form-group">
+      <label for="deadline">登記截止日</label>
+
+      <input
+        id="deadline"
+        type="date">
+    </div>
+
+
+    <div class="form-group">
+      <label for="groupBuyStatus">狀態</label>
+
+      <select id="groupBuyStatus">
+        <option value="進行中">進行中</option>
+        <option value="已結束">已結束</option>
+      </select>
+    </div>
+
+
+    <div class="form-group">
+      <label for="groupBuyNote">備註</label>
+
+      <textarea
+        id="groupBuyNote"
+        rows="4"
+        placeholder="例如：到貨後會再通知付款與取貨"></textarea>
+    </div>
+
+
+    <div class="modal-actions">
+
+      <button
+        class="cancel-button"
+        type="button"
+        onclick="closeCreateModal()">
+        取消
+      </button>
+
+      <button
+        class="save-button"
+        type="button">
+        建立代購
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+  
 </body>
 </html>
