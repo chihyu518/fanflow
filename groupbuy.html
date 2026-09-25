@@ -1213,6 +1213,11 @@ async function saveGroupBuy() {
     imageInput.files[0];
 
 
+  // 判斷現在是不是編輯模式
+  const isEditing =
+    !!window.editingGroupBuyId;
+
+
   // 代購名稱必填
   if (!name) {
     alert('請輸入代購名稱');
@@ -1248,7 +1253,15 @@ async function saveGroupBuy() {
 
   const data = {
 
-    action: 'createGroupBuy',
+    action:
+      isEditing
+        ? 'updateGroupBuy'
+        : 'createGroupBuy',
+
+    id:
+      isEditing
+        ? window.editingGroupBuyId
+        : '',
 
     name: name,
     group: group,
@@ -1283,39 +1296,66 @@ async function saveGroupBuy() {
 
       throw new Error(
         result.message ||
-        '建立代購失敗'
+        (
+          isEditing
+            ? '修改代購失敗'
+            : '建立代購失敗'
+        )
       );
 
     }
 
 
-    alert('建立代購成功！');
+    if (isEditing) {
+      alert('修改代購成功！');
+    } else {
+      alert('建立代購成功！');
+    }
 
+
+    // 清空表單
     document.getElementById('groupBuyImage').value = '';
     document.getElementById('groupBuyName').value = '';
     document.getElementById('groupName').value = '';
     document.getElementById('deadline').value = '';
     document.getElementById('groupBuyStatus').value = '進行中';
     document.getElementById('groupBuyNote').value = '';
-    
+
+
+    // 離開編輯模式
+    window.editingGroupBuyId = '';
+
+    document
+      .getElementById('groupBuySaveButton')
+      .textContent = '建立代購';
+
+
     closeCreateModal();
 
+
+    // 等 Notion 更新完成後重新讀取
     setTimeout(function() {
-  loadGroupBuys();
-}, 1500);
+      loadGroupBuys();
+    }, 1500);
+
 
   } catch (error) {
 
     console.error(error);
 
     alert(
-      '建立代購失敗：' +
+      (
+        isEditing
+          ? '修改代購失敗：'
+          : '建立代購失敗：'
+      ) +
       error.message
     );
 
   }
 
 }
+
   
   const createModal = document.getElementById("createModal");
 
