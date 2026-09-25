@@ -728,9 +728,10 @@
 
 
         <button
-  class="save-button"
-  type="button"
-  onclick="saveGroupBuy()">
+          id="groupBuySaveButton"
+          class="save-button"
+          type="button"
+          onclick="saveGroupBuy()">
 
           建立代購
 
@@ -774,16 +775,23 @@
     </div>
 
 
-    <div class="modal-actions">
+<div class="modal-actions">
 
-      <button
-        class="cancel-button"
-        type="button"
-        onclick="closeGroupBuyDetail()">
-        關閉
-      </button>
+  <button
+    class="cancel-button"
+    type="button"
+    onclick="closeGroupBuyDetail()">
+    關閉
+  </button>
 
-    </div>
+  <button
+    class="save-button"
+    type="button"
+    onclick="openEditGroupBuy()">
+    ✏️ 編輯
+  </button>
+
+</div>
 
   </div>
 
@@ -984,6 +992,8 @@ function openGroupBuyDetail(id) {
     return;
   }
 
+  window.currentGroupBuyId = id;
+  
   const modal =
     document.getElementById('groupBuyDetailModal');
 
@@ -1049,6 +1059,63 @@ function closeGroupBuyDetail() {
   document
     .getElementById('groupBuyDetailModal')
     .style.display = 'none';
+
+}
+
+  // =========================
+// 開啟編輯代購
+// =========================
+
+function openEditGroupBuy() {
+
+  const id =
+    window.currentGroupBuyId;
+
+  const item =
+    window.currentGroupBuys.find(function(groupBuy) {
+      return groupBuy.id === id;
+    });
+
+  if (!item) {
+    alert('找不到這筆代購資料');
+    return;
+  }
+
+
+  // 把原本資料帶回表單
+  document.getElementById('groupBuyName').value =
+    item.name || '';
+
+  document.getElementById('groupName').value =
+    item.group || '';
+
+  document.getElementById('deadline').value =
+    item.deadline || '';
+
+  document.getElementById('groupBuyStatus').value =
+    item.status === '🔴 已結束'
+      ? '已結束'
+      : '進行中';
+
+  document.getElementById('groupBuyNote').value =
+    item.note || '';
+
+
+// 記住目前正在編輯哪一筆
+window.editingGroupBuyId =
+  item.id;
+
+
+// 編輯模式時改變按鈕文字
+document.getElementById('groupBuySaveButton').textContent =
+  '儲存修改';
+
+
+// 關閉詳細資料
+closeGroupBuyDetail();
+
+// 開啟原本的建立／編輯視窗
+openCreateModal();
 
 }
   
