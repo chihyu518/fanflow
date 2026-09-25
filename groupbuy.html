@@ -1269,15 +1269,37 @@ async function saveGroupBuy() {
     }
   });
 
-  // 按 ESC 關閉
-  document.addEventListener("keydown", function(event) {
-    if (
-      event.key === "Escape" &&
-      createModal.style.display === "block"
-    ) {
+  // 點擊詳細資料視窗外的灰色背景關閉
+const groupBuyDetailModal =
+  document.getElementById('groupBuyDetailModal');
+
+groupBuyDetailModal.addEventListener(
+  'click',
+  function(event) {
+
+    if (event.target === groupBuyDetailModal) {
+      closeGroupBuyDetail();
+    }
+
+  }
+);
+  
+// 按 ESC 關閉視窗
+document.addEventListener("keydown", function(event) {
+
+  if (event.key === "Escape") {
+
+    if (createModal.style.display === "block") {
       closeCreateModal();
     }
-  });
+
+    if (groupBuyDetailModal.style.display === "block") {
+      closeGroupBuyDetail();
+    }
+
+  }
+
+});
 
   // =========================
 // 網頁開啟時讀取代購資料
