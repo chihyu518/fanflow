@@ -1090,8 +1090,16 @@ async function saveGroupBuy() {
 
     alert('建立代購成功！');
 
+    document.getElementById('groupBuyImage').value = '';
+    document.getElementById('groupBuyName').value = '';
+    document.getElementById('groupName').value = '';
+    document.getElementById('deadline').value = '';
+    document.getElementById('groupBuyStatus').value = '進行中';
+    document.getElementById('groupBuyNote').value = '';
+    
     closeCreateModal();
 
+    loadGroupBuys();
 
   } catch (error) {
 
