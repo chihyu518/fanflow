@@ -1142,9 +1142,40 @@ function renderGroupBuys(groupBuys) {
 
               ${deadlineHtml}
 
-              ${noteHtml}
+            ${noteHtml}
 
-            </div>
+<div
+  style="
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  ">
+
+  <button
+    type="button"
+    class="cancel-button"
+    onclick="openEditProduct('${product.id}')"
+    style="
+      padding: 7px 10px;
+      font-size: 12px;
+    ">
+    ✏️ 編輯
+  </button>
+
+  <button
+    type="button"
+    class="cancel-button"
+    onclick="deleteCurrentProduct('${product.id}')"
+    style="
+      padding: 7px 10px;
+      font-size: 12px;
+    ">
+    🗑️ 刪除
+  </button>
+
+</div>
+
+</div>
 
           </div>
         `;
