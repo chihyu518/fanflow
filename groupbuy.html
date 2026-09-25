@@ -745,7 +745,24 @@
         </div>
 
 
-        <div id="productList">
+        <div id="productList"></div>
+
+
+<!-- =========================
+     🧾 登記名單
+========================= -->
+
+<div class="order-section">
+
+  <h3>🧾 登記名單</h3>
+
+  <div id="orderList">
+    <div class="empty">
+      尚無登記資料
+    </div>
+  </div>
+
+</div>
 
           <div
             style="
@@ -1381,6 +1398,7 @@
 
 
       loadProducts(id);
+loadOrders(item.name);
 
     }
 
@@ -1855,7 +1873,123 @@ async function saveProduct() {
 
     }
 
+// =========================
+// 🧾 讀取登記名單
+// =========================
 
+async function loadOrders(groupBuyName) {
+
+  const orderList =
+    document.getElementById('orderList');
+
+  if (!orderList) {
+    return;
+  }
+
+
+  orderList.innerHTML =
+    '<div class="empty">讀取登記資料中...</div>';
+
+
+  try {
+
+    const response =
+      await fetch(
+        API_URL +
+        '?action=getOrders&groupBuyName=' +
+        encodeURIComponent(groupBuyName)
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+      throw new Error(
+        result.message ||
+        '讀取登記資料失敗'
+      );
+    }
+
+
+    const orders =
+      result.data || [];
+
+
+    if (orders.length === 0) {
+
+      orderList.innerHTML =
+        '<div class="empty">尚無登記資料</div>';
+
+      return;
+
+    }
+
+
+    orderList.innerHTML =
+      orders.map(function(order) {
+
+        return `
+          <div class="product-card">
+
+            <div class="product-info">
+
+              <strong>
+                👤 ${escapeHtml(order.name)}
+              </strong>
+
+              <div>
+                📦 ${escapeHtml(order.product)}
+                × ${order.quantity}
+              </div>
+
+              <div>
+                💲單價 NT$${Number(order.price).toLocaleString()}
+              </div>
+
+              ${
+                Number(order.secondPayment) > 0
+                  ? `
+                    <div>
+                      💰二補 NT$${Number(order.secondPayment).toLocaleString()}
+                    </div>
+                  `
+                  : ''
+              }
+
+              <div>
+                <strong>
+                  💵 總額 NT$${Number(order.total).toLocaleString()}
+                </strong>
+              </div>
+
+              <div>
+                ${escapeHtml(order.paymentStatus)}
+              </div>
+
+            </div>
+
+          </div>
+        `;
+
+      }).join('');
+
+
+  } catch (error) {
+
+    console.error(
+      '讀取登記資料失敗：',
+      error
+    );
+
+    orderList.innerHTML =
+      '<div class="empty">讀取登記資料失敗</div>';
+
+  }
+
+}
+    
     // =========================
     // 📦 顯示商品
     // =========================
