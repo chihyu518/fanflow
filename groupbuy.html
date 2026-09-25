@@ -859,7 +859,142 @@
 </div>
   
 
+<!-- ========================
+     📦 新增／編輯商品 Modal
+======================== -->
 
+<div
+  id="productModal"
+  class="modal">
+
+  <div class="modal-box">
+
+    <!-- 標題 -->
+
+    <div class="modal-header">
+
+      <h2 id="productModalTitle">
+        新增商品
+      </h2>
+
+      <button
+        class="close-button"
+        type="button"
+        onclick="closeProductModal()">
+        ×
+      </button>
+
+    </div>
+
+
+    <!-- 商品圖片 -->
+
+    <div class="form-group">
+
+      <label for="productImage">
+        商品圖片
+      </label>
+
+      <input
+        id="productImage"
+        type="file"
+        accept="image/*">
+
+    </div>
+
+
+    <!-- 商品名稱 -->
+
+    <div class="form-group">
+
+      <label for="productName">
+        商品名稱
+      </label>
+
+      <input
+        id="productName"
+        type="text"
+        placeholder="例如：成淏小卡">
+
+    </div>
+
+
+    <!-- 單價 -->
+
+    <div class="form-group">
+
+      <label for="productPrice">
+        單價
+      </label>
+
+      <input
+        id="productPrice"
+        type="number"
+        min="0"
+        placeholder="例如：350">
+
+    </div>
+
+
+    <!-- 排序 -->
+
+    <div class="form-group">
+
+      <label for="productSort">
+        排序
+      </label>
+
+      <input
+        id="productSort"
+        type="number"
+        min="0"
+        value="0"
+        placeholder="例如：1">
+
+    </div>
+
+
+    <!-- 備註 -->
+
+    <div class="form-group">
+
+      <label for="productNote">
+        備註
+      </label>
+
+      <textarea
+        id="productNote"
+        rows="4"
+        placeholder="例如：特典款／限量商品"></textarea>
+
+    </div>
+
+
+    <!-- 按鈕 -->
+
+    <div class="modal-actions">
+
+      <button
+        class="cancel-button"
+        type="button"
+        onclick="closeProductModal()">
+        取消
+      </button>
+
+      <button
+        id="productSaveButton"
+        class="save-button"
+        type="button"
+        onclick="saveProduct()">
+        新增商品
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+  
   <!-- ========================
        JavaScript
   ======================== -->
@@ -1113,6 +1248,60 @@ loadProducts(id);
 
 }
 
+  // =========================
+// 📦 開啟新增商品
+// =========================
+
+function openNewProduct() {
+
+  // 清除商品編輯模式
+  window.editingProductId = '';
+
+
+  // 清空表單
+  document.getElementById('productImage').value = '';
+
+  document.getElementById('productName').value = '';
+
+  document.getElementById('productPrice').value = '';
+
+  document.getElementById('productSort').value = '0';
+
+  document.getElementById('productNote').value = '';
+
+
+  // 標題
+  document
+    .getElementById('productModalTitle')
+    .textContent = '新增商品';
+
+
+  // 按鈕
+  document
+    .getElementById('productSaveButton')
+    .textContent = '新增商品';
+
+
+  // 開啟 Modal
+  document
+    .getElementById('productModal')
+    .style.display = 'block';
+
+}
+
+
+// =========================
+// 📦 關閉商品 Modal
+// =========================
+
+function closeProductModal() {
+
+  document
+    .getElementById('productModal')
+    .style.display = 'none';
+
+}
+  
   // =========================
 // 📦 讀取代購商品
 // =========================
