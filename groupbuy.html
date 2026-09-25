@@ -743,6 +743,52 @@
 
   </div>
 
+  <!-- ========================
+     代購詳細資料 Modal
+======================== -->
+
+<div
+  id="groupBuyDetailModal"
+  class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+
+      <h2>
+        代購詳細資料
+      </h2>
+
+      <button
+        class="close-button"
+        type="button"
+        onclick="closeGroupBuyDetail()">
+        ×
+      </button>
+
+    </div>
+
+
+    <div id="groupBuyDetailContent">
+      載入中...
+    </div>
+
+
+    <div class="modal-actions">
+
+      <button
+        class="cancel-button"
+        type="button"
+        onclick="closeGroupBuyDetail()">
+        關閉
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+  
 
 
   <!-- ========================
@@ -780,6 +826,8 @@ async function loadGroupBuys() {
       result.data
     );
 
+    window.currentGroupBuys = result.data;
+    
     renderGroupBuys(result.data);
     
   } catch (error) {
@@ -867,7 +915,9 @@ function renderGroupBuys(groupBuys) {
 
 
         return `
-          <div class="groupbuy-card">
+          <div
+  class="groupbuy-card"
+  onclick="openGroupBuyDetail('${item.id}')">
 
             ${imageHtml}
 
@@ -915,6 +965,90 @@ function renderGroupBuys(groupBuys) {
       endedGroupBuys,
       '目前沒有已結束的代購'
     );
+
+}
+
+  // =========================
+// 開啟代購詳細資料
+// =========================
+
+function openGroupBuyDetail(id) {
+
+  const item =
+    window.currentGroupBuys.find(function(groupBuy) {
+      return groupBuy.id === id;
+    });
+
+  if (!item) {
+    alert('找不到這筆代購資料');
+    return;
+  }
+
+  const modal =
+    document.getElementById('groupBuyDetailModal');
+
+  const content =
+    document.getElementById('groupBuyDetailContent');
+
+
+  const imageHtml =
+    item.imageUrl
+      ? `
+        <img
+          src="${item.imageUrl}"
+          alt="${item.name}"
+          style="
+            width: 100%;
+            max-height: 320px;
+            object-fit: cover;
+            border-radius: 14px;
+            margin-bottom: 20px;
+          ">
+      `
+      : '';
+
+
+  content.innerHTML = `
+
+    ${imageHtml}
+
+    <div style="font-size: 22px; font-weight: 800; margin-bottom: 18px;">
+      ${item.name}
+    </div>
+
+    <div style="margin-bottom: 12px;">
+      🎤 ${item.group || '未設定團體／活動'}
+    </div>
+
+    <div style="margin-bottom: 12px;">
+      📅 登記截止：
+      ${item.deadline || '未設定'}
+    </div>
+
+    <div style="margin-bottom: 12px;">
+      ${item.status || '未設定狀態'}
+    </div>
+
+    <div style="margin-top: 18px; line-height: 1.7;">
+      📝 ${item.note || '沒有備註'}
+    </div>
+
+  `;
+
+  modal.style.display = 'block';
+
+}
+
+
+// =========================
+// 關閉代購詳細資料
+// =========================
+
+function closeGroupBuyDetail() {
+
+  document
+    .getElementById('groupBuyDetailModal')
+    .style.display = 'none';
 
 }
   
