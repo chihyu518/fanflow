@@ -222,9 +222,10 @@
     }
 
     /* 商品 Modal 顯示在詳細資料上方 */
-    #productModal {
-      z-index: 2000;
-    }
+#productModal,
+#orderModal {
+  z-index: 2000;
+}
 
 
     /* ========================
@@ -912,7 +913,179 @@
 
   </div>
 
+  <!-- ========================
+       🧾 登記訂單 Modal
+  ======================== -->
 
+  <div
+    id="orderModal"
+    class="modal">
+
+    <div class="modal-box">
+
+      <div class="modal-header">
+
+        <h2>
+          🧾 登記訂單
+        </h2>
+
+        <button
+          class="close-button"
+          type="button"
+          onclick="closeOrderModal()">
+          ×
+        </button>
+
+      </div>
+
+
+      <!-- 商品名稱 -->
+
+      <div class="form-group">
+
+        <label for="orderProduct">
+          📦 商品
+        </label>
+
+        <input
+          id="orderProduct"
+          type="text"
+          readonly>
+
+      </div>
+
+
+      <!-- 姓名 -->
+
+      <div class="form-group">
+
+        <label for="orderName">
+          👤 姓名
+        </label>
+
+        <input
+          id="orderName"
+          type="text"
+          placeholder="輸入購買者姓名">
+
+      </div>
+
+
+      <!-- 數量 -->
+
+      <div class="form-group">
+
+        <label for="orderQuantity">
+          🔢 數量
+        </label>
+
+        <input
+          id="orderQuantity"
+          type="number"
+          min="1"
+          value="1"
+          oninput="calculateOrderTotal()">
+
+      </div>
+
+
+      <!-- 單價 -->
+
+      <div class="form-group">
+
+        <label for="orderPrice">
+          💲單價
+        </label>
+
+        <input
+          id="orderPrice"
+          type="number"
+          min="0"
+          readonly>
+
+      </div>
+
+
+      <!-- 二補金額 -->
+
+      <div class="form-group">
+
+        <label for="orderSecondPayment">
+          💰二補金額
+        </label>
+
+        <input
+          id="orderSecondPayment"
+          type="number"
+          min="0"
+          value="0"
+          oninput="calculateOrderTotal()">
+
+      </div>
+
+
+      <!-- 總額 -->
+
+      <div class="form-group">
+
+        <label for="orderTotal">
+          💵 總額
+        </label>
+
+        <input
+          id="orderTotal"
+          type="number"
+          readonly>
+
+      </div>
+
+
+      <!-- 付款狀態 -->
+
+      <div class="form-group">
+
+        <label for="orderPaymentStatus">
+          💳 付款狀態
+        </label>
+
+        <select id="orderPaymentStatus">
+
+          <option value="🔴 未付款">
+            🔴 未付款
+          </option>
+
+          <option value="🟢 已付款">
+            🟢 已付款
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="modal-actions">
+
+        <button
+          class="cancel-button"
+          type="button"
+          onclick="closeOrderModal()">
+          取消
+        </button>
+
+        <button
+          id="orderSaveButton"
+          class="save-button"
+          type="button"
+          onclick="saveOrder()">
+          儲存登記
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+  
   <!-- ========================
        JavaScript
   ======================== -->
@@ -1839,6 +2012,18 @@ function renderProducts(
                     margin-top: 10px;
                   ">
 
+<button
+  type="button"
+  class="save-button"
+  onclick="openNewOrder('${product.id}')"
+  style="
+    width: auto;
+    padding: 7px 10px;
+    font-size: 12px;
+  ">
+  ＋ 登記
+</button>
+
                   <button
                     type="button"
                     class="cancel-button"
@@ -2088,6 +2273,419 @@ async function deleteCurrentProduct(id) {
       '刪除商品失敗：' +
       error.message
     );
+
+  }
+
+}
+
+    // =========================
+// 🧾 開啟新增訂單
+// =========================
+
+function openNewOrder(productId) {
+
+  const product =
+    (window.currentProducts || [])
+      .find(function(item) {
+
+        return item.id === productId;
+
+      });
+
+
+  if (!product) {
+
+    alert('找不到這筆商品資料');
+
+    return;
+
+  }
+
+
+  const groupBuy =
+    (window.currentGroupBuys || [])
+      .find(function(item) {
+
+        return item.id ===
+          window.currentGroupBuyId;
+
+      });
+
+
+  if (!groupBuy) {
+
+    alert('找不到目前的代購資料');
+
+    return;
+
+  }
+
+
+  // 記住目前商品與代購
+  window.currentOrderProductId =
+    product.id;
+
+  window.currentOrderGroupBuyName =
+    groupBuy.name || '';
+
+  window.currentOrderProductName =
+    product.name || '';
+
+
+  // 自動帶入商品
+  document
+    .getElementById(
+      'orderProduct'
+    )
+    .value =
+      product.name || '';
+
+
+  // 姓名清空
+  document
+    .getElementById(
+      'orderName'
+    )
+    .value = '';
+
+
+  // 數量預設 1
+  document
+    .getElementById(
+      'orderQuantity'
+    )
+    .value = '1';
+
+
+  // 自動帶入單價
+  document
+    .getElementById(
+      'orderPrice'
+    )
+    .value =
+      product.price ?? 0;
+
+
+  // 二補預設 0
+  document
+    .getElementById(
+      'orderSecondPayment'
+    )
+    .value = '0';
+
+
+  // 預設未付款
+  document
+    .getElementById(
+      'orderPaymentStatus'
+    )
+    .value =
+      '🔴 未付款';
+
+
+  // 計算第一次總額
+  calculateOrderTotal();
+
+
+  // 開啟視窗
+  document
+    .getElementById(
+      'orderModal'
+    )
+    .style.display =
+      'block';
+
+}
+
+
+// =========================
+// 💵 計算訂單總額
+// =========================
+
+function calculateOrderTotal() {
+
+  const quantity =
+    Number(
+      document
+        .getElementById(
+          'orderQuantity'
+        )
+        .value
+    ) || 0;
+
+
+  const price =
+    Number(
+      document
+        .getElementById(
+          'orderPrice'
+        )
+        .value
+    ) || 0;
+
+
+  const secondPayment =
+    Number(
+      document
+        .getElementById(
+          'orderSecondPayment'
+        )
+        .value
+    ) || 0;
+
+
+  const total =
+    quantity * price +
+    secondPayment;
+
+
+  document
+    .getElementById(
+      'orderTotal'
+    )
+    .value =
+      total;
+
+}
+
+
+// =========================
+// 🧾 關閉訂單 Modal
+// =========================
+
+function closeOrderModal() {
+
+  document
+    .getElementById(
+      'orderModal'
+    )
+    .style.display =
+      'none';
+
+}
+
+
+// =========================
+// 🧾 儲存代購訂單
+// =========================
+
+async function saveOrder() {
+
+  const name =
+    document
+      .getElementById(
+        'orderName'
+      )
+      .value
+      .trim();
+
+
+  const quantity =
+    Number(
+      document
+        .getElementById(
+          'orderQuantity'
+        )
+        .value
+    );
+
+
+  const price =
+    Number(
+      document
+        .getElementById(
+          'orderPrice'
+        )
+        .value
+    );
+
+
+  const secondPayment =
+    Number(
+      document
+        .getElementById(
+          'orderSecondPayment'
+        )
+        .value
+    ) || 0;
+
+
+  const total =
+    Number(
+      document
+        .getElementById(
+          'orderTotal'
+        )
+        .value
+    );
+
+
+  const paymentStatus =
+    document
+      .getElementById(
+        'orderPaymentStatus'
+      )
+      .value;
+
+
+  // =========================
+  // 基本檢查
+  // =========================
+
+  if (!name) {
+
+    alert('請輸入購買者姓名');
+
+    return;
+
+  }
+
+
+  if (
+    !quantity ||
+    quantity < 1
+  ) {
+
+    alert('數量至少要 1');
+
+    return;
+
+  }
+
+
+  if (
+    !window.currentOrderGroupBuyName ||
+    !window.currentOrderProductName
+  ) {
+
+    alert('找不到代購或商品資料');
+
+    return;
+
+  }
+
+
+  const data = {
+
+    action:
+      'createOrder',
+
+    name:
+      name,
+
+    groupBuy:
+      window.currentOrderGroupBuyName,
+
+    product:
+      window.currentOrderProductName,
+
+    quantity:
+      quantity,
+
+    price:
+      price,
+
+    secondPayment:
+      secondPayment,
+
+    total:
+      total,
+
+    paymentStatus:
+      paymentStatus
+
+  };
+
+
+  const saveButton =
+    document.getElementById(
+      'orderSaveButton'
+    );
+
+
+  try {
+
+    saveButton.disabled =
+      true;
+
+    saveButton.textContent =
+      '儲存中...';
+
+
+    const response =
+      await fetch(
+        API_URL,
+        {
+
+          method:
+            'POST',
+
+          body:
+            JSON.stringify(data)
+
+        }
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+
+      throw new Error(
+        result.message ||
+        '新增訂單失敗'
+      );
+
+    }
+
+
+    alert('登記成功！');
+
+
+    closeOrderModal();
+
+
+    // 清空
+    document
+      .getElementById(
+        'orderName'
+      )
+      .value = '';
+
+
+    window.currentOrderProductId =
+      '';
+
+    window.currentOrderGroupBuyName =
+      '';
+
+    window.currentOrderProductName =
+      '';
+
+
+  } catch (error) {
+
+    console.error(
+      '新增訂單失敗：',
+      error
+    );
+
+
+    alert(
+      '新增訂單失敗：' +
+      error.message
+    );
+
+
+  } finally {
+
+    saveButton.disabled =
+      false;
+
+    saveButton.textContent =
+      '儲存登記';
 
   }
 
@@ -2839,6 +3437,11 @@ async function deleteCurrentProduct(id) {
         'productModal'
       );
 
+    const orderModal =
+  document.getElementById(
+    'orderModal'
+  );
+
 
     // 開啟建立代購視窗
     function openCreateModal() {
@@ -2913,6 +3516,22 @@ async function deleteCurrentProduct(id) {
       }
     );
 
+    orderModal.addEventListener(
+  'click',
+  function(event) {
+
+    if (
+      event.target ===
+      orderModal
+    ) {
+
+      closeOrderModal();
+
+    }
+
+  }
+);
+    
 
     // =========================
     // ESC 關閉視窗
@@ -2933,6 +3552,16 @@ async function deleteCurrentProduct(id) {
 
         // 商品 Modal 在最上層，
         // 所以先關商品 Modal
+        if (
+  orderModal.style.display ===
+  'block'
+) {
+
+  closeOrderModal();
+
+  return;
+
+}
         if (
           productModal.style.display ===
           'block'
