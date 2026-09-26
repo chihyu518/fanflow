@@ -2089,6 +2089,77 @@ orders.forEach(function(order) {
   });
 
 });
+
+    const customerSummaryHtml =
+  Object.entries(customerSummary)
+    .map(function([customerName, customer]) {
+
+      const productsHtml =
+        customer.products
+          .map(function(product) {
+
+            return `
+              <div style="
+                padding: 3px 0;
+              ">
+                📦 ${escapeHtml(product.name)}
+                × ${product.quantity}
+              </div>
+            `;
+
+          })
+          .join('');
+
+
+      const paymentHtml =
+        customer.unpaid > 0
+          ? `
+              <span>
+                🔴 未收款
+                NT$${customer.unpaid.toLocaleString()}
+              </span>
+            `
+          : `
+              <span>
+                🟢 已付清
+              </span>
+            `;
+
+
+      return `
+        <div style="
+          padding: 12px 0;
+          border-bottom: 1px solid #eee;
+        ">
+
+          <div style="
+            font-weight: 700;
+            margin-bottom: 5px;
+          ">
+            👤 ${escapeHtml(customerName)}
+          </div>
+
+          ${productsHtml}
+
+          <div style="
+            margin-top: 6px;
+          ">
+            📦 共 ${customer.quantity} 件
+            ・
+            💰 NT$${customer.total.toLocaleString()}
+          </div>
+
+          <div style="
+            margin-top: 4px;
+          ">
+            ${paymentHtml}
+          </div>
+
+        </div>
+      `;
+
+    })
+    .join('');
     
     if (orders.length === 0) {
 
