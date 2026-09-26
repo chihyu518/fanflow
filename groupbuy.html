@@ -2630,6 +2630,8 @@ async function deleteCurrentProduct(id) {
 
 function openNewOrder(productId) {
 
+  window.editingOrderId = '';
+  
   const product =
     (window.currentProducts || [])
       .find(function(item) {
@@ -2911,10 +2913,16 @@ async function saveOrder() {
   }
 
 
-  const data = {
+const data = {
 
-    action:
-      'createOrder',
+  action:
+    window.editingOrderId
+      ? 'updateOrder'
+      : 'createOrder',
+
+  id:
+    window.editingOrderId || '',
+
 
     name:
       name,
@@ -2977,63 +2985,99 @@ async function saveOrder() {
       await response.json();
 
 
-    if (!result.success) {
+if (!result.success) {
 
-      throw new Error(
-        result.message ||
-        '新增訂單失敗'
-      );
+  throw new Error(
+    result.message ||
+    (
+      window.editingOrderId
+        ? '修改訂單失敗'
+        : '新增訂單失敗'
+    )
+  );
 
-    }
-
-
-    alert('登記成功！');
-
-
-    closeOrderModal();
+}
 
 
-    // 清空
-    document
-      .getElementById(
-        'orderName'
-      )
-      .value = '';
+// 記住這次是新增還是修改
+const wasEditing =
+  !!window.editingOrderId;
 
 
-    window.currentOrderProductId =
-      '';
-
-    window.currentOrderGroupBuyName =
-      '';
-
-    window.currentOrderProductName =
-      '';
+// 成功提示
+alert(
+  wasEditing
+    ? '修改訂單成功！'
+    : '登記成功！'
+);
 
 
-  } catch (error) {
-
-    console.error(
-      '新增訂單失敗：',
-      error
-    );
+// 先記住目前代購名稱
+// 等一下刷新登記名單要用
+const groupBuyName =
+  window.currentOrderGroupBuyName;
 
 
-    alert(
-      '新增訂單失敗：' +
-      error.message
-    );
+// 關閉訂單視窗
+closeOrderModal();
 
 
-  } finally {
+// 清除編輯狀態
+window.editingOrderId =
+  '';
 
-    saveButton.disabled =
-      false;
 
-    saveButton.textContent =
-      '儲存登記';
+// 清空表單相關狀態
+document
+  .getElementById(
+    'orderName'
+  )
+  .value = '';
 
-  }
+
+window.currentOrderProductId =
+  '';
+
+window.currentOrderGroupBuyName =
+  '';
+
+window.currentOrderProductName =
+  '';
+
+
+// 自動重新讀取登記名單
+if (groupBuyName) {
+
+  await loadOrders(
+    groupBuyName
+  );
+
+}
+
+
+} catch (error) {
+
+  console.error(
+    '訂單儲存失敗：',
+    error
+  );
+
+
+  alert(
+    '訂單儲存失敗：' +
+    error.message
+  );
+
+
+} finally {
+
+  saveButton.disabled =
+    false;
+
+  saveButton.textContent =
+    '儲存登記';
+
+}
 
 }
     
