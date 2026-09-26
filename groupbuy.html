@@ -1929,6 +1929,28 @@ function escapeHtml(text) {
 // 🧾 讀取登記名單
 // =========================
 
+    // =========================
+// 🔍 訂單篩選
+// =========================
+
+window.currentOrderFilter = 'all';
+
+
+function filterOrders(filter) {
+
+  window.currentOrderFilter =
+    filter;
+
+  if (
+    window.currentOrderGroupBuyName
+  ) {
+    loadOrders(
+      window.currentOrderGroupBuyName
+    );
+  }
+
+}
+    
 async function loadOrders(groupBuyName) {
 
   const orderList =
