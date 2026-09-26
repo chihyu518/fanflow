@@ -2009,6 +2009,30 @@ orders.forEach(function(order) {
     quantity;
 
 });
+
+    const productSummaryHtml =
+  Object.entries(productSummary)
+    .map(function([productName, quantity]) {
+
+      return `
+        <div style="
+          display: flex;
+          justify-content: space-between;
+          gap: 12px;
+          padding: 6px 0;
+        ">
+          <span>
+            📦 ${escapeHtml(productName)}
+          </span>
+
+          <strong>
+            ${quantity} 件
+          </strong>
+        </div>
+      `;
+
+    })
+    .join('');
     
     if (orders.length === 0) {
 
