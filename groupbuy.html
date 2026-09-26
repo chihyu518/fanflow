@@ -3078,6 +3078,46 @@ async function updateOrderDeliveryStatus(
   }
 
 }
+    // =========================
+// 📦 設為已到貨
+// =========================
+
+async function markOrderArrived(orderId) {
+
+  await updateOrderDeliveryStatus(
+    orderId,
+    '🟡 已到貨'
+  );
+
+}
+
+
+// =========================
+// 🟢 設為已交付
+// =========================
+
+async function markOrderDelivered(orderId) {
+
+  await updateOrderDeliveryStatus(
+    orderId,
+    '🟢 已交付'
+  );
+
+}
+
+
+// =========================
+// ↩️ 改回已到貨
+// =========================
+
+async function markOrderArrivedAgain(orderId) {
+
+  await updateOrderDeliveryStatus(
+    orderId,
+    '🟡 已到貨'
+  );
+
+}
 // =========================
 // 🗑️ 刪除訂單
 // =========================
