@@ -754,9 +754,48 @@
 
 <div class="order-section">
 
-  <h3>🧾 登記名單</h3>
+ <h3>🧾 登記名單</h3>
 
-  <div id="orderList">
+<div
+  id="orderFilterButtons"
+  style="
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  "
+>
+
+  <button
+    type="button"
+    class="save-button"
+    onclick="filterOrders('all')"
+    id="filterAllButton"
+  >
+    全部
+  </button>
+
+  <button
+    type="button"
+    class="cancel-button"
+    onclick="filterOrders('unpaid')"
+    id="filterUnpaidButton"
+  >
+    🔴 未付款
+  </button>
+
+  <button
+    type="button"
+    class="cancel-button"
+    onclick="filterOrders('paid')"
+    id="filterPaidButton"
+  >
+    🟢 已付款
+  </button>
+
+</div>
+
+<div id="orderList">
     <div class="empty">
       尚無登記資料
     </div>
