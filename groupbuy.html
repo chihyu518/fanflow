@@ -2627,7 +2627,40 @@ ${
   }
 
 }
-    
+    // =========================
+// 🔎 套用搜尋
+// =========================
+
+const searchText =
+  window.currentOrderSearch || '';
+
+
+if (searchText) {
+
+  filteredOrders =
+    filteredOrders.filter(
+      function(order) {
+
+        const customerName =
+          String(
+            order.name || ''
+          ).toLowerCase();
+
+        const productName =
+          String(
+            order.product || ''
+          ).toLowerCase();
+
+
+        return (
+          customerName.includes(searchText) ||
+          productName.includes(searchText)
+        );
+
+      }
+    );
+
+}
     // =========================
     // 📦 顯示商品
     // =========================
