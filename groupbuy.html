@@ -2601,6 +2601,44 @@ if (searchText) {
 </div>
 
 ${
+  (order.orderStatus || '⚪ 未到貨') === '⚪ 未到貨'
+    ? `
+      <div style="margin-top: 10px;">
+        <button
+          type="button"
+          class="save-button"
+          onclick="markOrderArrived('${order.id}')"
+        >
+          📦 設為已到貨
+        </button>
+      </div>
+    `
+    : order.orderStatus === '🟡 已到貨'
+      ? `
+        <div style="margin-top: 10px;">
+          <button
+            type="button"
+            class="save-button"
+            onclick="markOrderDelivered('${order.id}')"
+          >
+            🟢 設為已交付
+          </button>
+        </div>
+      `
+      : `
+        <div style="margin-top: 10px;">
+          <button
+            type="button"
+            class="cancel-button"
+            onclick="markOrderArrivedAgain('${order.id}')"
+          >
+            ↩️ 改回已到貨
+          </button>
+        </div>
+      `
+}
+
+${
   order.paymentStatus === '🔴 未付款'
     ? `
       <div style="margin-top: 10px;">
