@@ -1953,6 +1953,9 @@ function filterOrders(filter) {
     
 async function loadOrders(groupBuyName) {
 
+  window.currentOrderGroupBuyName =
+    groupBuyName;
+
   const orderList =
     document.getElementById('orderList');
 
