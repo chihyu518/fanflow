@@ -291,9 +291,15 @@ display: block;
 </div>
 
       <div class="card">
-        <div class="card-title">📦 待領取商品</div>
-        <div class="card-number">0 件</div>
-      </div>
+  <div class="card-title">📦 未到貨商品</div>
+
+  <div
+    class="card-number"
+    id="unarrivedItemCount"
+  >
+    0 件
+  </div>
+</div>
 
       <div class="card">
         <div class="card-title">🔄 進行中代購</div>
@@ -386,7 +392,7 @@ async function loadDashboardGroupBuys() {
 // =========================
 
 let unpaidAmount = 0;
-
+let unarrivedItemCount = 0;
 
 for (const groupBuy of activeGroupBuys) {
 
@@ -413,17 +419,30 @@ for (const groupBuy of activeGroupBuys) {
 
   orders.forEach(function(order) {
 
-    if (
-      order.paymentStatus ===
-      '🔴 未付款'
-    ) {
+  // 💳 未收款
+  if (
+    order.paymentStatus ===
+    '🔴 未付款'
+  ) {
 
-      unpaidAmount +=
-        Number(order.total) || 0;
+    unpaidAmount +=
+      Number(order.total) || 0;
 
-    }
+  }
 
-  });
+
+  // 📦 未到貨商品
+  if (
+    order.orderStatus ===
+    '⚪ 未到貨'
+  ) {
+
+    unarrivedItemCount +=
+      Number(order.quantity) || 0;
+
+  }
+
+});
 
 }
 
@@ -433,6 +452,12 @@ document.getElementById(
 ).textContent =
   'NT$ ' +
   unpaidAmount.toLocaleString();
+
+    document.getElementById(
+  'unarrivedItemCount'
+).textContent =
+  unarrivedItemCount.toLocaleString() +
+  ' 件';
     
     const activeGroupBuyList =
   document.getElementById(
