@@ -1953,7 +1953,7 @@ function escapeHtml(text) {
 // =========================
 
 window.currentOrderFilter = 'all';
-
+window.currentOrderSearch = '';
 
 function filterOrders(filter) {
 
@@ -2000,6 +2000,30 @@ function filterOrders(filter) {
         : 'cancel-button';
   }
 
+
+  if (
+    window.currentOrderGroupBuyName
+  ) {
+
+    loadOrders(
+      window.currentOrderGroupBuyName
+    );
+
+  }
+
+}
+
+    function searchOrders() {
+
+  const searchInput =
+    document.getElementById(
+      'orderSearchInput'
+    );
+
+  window.currentOrderSearch =
+    searchInput
+      ? searchInput.value.trim().toLowerCase()
+      : '';
 
   if (
     window.currentOrderGroupBuyName
