@@ -2393,7 +2393,98 @@ async function updateOrderPaymentStatus(
   }
 
 }
+// =========================
+// 🗑️ 刪除訂單
+// =========================
 
+async function deleteCurrentOrder(orderId) {
+
+  const order =
+    (window.currentOrders || [])
+      .find(function(item) {
+        return item.id === orderId;
+      });
+
+
+  if (!order) {
+    alert('找不到這筆訂單資料');
+    return;
+  }
+
+
+  const confirmed =
+    confirm(
+      '確定要刪除這筆訂單嗎？\n\n' +
+      '👤 ' + order.name + '\n' +
+      '📦 ' + order.product +
+      ' × ' + order.quantity + '\n' +
+      '💵 NT$' + order.total
+    );
+
+
+  if (!confirmed) {
+    return;
+  }
+
+
+  try {
+
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method: 'POST',
+
+          body:
+            JSON.stringify({
+              action: 'deleteOrder',
+              pageId: orderId
+            })
+        }
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+      throw new Error(
+        result.message ||
+        '刪除訂單失敗'
+      );
+    }
+
+
+    alert('刪除訂單成功！');
+
+
+    const groupBuyName =
+      order.groupBuy;
+
+
+    if (groupBuyName) {
+      await loadOrders(
+        groupBuyName
+      );
+    }
+
+
+  } catch (error) {
+
+    console.error(
+      '刪除訂單失敗：',
+      error
+    );
+
+    alert(
+      '刪除訂單失敗：' +
+      error.message
+    );
+
+  }
+
+}
 
 // =========================
 // 🟢 設為已付款
