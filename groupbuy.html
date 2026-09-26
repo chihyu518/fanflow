@@ -1986,6 +1986,29 @@ const unpaidAmount =
     },
     0
   );
+
+    // =========================
+// 📦 商品數量統計
+// =========================
+
+const productSummary = {};
+
+orders.forEach(function(order) {
+
+  const productName =
+    order.product || '未命名商品';
+
+  const quantity =
+    Number(order.quantity || 0);
+
+  if (!productSummary[productName]) {
+    productSummary[productName] = 0;
+  }
+
+  productSummary[productName] +=
+    quantity;
+
+});
     
     if (orders.length === 0) {
 
