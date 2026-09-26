@@ -245,9 +245,12 @@ display: block;
 
       <h2>進行中的代購</h2>
 
-      <div class="empty-box">
-        目前沒有進行中的代購 ✨
-      </div>
+      <div
+  class="empty-box"
+  id="activeGroupBuyList"
+>
+  正在讀取進行中的代購...
+</div>
 
     </div>
 
@@ -306,6 +309,67 @@ async function loadDashboardGroupBuys() {
       activeGroupBuys.length +
       ' 團';
 
+    const activeGroupBuyList =
+  document.getElementById(
+    'activeGroupBuyList'
+  );
+
+
+if (activeGroupBuys.length === 0) {
+
+  activeGroupBuyList.innerHTML =
+    '目前沒有進行中的代購 ✨';
+
+} else {
+
+  activeGroupBuyList.innerHTML =
+    activeGroupBuys
+      .map(function(item) {
+
+        return `
+          <div
+            style="
+              padding: 16px 0;
+              border-bottom: 1px solid #eee;
+              text-align: left;
+            "
+          >
+
+            <div
+              style="
+                font-size: 16px;
+                font-weight: 700;
+              "
+            >
+              🛍️ ${item.name || ''}
+            </div>
+
+            <div
+              style="
+                margin-top: 6px;
+                color: #666;
+              "
+            >
+              🎤 ${item.group || ''}
+            </div>
+
+            <div
+              style="
+                margin-top: 6px;
+                color: #888;
+              "
+            >
+              📅 截止：${item.deadline || '未設定'}
+            </div>
+
+          </div>
+        `;
+
+      })
+      .join('');
+
+}
+    
 
   } catch (error) {
 
