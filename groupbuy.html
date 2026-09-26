@@ -1997,8 +1997,57 @@ const unpaidAmount =
     }
 
 
-    orderList.innerHTML =
-      orders.map(function(order) {
+    orderList.innerHTML = `
+
+  <div style="
+    margin-bottom: 16px;
+    padding: 16px;
+    background: #f7f7f7;
+    border-radius: 14px;
+  ">
+
+    <div style="
+      font-weight: 700;
+      margin-bottom: 12px;
+    ">
+      📊 訂單統計
+    </div>
+
+    <div style="
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    ">
+
+      <div>
+        👥 登記人數<br>
+        <strong>${customerCount} 人</strong>
+      </div>
+
+      <div>
+        📦 商品總數<br>
+        <strong>${totalQuantity} 件</strong>
+      </div>
+
+      <div>
+        💰 訂單總額<br>
+        <strong>
+          NT$${totalAmount.toLocaleString()}
+        </strong>
+      </div>
+
+      <div>
+        🔴 未收款<br>
+        <strong>
+          NT$${unpaidAmount.toLocaleString()}
+        </strong>
+      </div>
+
+    </div>
+
+  </div>
+
+` + orders.map(function(order) {
 
         return `
           <div class="product-card">
