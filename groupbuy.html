@@ -2246,6 +2246,49 @@ orders.forEach(function(order) {
 
     }
 
+    // =========================
+// 🔍 套用訂單篩選
+// =========================
+
+let filteredOrders =
+  orders;
+
+
+if (
+  window.currentOrderFilter ===
+  'unpaid'
+) {
+
+  filteredOrders =
+    orders.filter(function(order) {
+
+      return (
+        order.paymentStatus ===
+        '🔴 未付款'
+      );
+
+    });
+
+}
+
+
+if (
+  window.currentOrderFilter ===
+  'paid'
+) {
+
+  filteredOrders =
+    orders.filter(function(order) {
+
+      return (
+        order.paymentStatus ===
+        '🟢 已付款'
+      );
+
+    });
+
+}
+    
 
     orderList.innerHTML = `
 
@@ -2390,7 +2433,7 @@ orders.forEach(function(order) {
 
 </div>
 
-` + orders.map(function(order) {
+` + filteredOrders.map(function(order) {
 
         return `
           <div class="product-card">
