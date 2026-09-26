@@ -1985,8 +1985,34 @@ async function loadOrders(groupBuyName) {
               </div>
 
               <div>
-                ${escapeHtml(order.paymentStatus)}
-              </div>
+  ${escapeHtml(order.paymentStatus)}
+</div>
+
+${
+  order.paymentStatus === '🔴 未付款'
+    ? `
+      <div style="margin-top: 10px;">
+        <button
+          type="button"
+          class="save-button"
+          onclick="markOrderPaid('${order.id}')"
+        >
+          💳 設為已付款
+        </button>
+      </div>
+    `
+    : `
+      <div style="margin-top: 10px;">
+        <button
+          type="button"
+          class="cancel-button"
+          onclick="markOrderUnpaid('${order.id}')"
+        >
+          ↩️ 改回未付款
+        </button>
+      </div>
+    `
+}
 
             </div>
 
@@ -2217,6 +2243,102 @@ function renderProducts(
 
   productList.innerHTML =
     productCards;
+
+}
+    // =========================
+// 💳 修改訂單付款狀態
+// =========================
+
+async function updateOrderPaymentStatus(
+  orderId,
+  paymentStatus
+) {
+
+  try {
+
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            action: 'updateOrderPayment',
+            id: orderId,
+            paymentStatus: paymentStatus
+          })
+        }
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+      throw new Error(
+        result.message ||
+        '付款狀態修改失敗'
+      );
+    }
+
+
+    // 修改成功後重新讀取目前這團的訂單
+    const groupBuy =
+      (window.currentGroupBuys || [])
+        .find(function(item) {
+          return item.id ===
+            window.currentGroupBuyId;
+        });
+
+
+    if (groupBuy) {
+      await loadOrders(
+        groupBuy.name
+      );
+    }
+
+
+  } catch (error) {
+
+    console.error(
+      '付款狀態修改失敗：',
+      error
+    );
+
+    alert(
+      '付款狀態修改失敗：' +
+      error.message
+    );
+
+  }
+
+}
+
+
+// =========================
+// 🟢 設為已付款
+// =========================
+
+async function markOrderPaid(orderId) {
+
+  await updateOrderPaymentStatus(
+    orderId,
+    '🟢 已付款'
+  );
+
+}
+
+
+// =========================
+// 🔴 改回未付款
+// =========================
+
+async function markOrderUnpaid(orderId) {
+
+  await updateOrderPaymentStatus(
+    orderId,
+    '🔴 未付款'
+  );
 
 }
 
