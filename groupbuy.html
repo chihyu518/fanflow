@@ -2592,8 +2592,12 @@ if (searchText) {
                 </strong>
               </div>
 
-              <div>
+             <div>
   ${escapeHtml(order.paymentStatus)}
+</div>
+
+<div style="margin-top: 4px;">
+  ${escapeHtml(order.orderStatus || '⚪ 未到貨')}
 </div>
 
 ${
