@@ -2084,15 +2084,34 @@ orders.forEach(function(order) {
       </div>
 
       <div>
-        🔴 未收款<br>
-        <strong>
-          NT$${unpaidAmount.toLocaleString()}
-        </strong>
-      </div>
+  🔴 未收款<br>
+  <strong>
+    NT$${unpaidAmount.toLocaleString()}
+  </strong>
+</div>
 
-    </div>
+</div>
 
+
+<div style="
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #ddd;
+">
+
+  <div style="
+    font-weight: 700;
+    margin-bottom: 6px;
+  ">
+    📦 商品統計
   </div>
+
+  ${productSummaryHtml}
+
+</div>
+
+
+</div>
 
 ` + orders.map(function(order) {
 
