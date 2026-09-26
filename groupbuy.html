@@ -1932,6 +1932,61 @@ async function loadOrders(groupBuyName) {
     window.currentOrders =
   orders;
 
+    // =========================
+// 📊 訂單統計
+// =========================
+
+const customerNames =
+  new Set(
+    orders
+      .map(function(order) {
+        return order.name;
+      })
+      .filter(Boolean)
+  );
+
+const customerCount =
+  customerNames.size;
+
+
+const totalQuantity =
+  orders.reduce(
+    function(sum, order) {
+      return sum +
+        Number(order.quantity || 0);
+    },
+    0
+  );
+
+
+const totalAmount =
+  orders.reduce(
+    function(sum, order) {
+      return sum +
+        Number(order.total || 0);
+    },
+    0
+  );
+
+
+const unpaidAmount =
+  orders.reduce(
+    function(sum, order) {
+
+      if (
+        order.paymentStatus ===
+        '🔴 未付款'
+      ) {
+        return sum +
+          Number(order.total || 0);
+      }
+
+      return sum;
+
+    },
+    0
+  );
+    
     if (orders.length === 0) {
 
       orderList.innerHTML =
