@@ -1941,12 +1941,55 @@ function filterOrders(filter) {
   window.currentOrderFilter =
     filter;
 
+
+  const allButton =
+    document.getElementById(
+      'filterAllButton'
+    );
+
+  const unpaidButton =
+    document.getElementById(
+      'filterUnpaidButton'
+    );
+
+  const paidButton =
+    document.getElementById(
+      'filterPaidButton'
+    );
+
+
+  if (allButton) {
+    allButton.className =
+      filter === 'all'
+        ? 'save-button'
+        : 'cancel-button';
+  }
+
+
+  if (unpaidButton) {
+    unpaidButton.className =
+      filter === 'unpaid'
+        ? 'save-button'
+        : 'cancel-button';
+  }
+
+
+  if (paidButton) {
+    paidButton.className =
+      filter === 'paid'
+        ? 'save-button'
+        : 'cancel-button';
+  }
+
+
   if (
     window.currentOrderGroupBuyName
   ) {
+
     loadOrders(
       window.currentOrderGroupBuyName
     );
+
   }
 
 }
