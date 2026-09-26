@@ -312,9 +312,15 @@ display: block;
       </div>
 
       <div class="card">
-        <div class="card-title">♡ 我的收藏</div>
-        <div class="card-number">0 張</div>
-      </div>
+  <div class="card-title">🟡 待交付商品</div>
+
+  <div
+    class="card-number"
+    id="waitingDeliveryCount"
+  >
+    0 件
+  </div>
+</div>
 
     </div>
 
@@ -393,7 +399,8 @@ async function loadDashboardGroupBuys() {
 
 let unpaidAmount = 0;
 let unarrivedItemCount = 0;
-
+let waitingDeliveryCount = 0;
+    
 for (const groupBuy of activeGroupBuys) {
 
   const orderResponse =
@@ -442,6 +449,17 @@ for (const groupBuy of activeGroupBuys) {
 
   }
 
+    // 🟡 已到貨、等待交付
+if (
+  order.orderStatus ===
+  '🟡 已到貨'
+) {
+
+  waitingDeliveryCount +=
+    Number(order.quantity) || 0;
+
+}
+    
 });
 
 }
@@ -457,6 +475,12 @@ document.getElementById(
   'unarrivedItemCount'
 ).textContent =
   unarrivedItemCount.toLocaleString() +
+  ' 件';
+
+    document.getElementById(
+  'waitingDeliveryCount'
+).textContent =
+  waitingDeliveryCount.toLocaleString() +
   ' 件';
     
     const activeGroupBuyList =
