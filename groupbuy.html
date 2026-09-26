@@ -1988,6 +1988,21 @@ const unpaidAmount =
   );
 
     // =========================
+// 💳 付款進度
+// =========================
+
+const paidAmount =
+  totalAmount - unpaidAmount;
+
+
+const paymentPercent =
+  totalAmount > 0
+    ? Math.round(
+        (paidAmount / totalAmount) * 100
+      )
+    : 0;
+    
+    // =========================
 // 📦 商品數量統計
 // =========================
 
