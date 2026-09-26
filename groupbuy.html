@@ -2033,6 +2033,62 @@ orders.forEach(function(order) {
 
     })
     .join('');
+
+    // =========================
+// 👤 買家統計
+// =========================
+
+const customerSummary = {};
+
+orders.forEach(function(order) {
+
+  const customerName =
+    order.name || '未填姓名';
+
+  if (!customerSummary[customerName]) {
+
+    customerSummary[customerName] = {
+      quantity: 0,
+      total: 0,
+      unpaid: 0,
+      products: []
+    };
+
+  }
+
+
+  const customer =
+    customerSummary[customerName];
+
+
+  customer.quantity +=
+    Number(order.quantity || 0);
+
+
+  customer.total +=
+    Number(order.total || 0);
+
+
+  if (
+    order.paymentStatus ===
+    '🔴 未付款'
+  ) {
+
+    customer.unpaid +=
+      Number(order.total || 0);
+
+  }
+
+
+  customer.products.push({
+    name:
+      order.product || '未命名商品',
+
+    quantity:
+      Number(order.quantity || 0)
+  });
+
+});
     
     if (orders.length === 0) {
 
