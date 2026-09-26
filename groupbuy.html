@@ -1929,6 +1929,8 @@ async function loadOrders(groupBuyName) {
     const orders =
       result.data || [];
 
+    window.currentOrders =
+  orders;
 
     if (orders.length === 0) {
 
@@ -2006,7 +2008,15 @@ ${
       </div>
     `
 }
-
+<div style="margin-top: 8px;">
+  <button
+    type="button"
+    class="cancel-button"
+    onclick="openEditOrder('${order.id}')"
+  >
+    ✏️ 編輯訂單
+  </button>
+</div>
             </div>
 
           </div>
@@ -2242,6 +2252,73 @@ function renderProducts(
 // 💳 修改訂單付款狀態
 // =========================
 
+    // =========================
+// ✏️ 開啟編輯訂單
+// =========================
+
+function openEditOrder(orderId) {
+
+  const order =
+    (window.currentOrders || [])
+      .find(function(item) {
+        return item.id === orderId;
+      });
+
+
+  if (!order) {
+    alert('找不到這筆訂單資料');
+    return;
+  }
+
+
+  // 記住目前正在編輯哪一筆訂單
+  window.editingOrderId =
+    order.id;
+
+
+  // 保留目前代購名稱與商品名稱
+  window.currentOrderGroupBuyName =
+    order.groupBuy || '';
+
+  window.currentOrderProductName =
+    order.product || '';
+
+
+  // 把原本資料帶回表單
+  document.getElementById('orderProduct').value =
+    order.product || '';
+
+  document.getElementById('orderName').value =
+    order.name || '';
+
+  document.getElementById('orderQuantity').value =
+    order.quantity ?? 1;
+
+  document.getElementById('orderPrice').value =
+    order.price ?? 0;
+
+  document.getElementById('orderSecondPayment').value =
+    order.secondPayment ?? 0;
+
+  document.getElementById('orderPaymentStatus').value =
+    order.paymentStatus ||
+    '🔴 未付款';
+
+
+  calculateOrderTotal();
+
+
+  // 編輯模式按鈕文字
+  document.getElementById('orderSaveButton').textContent =
+    '儲存修改';
+
+
+  // 開啟原本的登記視窗
+  document.getElementById('orderModal').style.display =
+    'block';
+
+}
+    
 async function updateOrderPaymentStatus(
   orderId,
   paymentStatus
