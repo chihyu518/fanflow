@@ -3010,6 +3010,74 @@ async function updateOrderPaymentStatus(
   }
 
 }
+    // =========================
+// 📦 修改到貨／交付狀態
+// =========================
+
+async function updateOrderDeliveryStatus(
+  orderId,
+  orderStatus
+) {
+
+  try {
+
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            action: 'updateOrderStatus',
+            id: orderId,
+            orderStatus: orderStatus
+          })
+        }
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+      throw new Error(
+        result.message ||
+        '訂單狀態修改失敗'
+      );
+    }
+
+
+    // 修改成功後重新讀取目前這團的訂單
+    const groupBuy =
+      (window.currentGroupBuys || [])
+        .find(function(item) {
+          return item.id ===
+            window.currentGroupBuyId;
+        });
+
+
+    if (groupBuy) {
+      await loadOrders(
+        groupBuy.name
+      );
+    }
+
+
+  } catch (error) {
+
+    console.error(
+      '訂單狀態修改失敗：',
+      error
+    );
+
+    alert(
+      '訂單狀態修改失敗：' +
+      error.message
+    );
+
+  }
+
+}
 // =========================
 // 🗑️ 刪除訂單
 // =========================
