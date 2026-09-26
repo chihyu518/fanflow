@@ -280,9 +280,15 @@ display: block;
     <div class="stats">
 
       <div class="card">
-        <div class="card-title">💳 待付款金額</div>
-        <div class="card-number">NT$ 0</div>
-      </div>
+  <div class="card-title">💳 未收款金額</div>
+
+  <div
+    class="card-number"
+    id="unpaidAmount"
+  >
+    NT$ 0
+  </div>
+</div>
 
       <div class="card">
         <div class="card-title">📦 待領取商品</div>
@@ -375,6 +381,59 @@ async function loadDashboardGroupBuys() {
       activeGroupBuys.length +
       ' 團';
 
+    // =========================
+// 💳 計算未收款金額
+// =========================
+
+let unpaidAmount = 0;
+
+
+for (const groupBuy of activeGroupBuys) {
+
+  const orderResponse =
+    await fetch(
+      API_URL +
+      '?action=getOrders&groupBuyName=' +
+      encodeURIComponent(groupBuy.name)
+    );
+
+
+  const orderResult =
+    await orderResponse.json();
+
+
+  if (!orderResult.success) {
+    continue;
+  }
+
+
+  const orders =
+    orderResult.data || [];
+
+
+  orders.forEach(function(order) {
+
+    if (
+      order.paymentStatus ===
+      '🔴 未付款'
+    ) {
+
+      unpaidAmount +=
+        Number(order.total) || 0;
+
+    }
+
+  });
+
+}
+
+
+document.getElementById(
+  'unpaidAmount'
+).textContent =
+  'NT$ ' +
+  unpaidAmount.toLocaleString();
+    
     const activeGroupBuyList =
   document.getElementById(
     'activeGroupBuyList'
