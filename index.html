@@ -123,6 +123,63 @@ display: block;
       box-shadow: 0 4px 15px rgba(0,0,0,0.04);
     }
 
+    /* Dashboard 進行中代購 */
+
+.dashboard-groupbuy-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  text-align: left;
+}
+
+.dashboard-groupbuy-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: white;
+  border: 1px solid #eeeeee;
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.dashboard-groupbuy-image {
+  width: 85px;
+  height: 85px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  object-fit: cover;
+  background: #f3f4f8;
+}
+
+.dashboard-groupbuy-placeholder {
+  width: 85px;
+  height: 85px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: #f3f4f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+}
+
+.dashboard-groupbuy-info {
+  min-width: 0;
+}
+
+.dashboard-groupbuy-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 7px;
+}
+
+.dashboard-groupbuy-detail {
+  font-size: 14px;
+  color: #777;
+  margin-top: 5px;
+}
+    
     /* 手機 */
     @media (max-width: 800px) {
 
@@ -157,6 +214,15 @@ display: block;
       .stats {
         grid-template-columns: repeat(2, 1fr);
       }
+      .dashboard-groupbuy-list {
+  grid-template-columns: 1fr;
+}
+
+.dashboard-groupbuy-image,
+.dashboard-groupbuy-placeholder {
+  width: 70px;
+  height: 70px;
+}
     }
   </style>
 </head>
@@ -323,50 +389,61 @@ if (activeGroupBuys.length === 0) {
 } else {
 
   activeGroupBuyList.innerHTML =
-    activeGroupBuys
-      .map(function(item) {
+    `
+      <div class="dashboard-groupbuy-list">
 
-        return `
-          <div
-            style="
-              padding: 16px 0;
-              border-bottom: 1px solid #eee;
-              text-align: left;
-            "
-          >
+        ${
+          activeGroupBuys
+            .map(function(item) {
 
-            <div
-              style="
-                font-size: 16px;
-                font-weight: 700;
-              "
-            >
-              🛍️ ${item.name || ''}
-            </div>
+              const imageHtml =
+                item.imageUrl
+                  ? `
+                    <img
+                      class="dashboard-groupbuy-image"
+                      src="${item.imageUrl}"
+                      alt=""
+                    >
+                  `
+                  : `
+                    <div
+                      class="dashboard-groupbuy-placeholder"
+                    >
+                      📦
+                    </div>
+                  `;
 
-            <div
-              style="
-                margin-top: 6px;
-                color: #666;
-              "
-            >
-              🎤 ${item.group || ''}
-            </div>
 
-            <div
-              style="
-                margin-top: 6px;
-                color: #888;
-              "
-            >
-              📅 截止：${item.deadline || '未設定'}
-            </div>
+              return `
+                <div class="dashboard-groupbuy-card">
 
-          </div>
-        `;
+                  ${imageHtml}
 
-      })
-      .join('');
+                  <div class="dashboard-groupbuy-info">
+
+                    <div class="dashboard-groupbuy-name">
+                      🛍️ ${item.name || ''}
+                    </div>
+
+                    <div class="dashboard-groupbuy-detail">
+                      🎤 ${item.group || '未設定'}
+                    </div>
+
+                    <div class="dashboard-groupbuy-detail">
+                      📅 截止：${item.deadline || '未設定'}
+                    </div>
+
+                  </div>
+
+                </div>
+              `;
+
+            })
+            .join('')
+        }
+
+      </div>
+    `;
 
 }
     
