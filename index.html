@@ -225,7 +225,12 @@ display: block;
 
       <div class="card">
         <div class="card-title">🔄 進行中代購</div>
-        <div class="card-number">0 團</div>
+        <div
+  class="card-number"
+  id="activeGroupBuyCount"
+>
+  0 團
+</div>
       </div>
 
       <div class="card">
@@ -253,6 +258,69 @@ display: block;
   const API_URL =
     'https://script.google.com/macros/s/AKfycbz7CVrbddXxIvd86Z3PeMyM9MT6q7QBe7EJ5n1uQU7pTkwCYgc-4gjcg7EmRmz5itDSJQ/exec';
 
+    // =========================
+// 🛍️ 讀取代購 Dashboard
+// =========================
+
+async function loadDashboardGroupBuys() {
+
+  try {
+
+    const response =
+      await fetch(
+        API_URL + '?action=getGroupBuys'
+      );
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+      throw new Error(
+        result.message ||
+        '讀取代購失敗'
+      );
+    }
+
+
+    const groupBuys =
+      result.data || [];
+
+
+    const activeGroupBuys =
+      groupBuys.filter(
+        function(item) {
+
+          return (
+            item.status ===
+            '🟢 進行中'
+          );
+
+        }
+      );
+
+
+    document.getElementById(
+      'activeGroupBuyCount'
+    ).textContent =
+      activeGroupBuys.length +
+      ' 團';
+
+
+  } catch (error) {
+
+    console.error(
+      '讀取 Dashboard 失敗：',
+      error
+    );
+
+  }
+
+}
+
+
+loadDashboardGroupBuys();
+    
 </script>
   
 </body>
