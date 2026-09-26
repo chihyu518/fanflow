@@ -2008,7 +2008,8 @@ ${
       </div>
     `
 }
-<div style="margin-top: 8px;">
+<div style="margin-top: 8px; display: flex; gap: 8px;">
+
   <button
     type="button"
     class="cancel-button"
@@ -2016,6 +2017,15 @@ ${
   >
     ✏️ 編輯訂單
   </button>
+
+  <button
+    type="button"
+    class="cancel-button"
+    onclick="deleteCurrentOrder('${order.id}')"
+  >
+    🗑️ 刪除訂單
+  </button>
+
 </div>
             </div>
 
