@@ -697,22 +697,36 @@
       <div class="filter-row">
 
         <button
-          class="filter-button active"
-        >
-          全部
-        </button>
+  class="filter-button active"
+  data-type="all"
+  onclick="setCardTradeFilter(this)"
+>
+  全部
+</button>
 
-        <button class="filter-button">
-          🔵 出售
-        </button>
+<button
+  class="filter-button"
+  data-type="🔵 出售"
+  onclick="setCardTradeFilter(this)"
+>
+  🔵 出售
+</button>
 
-        <button class="filter-button">
-          🟣 收購
-        </button>
+<button
+  class="filter-button"
+  data-type="🟣 收購"
+  onclick="setCardTradeFilter(this)"
+>
+  🟣 收購
+</button>
 
-        <button class="filter-button">
-          🟢 交換
-        </button>
+<button
+  class="filter-button"
+  data-type="🟢 交換"
+  onclick="setCardTradeFilter(this)"
+>
+  🟢 交換
+</button>
 
       </div>
 
@@ -947,7 +961,8 @@
     'https://script.google.com/macros/s/AKfycbz7CVrbddXxIvd86Z3PeMyM9MT6q7QBe7EJ5n1uQU7pTkwCYgc-4gjcg7EmRmz5itDSJQ/exec';
 
     let cardTradesData = [];
-let editingCardTradeId = '';
+    let editingCardTradeId = '';
+    let currentCardTradeFilter = 'all';
     
       // =========================
   // 🃏 開啟新增小卡視窗
@@ -1886,6 +1901,98 @@ renderCardTrades(trades);
   }
 
     // =========================
+// 🔍 搜尋＋類型篩選
+// =========================
+
+function applyCardTradeFilters() {
+
+  const searchInput =
+    document.getElementById(
+      'cardTradeSearch'
+    );
+
+  const keyword =
+    searchInput.value
+      .trim()
+      .toLowerCase();
+
+
+  const filteredTrades =
+    cardTradesData.filter(
+      function(item) {
+
+        // 交易類型
+        const typeMatched =
+          currentCardTradeFilter === 'all' ||
+          item.tradeType ===
+            currentCardTradeFilter;
+
+
+        // 搜尋文字
+        const searchText = [
+          item.name,
+          item.group,
+          item.member,
+          item.version,
+          item.partner
+        ]
+          .join(' ')
+          .toLowerCase();
+
+
+        const keywordMatched =
+          !keyword ||
+          searchText.includes(
+            keyword
+          );
+
+
+        return (
+          typeMatched &&
+          keywordMatched
+        );
+
+      }
+    );
+
+
+  renderCardTrades(
+    filteredTrades
+  );
+
+}
+
+    function setCardTradeFilter(
+  button
+) {
+
+  currentCardTradeFilter =
+    button.dataset.type;
+
+
+  document
+    .querySelectorAll(
+      '.filter-button'
+    )
+    .forEach(
+      function(item) {
+        item.classList.remove(
+          'active'
+        );
+      }
+    );
+
+
+  button.classList.add(
+    'active'
+  );
+
+
+  applyCardTradeFilters();
+
+}
+    
+    // =========================
 // 🔍 搜尋小卡
 // =========================
 
@@ -1895,49 +2002,7 @@ document
   )
   .addEventListener(
     'input',
-    function() {
-
-      const keyword =
-        this.value
-          .trim()
-          .toLowerCase();
-
-      if (!keyword) {
-
-        renderCardTrades(
-          cardTradesData
-        );
-
-        return;
-
-      }
-
-      const filteredTrades =
-        cardTradesData.filter(
-          function(item) {
-
-            const searchText = [
-              item.name,
-              item.group,
-              item.member,
-              item.version,
-              item.partner
-            ]
-              .join(' ')
-              .toLowerCase();
-
-            return searchText.includes(
-              keyword
-            );
-
-          }
-        );
-
-      renderCardTrades(
-        filteredTrades
-      );
-
-    }
+    applyCardTradeFilters
   );
     
 
