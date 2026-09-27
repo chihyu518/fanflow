@@ -650,6 +650,46 @@
   <div class="stat-card">
 
     <div class="stat-label">
+      💸 待付款
+    </div>
+
+    <div
+      class="stat-number"
+      id="pendingPaymentAmount"
+    >
+      NT$ 0
+    </div>
+
+  </div>
+
+
+  <div class="stat-card">
+
+    <div class="stat-label">
+      ☑️ 已付款
+    </div>
+
+    <div
+      class="stat-number"
+      id="paidAmount"
+    >
+      NT$ 0
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- 帳務分類 -->
+
+    <!-- 交易統計 -->
+
+<div class="stats">
+
+  <div class="stat-card">
+
+    <div class="stat-label">
       🛍️ 代購訂單
     </div>
 
@@ -679,10 +719,7 @@
   </div>
 
 </div>
-
-
-<!-- 帳務分類 -->
-
+    
 <div class="toolbar">
 
   <div class="filter-row">
@@ -735,6 +772,12 @@
     const API_URL =
   'https://script.google.com/macros/s/AKfycbz7CVrbddXxIvd86Z3PeMyM9MT6q7QBe7EJ5n1uQU7pTkwCYgc-4gjcg7EmRmz5itDSJQ/exec';
 
+    let groupBuyPendingAmount = 0;
+let groupBuyReceivedAmount = 0;
+
+let cardPendingAmount = 0;
+let cardReceivedAmount = 0;
+    
     // =========================
 // 🛍️ 讀取全部代購訂單
 // =========================
@@ -770,8 +813,8 @@ async function loadFinanceOrders() {
 // 💰 計算代購收款金額
 // =========================
 
-let pendingAmount = 0;
-let receivedAmount = 0;
+groupBuyPendingAmount = 0;
+groupBuyReceivedAmount = 0;
 
 orders.forEach(
   function(order) {
@@ -784,36 +827,21 @@ orders.forEach(
       '🟢 已付款'
     ) {
 
-      receivedAmount += amount;
+      groupBuyReceivedAmount += amount;
 
     } else {
 
-      pendingAmount += amount;
-
+      groupBuyPendingAmount += amount;
     }
 
   }
 );
 
 
-// 顯示待收款
-document
-  .getElementById(
-    'pendingAmount'
-  )
-  .textContent =
-    'NT$ ' +
-    pendingAmount.toLocaleString();
+updateIncomeSummary();
 
 
-// 顯示已收款
-document
-  .getElementById(
-    'receivedAmount'
-  )
-  .textContent =
-    'NT$ ' +
-    receivedAmount.toLocaleString();
+
     
 
     console.log(
@@ -876,6 +904,96 @@ async function loadFinanceCardTrades() {
     const trades =
       result.data || [];
 
+    // =========================
+// 💰 計算小卡帳務
+// =========================
+
+cardPendingAmount = 0;
+cardReceivedAmount = 0;
+
+let pendingPaymentAmount = 0;
+let paidAmount = 0;
+
+
+trades.forEach(
+  function(trade) {
+
+    const amount =
+      (Number(trade.price) || 0) *
+      (Number(trade.quantity) || 0);
+
+
+    // 🔵 出售 = 收款
+    if (
+      trade.tradeType ===
+      '🔵 出售'
+    ) {
+
+      if (
+        trade.paymentStatus ===
+        '🟢 已付款'
+      ) {
+
+        cardReceivedAmount +=
+          amount;
+
+      } else {
+
+        cardPendingAmount +=
+          amount;
+
+      }
+
+    }
+
+
+    // 🟣 收購 = 付款
+    if (
+      trade.tradeType ===
+      '🟣 收購'
+    ) {
+
+      if (
+        trade.paymentStatus ===
+        '🟢 已付款'
+      ) {
+
+        paidAmount +=
+          amount;
+
+      } else {
+
+        pendingPaymentAmount +=
+          amount;
+
+      }
+
+    }
+
+  }
+);
+
+    updateIncomeSummary();
+    
+    // 顯示待付款
+document
+  .getElementById(
+    'pendingPaymentAmount'
+  )
+  .textContent =
+    'NT$ ' +
+    pendingPaymentAmount.toLocaleString();
+
+
+// 顯示已付款
+document
+  .getElementById(
+    'paidAmount'
+  )
+  .textContent =
+    'NT$ ' +
+    paidAmount.toLocaleString();
+    
 
     console.log(
       '帳務中心－小卡交易：',
@@ -903,6 +1021,40 @@ async function loadFinanceCardTrades() {
         '讀取失敗';
 
   }
+
+}
+
+    // =========================
+// 💳 更新收款總覽
+// =========================
+
+function updateIncomeSummary() {
+
+  const totalPending =
+    groupBuyPendingAmount +
+    cardPendingAmount;
+
+  const totalReceived =
+    groupBuyReceivedAmount +
+    cardReceivedAmount;
+
+
+  document
+    .getElementById(
+      'pendingAmount'
+    )
+    .textContent =
+      'NT$ ' +
+      totalPending.toLocaleString();
+
+
+  document
+    .getElementById(
+      'receivedAmount'
+    )
+    .textContent =
+      'NT$ ' +
+      totalReceived.toLocaleString();
 
 }
     
