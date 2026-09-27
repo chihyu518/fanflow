@@ -722,6 +722,13 @@
     
 <div class="toolbar">
 
+  <input
+  class="search-input"
+  id="financeSearch"
+  type="text"
+  placeholder="🔍 搜尋姓名、代購、商品、小卡、成員..."
+>
+  
   <div class="filter-row">
 
     <button
@@ -786,6 +793,7 @@ let cardReceivedAmount = 0;
     let financeCardTradesData = [];
     
     let currentFinanceFilter = 'all';
+    let currentFinanceSearch = '';
     
     // =========================
 // 🛍️ 讀取全部代購訂單
@@ -1176,16 +1184,43 @@ function renderFinanceList() {
 // =========================
 
 const filteredItems =
-  currentFinanceFilter === 'all'
-    ? items
-    : items.filter(
-        function(item) {
-          return (
-            item.type ===
-            currentFinanceFilter
-          );
-        }
+  items.filter(
+    function(item) {
+
+      // 分類是否符合
+      const matchType =
+        currentFinanceFilter === 'all' ||
+        item.type ===
+          currentFinanceFilter;
+
+
+      // 搜尋文字
+      const searchText =
+        (
+          item.title +
+          ' ' +
+          item.detail +
+          ' ' +
+          item.status
+        )
+          .toLowerCase();
+
+
+      // 搜尋是否符合
+      const matchSearch =
+        !currentFinanceSearch ||
+        searchText.includes(
+          currentFinanceSearch
+        );
+
+
+      return (
+        matchType &&
+        matchSearch
       );
+
+    }
+  );
   
   // 沒有資料
   if (filteredItems.length === 0) {
@@ -1293,6 +1328,28 @@ function setFinanceFilter(
   renderFinanceList();
 
 }
+
+    // =========================
+// 🔍 搜尋帳務
+// =========================
+
+document
+  .getElementById(
+    'financeSearch'
+  )
+  .addEventListener(
+    'input',
+    function(event) {
+
+      currentFinanceSearch =
+        event.target.value
+          .trim()
+          .toLowerCase();
+
+      renderFinanceList();
+
+    }
+  );
     
 // 開啟帳務中心時讀取
 loadFinanceOrders();
