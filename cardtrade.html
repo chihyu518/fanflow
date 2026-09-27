@@ -303,6 +303,148 @@
 
     }
 
+    /* =========================
+   🃏 小卡新增／編輯視窗
+========================= */
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.38);
+  z-index: 1000;
+  padding: 30px 20px;
+  overflow-y: auto;
+}
+
+.modal-overlay.show {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.modal-box {
+  width: 100%;
+  max-width: 620px;
+  background: white;
+  border-radius: 18px;
+  padding: 24px;
+  margin: auto;
+  box-shadow:
+    0 18px 50px
+    rgba(0, 0, 0, 0.18);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.modal-close {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 10px;
+  background: #f3f4f8;
+  font-size: 24px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #444;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  border: 1px solid #dddddd;
+  border-radius: 10px;
+  padding: 11px 12px;
+  font-size: 15px;
+  font-family: inherit;
+  background: white;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #4056d6;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.cancel-button,
+.save-button {
+  border: none;
+  border-radius: 10px;
+  padding: 11px 18px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cancel-button {
+  background: #f0f1f5;
+  color: #555;
+}
+
+.save-button {
+  background: #4056d6;
+  color: white;
+}
+
+@media (max-width: 600px) {
+
+  .modal-overlay {
+    padding: 15px;
+  }
+
+  .modal-box {
+    padding: 20px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+}
+    
   </style>
 
 </head>
@@ -419,9 +561,12 @@
 
       </div>
 
-      <button class="add-button">
-        ＋ 新增小卡
-      </button>
+      <button
+  class="add-button"
+  onclick="openCardTradeModal()"
+>
+  ＋ 新增小卡
+</button>
 
     </div>
 
@@ -550,11 +695,243 @@
 
   </main>
 
+  <!-- =========================
+     🃏 新增小卡視窗
+========================= -->
+
+<div
+  class="modal-overlay"
+  id="cardTradeModal"
+>
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+
+      <h2 id="cardTradeModalTitle">
+        ＋ 新增小卡
+      </h2>
+
+      <button
+        class="modal-close"
+        onclick="closeCardTradeModal()"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div class="form-group">
+      <label>🃏 小卡名稱</label>
+
+      <input
+        type="text"
+        id="cardName"
+        placeholder="例如：泰山 Lucky Draw"
+      >
+    </div>
+
+
+    <div class="form-row">
+
+      <div class="form-group">
+
+        <label>🔄 交易類型</label>
+
+        <select id="cardTradeType">
+
+          <option value="🔵 出售">
+            🔵 出售
+          </option>
+
+          <option value="🟣 收購">
+            🟣 收購
+          </option>
+
+          <option value="🟢 交換">
+            🟢 交換
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>🎤 團體／藝人</label>
+
+        <input
+          type="text"
+          id="cardGroup"
+          placeholder="BOYNEXTDOOR"
+        >
+
+      </div>
+
+    </div>
+
+
+    <div class="form-row">
+
+      <div class="form-group">
+
+        <label>👤 成員</label>
+
+        <input
+          type="text"
+          id="cardMember"
+          placeholder="泰山"
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>🏷️ 小卡來源／版本</label>
+
+        <input
+          type="text"
+          id="cardVersion"
+          placeholder="例如：Lucky Draw"
+        >
+
+      </div>
+
+    </div>
+
+
+    <div class="form-row">
+
+      <div class="form-group">
+
+        <label>💰 價格</label>
+
+        <input
+          type="number"
+          id="cardPrice"
+          min="0"
+          placeholder="0"
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>🔢 數量</label>
+
+        <input
+          type="number"
+          id="cardQuantity"
+          min="1"
+          value="1"
+        >
+
+      </div>
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>👥 交易對象</label>
+
+      <input
+        type="text"
+        id="cardPartner"
+        placeholder="可稍後填寫"
+      >
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>🖼️ 小卡圖片</label>
+
+      <input
+        type="file"
+        id="cardImage"
+        accept="image/*"
+      >
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>📝 備註</label>
+
+      <textarea
+        id="cardNote"
+        rows="3"
+        placeholder="其他備註..."
+      ></textarea>
+
+    </div>
+
+
+    <div class="modal-actions">
+
+      <button
+        class="cancel-button"
+        onclick="closeCardTradeModal()"
+      >
+        取消
+      </button>
+
+      <button
+        class="save-button"
+        type="button"
+      >
+        儲存
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+  
   <script>
 
   const API_URL =
     'https://script.google.com/macros/s/AKfycbz7CVrbddXxIvd86Z3PeMyM9MT6q7QBe7EJ5n1uQU7pTkwCYgc-4gjcg7EmRmz5itDSJQ/exec';
 
+      // =========================
+  // 🃏 開啟新增小卡視窗
+  // =========================
+
+  function openCardTradeModal() {
+
+    document
+      .getElementById(
+        'cardTradeModal'
+      )
+      .classList
+      .add('show');
+
+  }
+
+
+  // =========================
+  // 🃏 關閉新增小卡視窗
+  // =========================
+
+  function closeCardTradeModal() {
+
+    document
+      .getElementById(
+        'cardTradeModal'
+      )
+      .classList
+      .remove('show');
+
+  }
+    
 
   // =========================
   // 🃏 讀取小卡交易
