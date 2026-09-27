@@ -725,25 +725,28 @@
   <div class="filter-row">
 
     <button
-      class="filter-button active"
-      type="button"
-    >
-      全部
-    </button>
+  class="filter-button active"
+  type="button"
+  onclick="setFinanceFilter('all', this)"
+>
+  全部
+</button>
 
-    <button
-      class="filter-button"
-      type="button"
-    >
-      🛍️ 代購
-    </button>
+<button
+  class="filter-button"
+  type="button"
+  onclick="setFinanceFilter('groupbuy', this)"
+>
+  🛍️ 代購
+</button>
 
-    <button
-      class="filter-button"
-      type="button"
-    >
-      🃏 小卡
-    </button>
+<button
+  class="filter-button"
+  type="button"
+  onclick="setFinanceFilter('card', this)"
+>
+  🃏 小卡
+</button>
 
   </div>
 
@@ -780,7 +783,9 @@ let cardPendingAmount = 0;
 let cardReceivedAmount = 0;
 
     let financeOrdersData = [];
-let financeCardTradesData = [];
+    let financeCardTradesData = [];
+    
+    let currentFinanceFilter = 'all';
     
     // =========================
 // 🛍️ 讀取全部代購訂單
@@ -1166,8 +1171,24 @@ function renderFinanceList() {
   );
 
 
+  // =========================
+// 🔍 套用帳務分類篩選
+// =========================
+
+const filteredItems =
+  currentFinanceFilter === 'all'
+    ? items
+    : items.filter(
+        function(item) {
+          return (
+            item.type ===
+            currentFinanceFilter
+          );
+        }
+      );
+  
   // 沒有資料
-  if (items.length === 0) {
+  if (filteredItems.length === 0) {
 
     list.innerHTML = `
       <div class="empty-box">
@@ -1181,7 +1202,7 @@ function renderFinanceList() {
 
   // 顯示資料
   list.innerHTML =
-    items.map(
+  filteredItems.map(
       function(item) {
 
         return `
@@ -1233,6 +1254,43 @@ function renderFinanceList() {
       }
     )
     .join('');
+
+}
+
+    // =========================
+// 🔘 切換帳務分類
+// =========================
+
+function setFinanceFilter(
+  type,
+  button
+) {
+
+  currentFinanceFilter =
+    type;
+
+
+  document
+    .querySelectorAll(
+      '.filter-button'
+    )
+    .forEach(
+      function(item) {
+
+        item.classList.remove(
+          'active'
+        );
+
+      }
+    );
+
+
+  button.classList.add(
+    'active'
+  );
+
+
+  renderFinanceList();
 
 }
     
