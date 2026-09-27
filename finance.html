@@ -766,6 +766,55 @@ async function loadFinanceOrders() {
     const orders =
       result.data || [];
 
+    // =========================
+// 💰 計算代購收款金額
+// =========================
+
+let pendingAmount = 0;
+let receivedAmount = 0;
+
+orders.forEach(
+  function(order) {
+
+    const amount =
+      Number(order.total) || 0;
+
+    if (
+      order.paymentStatus ===
+      '🟢 已付款'
+    ) {
+
+      receivedAmount += amount;
+
+    } else {
+
+      pendingAmount += amount;
+
+    }
+
+  }
+);
+
+
+// 顯示待收款
+document
+  .getElementById(
+    'pendingAmount'
+  )
+  .textContent =
+    'NT$ ' +
+    pendingAmount.toLocaleString();
+
+
+// 顯示已收款
+document
+  .getElementById(
+    'receivedAmount'
+  )
+  .textContent =
+    'NT$ ' +
+    receivedAmount.toLocaleString();
+    
 
     console.log(
       '帳務中心－代購訂單：',
