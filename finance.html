@@ -845,9 +845,70 @@ document
 
 }
 
+// =========================
+// 🃏 讀取全部小卡交易
+// =========================
 
+async function loadFinanceCardTrades() {
+
+  try {
+
+    const response =
+      await fetch(
+        API_URL +
+        '?action=getCardTrades'
+      );
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+
+      throw new Error(
+        result.message ||
+        '讀取小卡交易失敗'
+      );
+
+    }
+
+
+    const trades =
+      result.data || [];
+
+
+    console.log(
+      '帳務中心－小卡交易：',
+      trades
+    );
+
+
+    document
+      .getElementById(
+        'cardTradeCount'
+      )
+      .textContent =
+        trades.length;
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    document
+      .getElementById(
+        'cardTradeCount'
+      )
+      .textContent =
+        '讀取失敗';
+
+  }
+
+}
+    
 // 開啟帳務中心時讀取
 loadFinanceOrders();
+loadFinanceCardTrades();
     
 </script>
   
