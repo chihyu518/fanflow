@@ -2879,10 +2879,10 @@ const originalPriceHtml =
       >
         ${
           product.currency === '🇯🇵 JPY 日圓'
-            ? '🇯🇵 ¥'
-            : product.currency === '🇰🇷 KRW 韓元'
-              ? '🇰🇷 ₩'
-              : ''
+  ? 'JPY ¥'
+  : product.currency === '🇰🇷 KRW 韓元'
+    ? 'KRW ₩'
+    : ''
         }${Number(
           product.originalPrice
         ).toLocaleString()}
