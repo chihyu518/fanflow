@@ -884,11 +884,13 @@
       </button>
 
       <button
-        class="save-button"
-        type="button"
-      >
-        儲存
-      </button>
+  class="save-button"
+  type="button"
+  id="saveCardTradeButton"
+  onclick="saveCardTrade()"
+>
+  儲存
+</button>
 
     </div>
 
@@ -931,6 +933,196 @@
       .remove('show');
 
   }
+
+    // =========================
+// 💾 儲存小卡交易
+// =========================
+
+async function saveCardTrade() {
+
+  const name =
+    document.getElementById(
+      'cardName'
+    ).value.trim();
+
+  if (!name) {
+    alert('請輸入小卡名稱');
+    return;
+  }
+
+
+  const saveButton =
+    document.getElementById(
+      'saveCardTradeButton'
+    );
+
+  saveButton.disabled = true;
+  saveButton.textContent =
+    '儲存中...';
+
+
+  try {
+
+    const data = {
+
+      action:
+        'createCardTrade',
+
+      name:
+        name,
+
+      tradeType:
+        document.getElementById(
+          'cardTradeType'
+        ).value,
+
+      group:
+        document.getElementById(
+          'cardGroup'
+        ).value.trim(),
+
+      member:
+        document.getElementById(
+          'cardMember'
+        ).value.trim(),
+
+      version:
+        document.getElementById(
+          'cardVersion'
+        ).value.trim(),
+
+      price:
+        Number(
+          document.getElementById(
+            'cardPrice'
+          ).value
+        ) || 0,
+
+      quantity:
+        Number(
+          document.getElementById(
+            'cardQuantity'
+          ).value
+        ) || 1,
+
+      partner:
+        document.getElementById(
+          'cardPartner'
+        ).value.trim(),
+
+      tradeStatus:
+        '🟡 交易中',
+
+      paymentStatus:
+        '🔴 未付款',
+
+      shippingStatus:
+        '⚪ 未寄出',
+
+      note:
+        document.getElementById(
+          'cardNote'
+        ).value.trim()
+
+    };
+
+
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method: 'POST',
+
+          body:
+            JSON.stringify(data)
+        }
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+      throw new Error(
+        result.message ||
+        '新增小卡失敗'
+      );
+    }
+
+
+    alert('新增小卡成功！🃏');
+
+
+    closeCardTradeModal();
+
+
+    // 清空表單
+    document.getElementById(
+      'cardName'
+    ).value = '';
+
+    document.getElementById(
+      'cardTradeType'
+    ).value =
+      '🔵 出售';
+
+    document.getElementById(
+      'cardGroup'
+    ).value = '';
+
+    document.getElementById(
+      'cardMember'
+    ).value = '';
+
+    document.getElementById(
+      'cardVersion'
+    ).value = '';
+
+    document.getElementById(
+      'cardPrice'
+    ).value = '';
+
+    document.getElementById(
+      'cardQuantity'
+    ).value = 1;
+
+    document.getElementById(
+      'cardPartner'
+    ).value = '';
+
+    document.getElementById(
+      'cardImage'
+    ).value = '';
+
+    document.getElementById(
+      'cardNote'
+    ).value = '';
+
+
+    // 重新讀取列表
+    await loadCardTrades();
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      '新增失敗：' +
+      error.message
+    );
+
+
+  } finally {
+
+    saveButton.disabled = false;
+    saveButton.textContent =
+      '儲存';
+
+  }
+
+}
     
 
   // =========================
