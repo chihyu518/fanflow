@@ -688,10 +688,11 @@
     <div class="toolbar">
 
       <input
-        class="search-input"
-        type="text"
-        placeholder="🔍 搜尋小卡、團體、成員..."
-      >
+  class="search-input"
+  id="cardTradeSearch"
+  type="text"
+  placeholder="🔍 搜尋小卡、團體、成員..."
+>
 
       <div class="filter-row">
 
@@ -1616,6 +1617,135 @@ document.getElementById(
   // 🃏 讀取小卡交易
   // =========================
 
+    // =========================
+// 🔍 顯示小卡列表
+// =========================
+
+function renderCardTrades(trades) {
+
+  const list =
+    document.getElementById(
+      'cardTradeList'
+    );
+
+  if (trades.length === 0) {
+
+    list.innerHTML =
+      `
+        <div class="empty-box">
+          🔍 找不到符合條件的小卡
+        </div>
+      `;
+
+    return;
+  }
+
+
+  list.innerHTML =
+    trades
+      .map(
+        function(item) {
+
+          const imageHtml =
+            item.imageUrl
+              ? `
+                <img
+                  class="trade-image"
+                  src="${item.imageUrl}"
+                  alt=""
+                >
+              `
+              : `
+                <div
+                  class="trade-placeholder"
+                >
+                  🃏
+                </div>
+              `;
+
+
+          return `
+            <div class="trade-card">
+
+              ${imageHtml}
+
+              <div class="trade-body">
+
+                <div class="trade-name">
+                  ${item.name || '未命名小卡'}
+                </div>
+
+                <div class="trade-detail">
+                  ${item.tradeType || ''}
+                </div>
+
+                <div class="trade-detail">
+                  🎤 ${item.group || '未設定'}
+                </div>
+
+                <div class="trade-detail">
+                  👤 ${item.member || '未設定'}
+                </div>
+
+                <div class="trade-detail">
+                  🏷️ ${item.version || '未設定'}
+                </div>
+
+                <div class="trade-detail">
+                  💰 NT$ ${
+                    Number(
+                      item.price
+                    ).toLocaleString()
+                  }
+                </div>
+
+                <div class="trade-detail">
+                  🔢 數量：${item.quantity || 0}
+                </div>
+
+                <div class="trade-detail">
+                  ${item.tradeStatus || ''}
+                </div>
+
+                <div class="trade-detail">
+                  ${item.paymentStatus || ''}
+                </div>
+
+                <div class="trade-detail">
+                  ${item.shippingStatus || ''}
+                </div>
+
+                <div class="trade-actions">
+
+                  <button
+                    type="button"
+                    class="edit-trade-button"
+                    onclick="editCardTrade('${item.id}')"
+                  >
+                    ✏️ 編輯
+                  </button>
+
+                  <button
+                    type="button"
+                    class="delete-trade-button"
+                    onclick="deleteCardTrade('${item.id}', '${item.name || '未命名小卡'}')"
+                  >
+                    🗑️ 刪除
+                  </button>
+
+                </div>
+
+              </div>
+
+            </div>
+          `;
+
+        }
+      )
+      .join('');
+
+}
+    
   async function loadCardTrades() {
 
     const list =
@@ -1736,107 +1866,8 @@ document.getElementById(
       // 顯示小卡
       // =========================
 
-      list.innerHTML =
-        trades
-          .map(
-            function(item) {
-
-              const imageHtml =
-                item.imageUrl
-                  ? `
-                    <img
-                      class="trade-image"
-                      src="${item.imageUrl}"
-                      alt=""
-                    >
-                  `
-                  : `
-                    <div
-                      class="trade-placeholder"
-                    >
-                      🃏
-                    </div>
-                  `;
-
-
-              return `
-                <div class="trade-card">
-
-                  ${imageHtml}
-
-                  <div class="trade-body">
-
-                    <div class="trade-name">
-                      ${item.name || '未命名小卡'}
-                    </div>
-
-                    <div class="trade-detail">
-                      ${item.tradeType || ''}
-                    </div>
-
-                    <div class="trade-detail">
-                      🎤 ${item.group || '未設定'}
-                    </div>
-
-                    <div class="trade-detail">
-                      👤 ${item.member || '未設定'}
-                    </div>
-
-                    <div class="trade-detail">
-                      🏷️ ${item.version || '未設定'}
-                    </div>
-
-                    <div class="trade-detail">
-                      💰 NT$ ${
-                        Number(
-                          item.price
-                        ).toLocaleString()
-                      }
-                    </div>
-
-                    <div class="trade-detail">
-                      🔢 數量：${item.quantity || 0}
-                    </div>
-
-                    <div class="trade-detail">
-                      ${item.tradeStatus || ''}
-                    </div>
-
-                    <div class="trade-detail">
-                      ${item.paymentStatus || ''}
-                    </div>
-
-                    <div class="trade-detail">
-                      ${item.shippingStatus || ''}
-                    </div>
-
-<button
-  type="button"
-  class="edit-trade-button"
-  onclick="editCardTrade('${item.id}')"
->
-  ✏️ 編輯
-</button>
-
-<button
-  type="button"
-  class="delete-trade-button"
-  onclick="deleteCardTrade('${item.id}', '${item.name || '未命名小卡'}')"
->
-  🗑️ 刪除
-</button>
-
-</div>
-
-                  </div>
-
-                </div>
-              `;
-
-            }
-          )
-          .join('');
-
+renderCardTrades(trades);
+      
     } catch (error) {
 
       console.error(error);
@@ -1854,6 +1885,61 @@ document.getElementById(
 
   }
 
+    // =========================
+// 🔍 搜尋小卡
+// =========================
+
+document
+  .getElementById(
+    'cardTradeSearch'
+  )
+  .addEventListener(
+    'input',
+    function() {
+
+      const keyword =
+        this.value
+          .trim()
+          .toLowerCase();
+
+      if (!keyword) {
+
+        renderCardTrades(
+          cardTradesData
+        );
+
+        return;
+
+      }
+
+      const filteredTrades =
+        cardTradesData.filter(
+          function(item) {
+
+            const searchText = [
+              item.name,
+              item.group,
+              item.member,
+              item.version,
+              item.partner
+            ]
+              .join(' ')
+              .toLowerCase();
+
+            return searchText.includes(
+              keyword
+            );
+
+          }
+        );
+
+      renderCardTrades(
+        filteredTrades
+      );
+
+    }
+  );
+    
 
   // 開啟頁面時自動讀取
   loadCardTrades();
