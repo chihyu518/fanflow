@@ -934,6 +934,149 @@
 
   }
 
+    function compressImage(file) {
+
+      return new Promise(
+        (
+          resolve,
+          reject
+        ) => {
+
+          const reader =
+            new FileReader();
+
+
+          reader.onload =
+            function(event) {
+
+              const img =
+                new Image();
+
+
+              img.onload =
+                function() {
+
+                  const maxWidth =
+                    1200;
+
+                  const maxHeight =
+                    1200;
+
+
+                  let width =
+                    img.width;
+
+                  let height =
+                    img.height;
+
+
+                  if (
+                    width > maxWidth ||
+                    height > maxHeight
+                  ) {
+
+                    const ratio =
+                      Math.min(
+                        maxWidth / width,
+                        maxHeight / height
+                      );
+
+
+                    width =
+                      Math.round(
+                        width * ratio
+                      );
+
+
+                    height =
+                      Math.round(
+                        height * ratio
+                      );
+
+                  }
+
+
+                  const canvas =
+                    document.createElement(
+                      'canvas'
+                    );
+
+
+                  canvas.width =
+                    width;
+
+                  canvas.height =
+                    height;
+
+
+                  const ctx =
+                    canvas.getContext(
+                      '2d'
+                    );
+
+
+                  ctx.drawImage(
+                    img,
+                    0,
+                    0,
+                    width,
+                    height
+                  );
+
+
+                  const compressedData =
+                    canvas.toDataURL(
+                      'image/jpeg',
+                      0.8
+                    );
+
+
+                  resolve(
+                    compressedData
+                  );
+
+                };
+
+
+              img.onerror =
+                function() {
+
+                  reject(
+                    new Error(
+                      '圖片處理失敗'
+                    )
+                  );
+
+                };
+
+
+              img.src =
+                event.target.result;
+
+            };
+
+
+          reader.onerror =
+            function() {
+
+              reject(
+                new Error(
+                  '圖片讀取失敗'
+                )
+              );
+
+            };
+
+
+          reader.readAsDataURL(
+            file
+          );
+
+        }
+      );
+
+    }
+    
     // =========================
 // 💾 儲存小卡交易
 // =========================
@@ -963,7 +1106,42 @@ async function saveCardTrade() {
 
   try {
 
-    const data = {
+  // =========================
+  // 📸 處理小卡圖片
+  // =========================
+
+  const imageInput =
+    document.getElementById(
+      'cardImage'
+    );
+
+  const imageFile =
+    imageInput.files[0];
+
+  let imageData = '';
+  let imageName = '';
+  let imageType = '';
+
+
+  if (imageFile) {
+
+    imageData =
+      await compressImage(
+        imageFile
+      );
+
+    imageName =
+      'cardtrade-' +
+      Date.now() +
+      '.jpg';
+
+    imageType =
+      'image/jpeg';
+
+  }
+
+
+  const data = {
 
       action:
         'createCardTrade',
@@ -1020,11 +1198,20 @@ async function saveCardTrade() {
         '⚪ 未寄出',
 
       note:
-        document.getElementById(
-          'cardNote'
-        ).value.trim()
+  document.getElementById(
+    'cardNote'
+  ).value.trim(),
 
-    };
+imageData:
+  imageData,
+
+imageName:
+  imageName,
+
+imageType:
+  imageType
+
+};
 
 
     const response =
