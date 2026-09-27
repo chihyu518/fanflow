@@ -2861,6 +2861,35 @@ function renderProducts(
               `;
 
 
+          // 原幣價格
+const originalPriceHtml =
+  product.originalPrice !== null &&
+  product.originalPrice !== undefined &&
+  product.originalPrice !== 0 &&
+  product.currency &&
+  product.currency !== '🇹🇼 TWD 台幣'
+    ? `
+      <div
+        style="
+          margin-top: 5px;
+          font-size: 14px;
+          font-weight: 700;
+          color: #666;
+        "
+      >
+        ${
+          product.currency === '🇯🇵 JPY 日圓'
+            ? '🇯🇵 ¥'
+            : product.currency === '🇰🇷 KRW 韓元'
+              ? '🇰🇷 ₩'
+              : ''
+        }${Number(
+          product.originalPrice
+        ).toLocaleString()}
+      </div>
+      `
+    : '';
+          
           // 單價
           const priceHtml =
             product.price !== null &&
@@ -2925,6 +2954,8 @@ function renderProducts(
                   ">
                   ${product.name}
                 </div>
+
+${originalPriceHtml}
 
                 ${priceHtml}
 
