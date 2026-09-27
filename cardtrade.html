@@ -486,6 +486,22 @@
 .delete-trade-button:hover {
   background: #ffe2e2;
 }
+
+    /* =========================
+   💳 可點擊狀態
+========================= */
+
+.status-clickable {
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 4px 6px;
+  margin-left: -6px;
+  transition: 0.2s;
+}
+
+.status-clickable:hover {
+  background: #f1f3f9;
+}
     
   </style>
 
@@ -1278,6 +1294,127 @@ function editCardTrade(id) {
 }
 
     // =========================
+// 💳 切換小卡付款狀態
+// =========================
+
+async function toggleCardPaymentStatus(id) {
+
+  const item =
+    cardTradesData.find(
+      function(trade) {
+        return trade.id === id;
+      }
+    );
+
+  if (!item) {
+    alert('找不到這筆小卡資料');
+    return;
+  }
+
+
+  const newPaymentStatus =
+    item.paymentStatus ===
+    '🟢 已付款'
+      ? '🔴 未付款'
+      : '🟢 已付款';
+
+
+  try {
+
+    const data = {
+
+      action:
+        'updateCardTrade',
+
+      id:
+        item.id,
+
+      name:
+        item.name || '',
+
+      tradeType:
+        item.tradeType ||
+        '🔵 出售',
+
+      group:
+        item.group || '',
+
+      member:
+        item.member || '',
+
+      version:
+        item.version || '',
+
+      imageUrl:
+        item.imageUrl || '',
+
+      price:
+        item.price || 0,
+
+      quantity:
+        item.quantity || 1,
+
+      partner:
+        item.partner || '',
+
+      tradeStatus:
+        item.tradeStatus ||
+        '🟡 交易中',
+
+      paymentStatus:
+        newPaymentStatus,
+
+      shippingStatus:
+        item.shippingStatus ||
+        '⚪ 未寄出',
+
+      note:
+        item.note || ''
+
+    };
+
+
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method: 'POST',
+
+          body:
+            JSON.stringify(data)
+        }
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+      throw new Error(
+        result.message ||
+        '付款狀態更新失敗'
+      );
+    }
+
+
+    await loadCardTrades();
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      '付款狀態更新失敗：' +
+      error.message
+    );
+
+  }
+
+}
+    
+    // =========================
 // 🗑️ 刪除小卡
 // =========================
 
@@ -1722,9 +1859,13 @@ function renderCardTrades(trades) {
                   ${item.tradeStatus || ''}
                 </div>
 
-                <div class="trade-detail">
-                  ${item.paymentStatus || ''}
-                </div>
+                <div
+  class="trade-detail status-clickable"
+  onclick="toggleCardPaymentStatus('${item.id}')"
+  title="點一下切換付款狀態"
+>
+  ${item.paymentStatus || '🔴 未付款'}
+</div>
 
                 <div class="trade-detail">
                   ${item.shippingStatus || ''}
