@@ -550,6 +550,241 @@
 
   </main>
 
+  <script>
+
+  const API_URL =
+    'https://script.google.com/macros/s/AKfycbz7CVrbddXxIvd86Z3PeMyM9MT6q7QBe7EJ5n1uQU7pTkwCYgc-4gjcg7EmRmz5itDSJQ/exec';
+
+
+  // =========================
+  // 🃏 讀取小卡交易
+  // =========================
+
+  async function loadCardTrades() {
+
+    const list =
+      document.getElementById(
+        'cardTradeList'
+      );
+
+    try {
+
+      list.innerHTML =
+        `
+          <div class="empty-box">
+            正在讀取小卡交易...
+          </div>
+        `;
+
+
+      const response =
+        await fetch(
+          API_URL +
+          '?action=getCardTrades'
+        );
+
+
+      const result =
+        await response.json();
+
+
+      if (!result.success) {
+
+        throw new Error(
+          result.message ||
+          '讀取小卡交易失敗'
+        );
+
+      }
+
+
+      const trades =
+        result.data || [];
+
+
+      // =========================
+      // 更新統計
+      // =========================
+
+      document.getElementById(
+        'totalCardCount'
+      ).textContent =
+        trades.length;
+
+
+      document.getElementById(
+        'sellCardCount'
+      ).textContent =
+        trades.filter(
+          function(item) {
+            return (
+              item.tradeType ===
+              '🔵 出售'
+            );
+          }
+        ).length;
+
+
+      document.getElementById(
+        'buyCardCount'
+      ).textContent =
+        trades.filter(
+          function(item) {
+            return (
+              item.tradeType ===
+              '🟣 收購'
+            );
+          }
+        ).length;
+
+
+      document.getElementById(
+        'tradeCardCount'
+      ).textContent =
+        trades.filter(
+          function(item) {
+            return (
+              item.tradeType ===
+              '🟢 交換'
+            );
+          }
+        ).length;
+
+
+      // =========================
+      // 沒有資料
+      // =========================
+
+      if (trades.length === 0) {
+
+        list.innerHTML =
+          `
+            <div class="empty-box">
+
+              🃏 目前還沒有小卡交易資料
+
+              <br><br>
+
+              點右上角「＋ 新增小卡」開始建立
+
+            </div>
+          `;
+
+        return;
+
+      }
+
+
+      // =========================
+      // 顯示小卡
+      // =========================
+
+      list.innerHTML =
+        trades
+          .map(
+            function(item) {
+
+              const imageHtml =
+                item.imageUrl
+                  ? `
+                    <img
+                      class="trade-image"
+                      src="${item.imageUrl}"
+                      alt=""
+                    >
+                  `
+                  : `
+                    <div
+                      class="trade-placeholder"
+                    >
+                      🃏
+                    </div>
+                  `;
+
+
+              return `
+                <div class="trade-card">
+
+                  ${imageHtml}
+
+                  <div class="trade-body">
+
+                    <div class="trade-name">
+                      ${item.name || '未命名小卡'}
+                    </div>
+
+                    <div class="trade-detail">
+                      ${item.tradeType || ''}
+                    </div>
+
+                    <div class="trade-detail">
+                      🎤 ${item.group || '未設定'}
+                    </div>
+
+                    <div class="trade-detail">
+                      👤 ${item.member || '未設定'}
+                    </div>
+
+                    <div class="trade-detail">
+                      🏷️ ${item.version || '未設定'}
+                    </div>
+
+                    <div class="trade-detail">
+                      💰 NT$ ${
+                        Number(
+                          item.price
+                        ).toLocaleString()
+                      }
+                    </div>
+
+                    <div class="trade-detail">
+                      🔢 數量：${item.quantity || 0}
+                    </div>
+
+                    <div class="trade-detail">
+                      ${item.tradeStatus || ''}
+                    </div>
+
+                    <div class="trade-detail">
+                      ${item.paymentStatus || ''}
+                    </div>
+
+                    <div class="trade-detail">
+                      ${item.shippingStatus || ''}
+                    </div>
+
+                  </div>
+
+                </div>
+              `;
+
+            }
+          )
+          .join('');
+
+    } catch (error) {
+
+      console.error(error);
+
+      list.innerHTML =
+        `
+          <div class="empty-box">
+            ⚠️ 讀取小卡交易失敗
+            <br><br>
+            ${error.message}
+          </div>
+        `;
+
+    }
+
+  }
+
+
+  // 開啟頁面時自動讀取
+  loadCardTrades();
+
+</script>
+  
 </body>
 
 </html>
