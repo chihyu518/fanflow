@@ -938,14 +938,61 @@ let editingCardTradeId = '';
 
   function openCardTradeModal() {
 
-    document
-      .getElementById(
-        'cardTradeModal'
-      )
-      .classList
-      .add('show');
+  editingCardTradeId = '';
 
-  }
+  document.getElementById(
+    'cardTradeModalTitle'
+  ).textContent =
+    '＋ 新增小卡';
+
+
+  document.getElementById(
+    'cardName'
+  ).value = '';
+
+  document.getElementById(
+    'cardTradeType'
+  ).value =
+    '🔵 出售';
+
+  document.getElementById(
+    'cardGroup'
+  ).value = '';
+
+  document.getElementById(
+    'cardMember'
+  ).value = '';
+
+  document.getElementById(
+    'cardVersion'
+  ).value = '';
+
+  document.getElementById(
+    'cardPrice'
+  ).value = '';
+
+  document.getElementById(
+    'cardQuantity'
+  ).value = 1;
+
+  document.getElementById(
+    'cardPartner'
+  ).value = '';
+
+  document.getElementById(
+    'cardImage'
+  ).value = '';
+
+  document.getElementById(
+    'cardNote'
+  ).value = '';
+
+
+  document.getElementById(
+    'cardTradeModal'
+  ).classList.add('show');
+
+}
 
 
   // =========================
@@ -1242,6 +1289,27 @@ async function saveCardTrade() {
   let imageName = '';
   let imageType = '';
 
+    let existingImageUrl = '';
+
+if (editingCardTradeId) {
+
+  const editingItem =
+    cardTradesData.find(
+      function(item) {
+        return (
+          item.id ===
+          editingCardTradeId
+        );
+      }
+    );
+
+  if (editingItem) {
+    existingImageUrl =
+      editingItem.imageUrl || '';
+  }
+
+}
+    
 
   if (imageFile) {
 
@@ -1263,11 +1331,19 @@ async function saveCardTrade() {
 
   const data = {
 
-      action:
-        'createCardTrade',
+  action:
+    editingCardTradeId
+      ? 'updateCardTrade'
+      : 'createCardTrade',
+    
+    id:
+  editingCardTradeId,
 
-      name:
-        name,
+imageUrl:
+  existingImageUrl,
+
+  name:
+    name,
 
       tradeType:
         document.getElementById(
@@ -1358,7 +1434,15 @@ imageType:
     }
 
 
-    alert('新增小卡成功！🃏');
+    if (editingCardTradeId) {
+
+  alert('修改小卡成功！✏️');
+
+} else {
+
+  alert('新增小卡成功！🃏');
+
+}
 
 
     closeCardTradeModal();
@@ -1406,6 +1490,13 @@ imageType:
       'cardNote'
     ).value = '';
 
+    editingCardTradeId = '';
+
+document.getElementById(
+  'cardTradeModalTitle'
+).textContent =
+  '＋ 新增小卡';
+    
 
     // 重新讀取列表
     await loadCardTrades();
