@@ -1415,6 +1415,145 @@ async function toggleCardPaymentStatus(id) {
 }
 
     // =========================
+// 📌 切換交易狀態
+// =========================
+
+async function toggleCardTradeStatus(id) {
+
+  const item =
+    cardTradesData.find(
+      function(trade) {
+        return trade.id === id;
+      }
+    );
+
+  if (!item) {
+    alert('找不到這筆小卡資料');
+    return;
+  }
+
+
+  let newTradeStatus = '';
+
+  if (
+    item.tradeStatus ===
+    '🟡 交易中'
+  ) {
+
+    newTradeStatus =
+      '🟢 已完成';
+
+  } else if (
+    item.tradeStatus ===
+    '🟢 已完成'
+  ) {
+
+    newTradeStatus =
+      '🔴 已取消';
+
+  } else {
+
+    newTradeStatus =
+      '🟡 交易中';
+
+  }
+
+
+  try {
+
+    const data = {
+
+      action:
+        'updateCardTrade',
+
+      id:
+        item.id,
+
+      name:
+        item.name || '',
+
+      tradeType:
+        item.tradeType ||
+        '🔵 出售',
+
+      group:
+        item.group || '',
+
+      member:
+        item.member || '',
+
+      version:
+        item.version || '',
+
+      imageUrl:
+        item.imageUrl || '',
+
+      price:
+        item.price || 0,
+
+      quantity:
+        item.quantity || 1,
+
+      partner:
+        item.partner || '',
+
+      tradeStatus:
+        newTradeStatus,
+
+      paymentStatus:
+        item.paymentStatus ||
+        '🔴 未付款',
+
+      shippingStatus:
+        item.shippingStatus ||
+        '⚪ 未寄出',
+
+      note:
+        item.note || ''
+
+    };
+
+
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method: 'POST',
+          body:
+            JSON.stringify(data)
+        }
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+      throw new Error(
+        result.message ||
+        '更新交易狀態失敗'
+      );
+    }
+
+
+    await loadCardTrades();
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      '更新交易狀態失敗：' +
+      error.message
+    );
+
+  }
+
+}
+    
+    // =========================
 // 📦 切換寄送狀態
 // =========================
 
@@ -1994,9 +2133,13 @@ function renderCardTrades(trades) {
                   🔢 數量：${item.quantity || 0}
                 </div>
 
-                <div class="trade-detail">
-                  ${item.tradeStatus || ''}
-                </div>
+                <div
+  class="trade-detail status-clickable"
+  onclick="toggleCardTradeStatus('${item.id}')"
+  title="點一下切換交易狀態"
+>
+  ${item.tradeStatus || '🟡 交易中'}
+</div>
 
                 <div
   class="trade-detail status-clickable"
