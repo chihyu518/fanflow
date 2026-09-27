@@ -752,13 +752,14 @@
 
 <!-- 帳務明細 -->
 
-<div class="card-grid">
+<div
+  class="card-grid"
+  id="financeList"
+>
 
   <div class="empty-box">
 
     💰 帳務資料載入中
-    <br><br>
-    接下來會自動整理代購與小卡交易資料
 
   </div>
 
@@ -777,6 +778,9 @@ let groupBuyReceivedAmount = 0;
 
 let cardPendingAmount = 0;
 let cardReceivedAmount = 0;
+
+    let financeOrdersData = [];
+let financeCardTradesData = [];
     
     // =========================
 // 🛍️ 讀取全部代購訂單
@@ -809,6 +813,10 @@ async function loadFinanceOrders() {
     const orders =
       result.data || [];
 
+    financeOrdersData = orders;
+    
+    renderFinanceList();
+    
     // =========================
 // 💰 計算代購收款金額
 // =========================
@@ -904,6 +912,10 @@ async function loadFinanceCardTrades() {
     const trades =
       result.data || [];
 
+    financeCardTradesData = trades;
+
+    renderFinanceList();
+    
     // =========================
 // 💰 計算小卡帳務
 // =========================
@@ -1055,6 +1067,172 @@ function updateIncomeSummary() {
     .textContent =
       'NT$ ' +
       totalReceived.toLocaleString();
+
+}
+
+    // =========================
+// 📋 顯示帳務明細
+// =========================
+
+function renderFinanceList() {
+
+  const list =
+    document.getElementById(
+      'financeList'
+    );
+
+
+  if (!list) {
+    return;
+  }
+
+
+  const items = [];
+
+
+  // 🛍️ 代購訂單
+  financeOrdersData.forEach(
+    function(order) {
+
+      items.push({
+
+        type: 'groupbuy',
+
+        icon: '🛍️',
+
+        title:
+          order.name ||
+          '未填姓名',
+
+        detail:
+          (order.groupBuy || '') +
+          (
+            order.product
+              ? '｜' + order.product
+              : ''
+          ),
+
+        amount:
+          Number(order.total) || 0,
+
+        status:
+          order.paymentStatus ||
+          '🔴 未付款'
+
+      });
+
+    }
+  );
+
+
+  // 🃏 小卡交易
+  financeCardTradesData.forEach(
+    function(trade) {
+
+      const amount =
+        (Number(trade.price) || 0) *
+        (Number(trade.quantity) || 0);
+
+
+      items.push({
+
+        type: 'card',
+
+        icon: '🃏',
+
+        title:
+          trade.name ||
+          '未填小卡名稱',
+
+        detail:
+          [
+            trade.tradeType,
+            trade.group,
+            trade.member
+          ]
+            .filter(Boolean)
+            .join('｜'),
+
+        amount:
+          amount,
+
+        status:
+          trade.paymentStatus ||
+          '🔴 未付款'
+
+      });
+
+    }
+  );
+
+
+  // 沒有資料
+  if (items.length === 0) {
+
+    list.innerHTML = `
+      <div class="empty-box">
+        💰 目前沒有帳務資料
+      </div>
+    `;
+
+    return;
+  }
+
+
+  // 顯示資料
+  list.innerHTML =
+    items.map(
+      function(item) {
+
+        return `
+          <div class="stat-card">
+
+            <div
+              style="
+                font-weight: 800;
+                font-size: 16px;
+                margin-bottom: 8px;
+              "
+            >
+              ${item.icon}
+              ${item.title}
+            </div>
+
+            <div
+              style="
+                color: #777;
+                font-size: 14px;
+                margin-bottom: 10px;
+              "
+            >
+              ${item.detail || '—'}
+            </div>
+
+            <div
+              style="
+                font-weight: 800;
+                font-size: 20px;
+                margin-bottom: 8px;
+              "
+            >
+              NT$
+              ${item.amount.toLocaleString()}
+            </div>
+
+            <div
+              style="
+                font-size: 14px;
+              "
+            >
+              ${item.status}
+            </div>
+
+          </div>
+        `;
+
+      }
+    )
+    .join('');
 
 }
     
