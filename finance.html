@@ -734,7 +734,72 @@
 
     const API_URL =
   'https://script.google.com/macros/s/AKfycbz7CVrbddXxIvd86Z3PeMyM9MT6q7QBe7EJ5n1uQU7pTkwCYgc-4gjcg7EmRmz5itDSJQ/exec';
-  
+
+    // =========================
+// 🛍️ 讀取全部代購訂單
+// =========================
+
+async function loadFinanceOrders() {
+
+  try {
+
+    const response =
+      await fetch(
+        API_URL +
+        '?action=getOrders'
+      );
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+
+      throw new Error(
+        result.message ||
+        '讀取代購訂單失敗'
+      );
+
+    }
+
+
+    const orders =
+      result.data || [];
+
+
+    console.log(
+      '帳務中心－代購訂單：',
+      orders
+    );
+
+
+    document
+      .getElementById(
+        'groupBuyOrderCount'
+      )
+      .textContent =
+        orders.length;
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    document
+      .getElementById(
+        'groupBuyOrderCount'
+      )
+      .textContent =
+        '讀取失敗';
+
+  }
+
+}
+
+
+// 開啟帳務中心時讀取
+loadFinanceOrders();
+    
 </script>
   
 </body>
