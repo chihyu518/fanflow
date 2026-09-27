@@ -915,17 +915,53 @@
 
       <div class="form-group">
 
-        <label for="productPrice">
-          單價
-        </label>
+  <label for="productCurrency">
+    💱 幣別
+  </label>
 
-        <input
-          id="productPrice"
-          type="number"
-          min="0"
-          placeholder="例如：350">
+  <select id="productCurrency">
+    <option value="🇹🇼 TWD 台幣">
+      🇹🇼 TWD 台幣
+    </option>
+    <option value="🇯🇵 JPY 日圓">
+      🇯🇵 JPY 日圓
+    </option>
+    <option value="🇰🇷 KRW 韓元">
+      🇰🇷 KRW 韓元
+    </option>
+  </select>
 
-      </div>
+</div>
+
+
+<div class="form-group">
+
+  <label for="productOriginalPrice">
+    💴 原幣價格
+  </label>
+
+  <input
+    id="productOriginalPrice"
+    type="number"
+    min="0"
+    placeholder="例如：2500">
+
+</div>
+
+
+<div class="form-group">
+
+  <label for="productPrice">
+    💰 台幣單價
+  </label>
+
+  <input
+    id="productPrice"
+    type="number"
+    min="0"
+    placeholder="例如：550">
+
+</div>
 
 
       <div class="form-group">
@@ -1483,6 +1519,20 @@ loadOrders(item.name);
         )
         .value = '';
 
+      document
+  .getElementById(
+    'productOriginalPrice'
+  )
+  .value = '';
+
+
+document
+  .getElementById(
+    'productCurrency'
+  )
+  .value =
+    '🇹🇼 TWD 台幣';
+      
 
       document
         .getElementById(
@@ -1560,6 +1610,17 @@ async function saveProduct() {
       .getElementById('productPrice')
       .value;
 
+  const originalPrice =
+  document
+    .getElementById('productOriginalPrice')
+    .value;
+
+
+const currency =
+  document
+    .getElementById('productCurrency')
+    .value;
+  
 
   const sort =
     document
@@ -1659,10 +1720,16 @@ async function saveProduct() {
       name,
 
     price:
-      price,
+  price,
 
-    sort:
-      sort,
+originalPrice:
+  originalPrice,
+
+currency:
+  currency,
+
+sort:
+  sort,
 
     note:
       note,
@@ -1769,6 +1836,19 @@ async function saveProduct() {
       )
       .value = '';
 
+    document
+  .getElementById(
+    'productOriginalPrice'
+  )
+  .value = '';
+
+
+document
+  .getElementById(
+    'productCurrency'
+  )
+  .value = '🇹🇼 TWD 台幣';
+    
 
     document
       .getElementById(
@@ -3329,6 +3409,22 @@ function openEditProduct(id) {
     .value =
       product.price ?? '';
 
+  document
+  .getElementById(
+    'productOriginalPrice'
+  )
+  .value =
+    product.originalPrice ?? '';
+
+
+document
+  .getElementById(
+    'productCurrency'
+  )
+  .value =
+    product.currency ||
+    '🇹🇼 TWD 台幣';
+  
 
   document
     .getElementById(
