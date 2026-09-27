@@ -1176,6 +1176,11 @@ function editCardTrade(id) {
   editingCardTradeId =
     item.id;
 
+  alert(
+  '目前編輯 ID：' +
+  editingCardTradeId
+);
+  
 
   document.getElementById(
     'cardTradeModalTitle'
@@ -1721,14 +1726,13 @@ document.getElementById(
                       ${item.shippingStatus || ''}
                     </div>
 
-<div class="trade-actions">
-
-  <button
-    class="edit-trade-button"
-    onclick="editCardTrade('${item.id}')"
-  >
-    ✏️ 編輯
-  </button>
+<button
+  type="button"
+  class="edit-trade-button"
+  onclick="editCardTrade('${item.id}')"
+>
+  ✏️ 編輯
+</button>
 
 </div>
 
