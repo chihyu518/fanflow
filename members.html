@@ -971,9 +971,16 @@ function openMemberModal() {
     'memberType'
   ).value = '';
 
-  document.getElementById(
-    'memberDeliveryMethod'
-  ).value = '';
+  const defaultDeliveryMethod =
+  localStorage.getItem(
+    'fanflowDefaultDeliveryMethod'
+  ) || '🏪 賣貨便';
+
+
+document.getElementById(
+  'memberDeliveryMethod'
+).value =
+  defaultDeliveryMethod;
 
   document.getElementById(
     'memberShippingInfo'
