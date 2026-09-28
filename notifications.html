@@ -818,59 +818,125 @@ async function loadNotifications() {
       result.data || [];
 
 
-    const unpaidOrders =
-      orders.filter(
-        function(item) {
+// =========================
+// 💳 未付款訂單
+// =========================
 
-          return (
-            item.paymentStatus ===
-            '🔴 未付款'
-          );
+const unpaidOrders =
+  orders.filter(
+    function(item) {
 
-        }
+      return (
+        item.paymentStatus ===
+        '🔴 未付款'
       );
 
+    }
+  );
 
-    notificationsData =
-      unpaidOrders.map(
-        function(item) {
 
-          return {
-            type:
-              'unpaid',
+// =========================
+// 📦 已到貨待交付
+// =========================
 
-            name:
-              item.name || '',
+const deliveryOrders =
+  orders.filter(
+    function(item) {
 
-            groupBuy:
-              item.groupBuy || '',
-
-            product:
-              item.product || '',
-
-            amount:
-              item.total || 0
-          };
-
-        }
+      return (
+        item.orderStatus ===
+        '🟡 已到貨'
       );
 
-
-    document.getElementById(
-      'unpaidNotificationCount'
-    ).textContent =
-      notificationsData.length;
+    }
+  );
 
 
-    document.getElementById(
-      'totalNotificationCount'
-    ).textContent =
-      notificationsData.length;
+// =========================
+// 🔔 建立通知資料
+// =========================
+
+const unpaidNotifications =
+  unpaidOrders.map(
+    function(item) {
+
+      return {
+        type:
+          'unpaid',
+
+        name:
+          item.name || '',
+
+        groupBuy:
+          item.groupBuy || '',
+
+        product:
+          item.product || '',
+
+        amount:
+          item.total || 0
+      };
+
+    }
+  );
 
 
-    renderNotifications(
-      notificationsData
-    );
+const deliveryNotifications =
+  deliveryOrders.map(
+    function(item) {
+
+      return {
+        type:
+          'delivery',
+
+        name:
+          item.name || '',
+
+        groupBuy:
+          item.groupBuy || '',
+
+        product:
+          item.product || '',
+
+        amount:
+          item.total || 0
+      };
+
+    }
+  );
+
+
+notificationsData = [
+  ...unpaidNotifications,
+  ...deliveryNotifications
+];
+
+
+// =========================
+// 🔔 更新通知統計
+// =========================
+
+document.getElementById(
+  'unpaidNotificationCount'
+).textContent =
+  unpaidNotifications.length;
+
+
+document.getElementById(
+  'deliveryNotificationCount'
+).textContent =
+  deliveryNotifications.length;
+
+
+document.getElementById(
+  'totalNotificationCount'
+).textContent =
+  notificationsData.length;
+
+
+renderNotifications(
+  notificationsData
+);
 
 
   } catch (error) {
@@ -928,13 +994,37 @@ function renderNotifications(
       .map(
         function(item) {
 
+          let notificationTitle =
+            '🔔 待處理提醒';
+
+
+          if (
+            item.type === 'unpaid'
+          ) {
+
+            notificationTitle =
+              '💳 尚未付款';
+
+          }
+
+
+          if (
+            item.type === 'delivery'
+          ) {
+
+            notificationTitle =
+              '📦 已到貨待交付';
+
+          }
+
+
           return `
             <div class="trade-card">
 
               <div class="trade-body">
 
                 <div class="trade-name">
-                  💳 尚未付款
+                  ${notificationTitle}
                 </div>
 
                 <div class="trade-detail">
