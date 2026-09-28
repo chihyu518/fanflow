@@ -429,7 +429,76 @@ async function loadDashboardGroupBuys() {
 let unpaidAmount = 0;
 let unarrivedItemCount = 0;
 let waitingDeliveryCount = 0;
-    
+
+let dashboardNotifications = [];
+
+// =========================
+// ⏰ 即將截止提醒
+// =========================
+
+const today =
+  new Date();
+
+today.setHours(
+  0,
+  0,
+  0,
+  0
+);
+
+
+const savedDeadlineDays =
+  localStorage.getItem(
+    'fanflowDeadlineReminderDays'
+  );
+
+const reminderDays =
+  Number(
+    savedDeadlineDays || 3
+  );
+
+
+const deadlineLimit =
+  new Date(today);
+
+deadlineLimit.setDate(
+  deadlineLimit.getDate() +
+  reminderDays
+);
+
+
+activeGroupBuys.forEach(
+  function(groupBuy) {
+
+    if (!groupBuy.deadline) {
+      return;
+    }
+
+
+    const deadline =
+      new Date(
+        groupBuy.deadline +
+        'T00:00:00'
+      );
+
+
+    if (
+      deadline >= today &&
+      deadline <= deadlineLimit
+    ) {
+
+      dashboardNotifications.push({
+        type: 'deadline',
+        name: groupBuy.name || '',
+        groupBuy: groupBuy.group || '',
+        deadline: groupBuy.deadline || ''
+      });
+
+    }
+
+  }
+);
+  
 for (const groupBuy of activeGroupBuys) {
 
   const orderResponse =
@@ -456,15 +525,24 @@ for (const groupBuy of activeGroupBuys) {
   orders.forEach(function(order) {
 
   // 💳 未收款
-  if (
-    order.paymentStatus ===
-    '🔴 未付款'
-  ) {
+if (
+  order.paymentStatus ===
+  '🔴 未付款'
+) {
 
-    unpaidAmount +=
-      Number(order.total) || 0;
+  unpaidAmount +=
+    Number(order.total) || 0;
 
-  }
+
+  dashboardNotifications.push({
+    type: 'unpaid',
+    name: order.name || '',
+    groupBuy: groupBuy.name || '',
+    product: order.product || '',
+    amount: Number(order.total) || 0
+  });
+
+}
 
 
   // 📦 未到貨商品
@@ -486,6 +564,15 @@ if (
 
   waitingDeliveryCount +=
     Number(order.quantity) || 0;
+
+
+  dashboardNotifications.push({
+    type: 'delivery',
+    name: order.name || '',
+    groupBuy: groupBuy.name || '',
+    product: order.product || '',
+    quantity: Number(order.quantity) || 0
+  });
 
 }
     
@@ -511,6 +598,146 @@ document.getElementById(
 ).textContent =
   waitingDeliveryCount.toLocaleString() +
   ' 件';
+
+    // =========================
+// 🔔 今日待處理
+// =========================
+
+const dashboardNotificationList =
+  document.getElementById(
+    'dashboardNotificationList'
+  );
+
+
+if (dashboardNotifications.length === 0) {
+
+  dashboardNotificationList.innerHTML =
+    '今天沒有需要處理的事項 ✨';
+
+} else {
+
+  dashboardNotificationList.innerHTML =
+    `
+      <div class="dashboard-groupbuy-list">
+
+        ${
+          dashboardNotifications
+            .map(function(item) {
+
+              let title = '';
+              let detail = '';
+              let targetPage = 'notifications.html';
+
+
+              if (item.type === 'unpaid') {
+
+                title =
+                  '💳 尚未付款';
+
+                detail =
+                  `
+                    👤 ${item.name || '未設定'}
+                    ｜📦 ${item.product || '未設定'}
+                    ｜💰 NT$ ${Number(
+                      item.amount || 0
+                    ).toLocaleString()}
+                  `;
+
+                targetPage =
+                  'finance.html';
+
+              }
+
+
+              if (item.type === 'delivery') {
+
+                title =
+                  '📦 已到貨待交付';
+
+                detail =
+                  `
+                    👤 ${item.name || '未設定'}
+                    ｜📦 ${item.product || '未設定'}
+                    ｜🔢 ${Number(
+                      item.quantity || 0
+                    ).toLocaleString()} 件
+                  `;
+
+                targetPage =
+                  'groupbuy.html';
+
+              }
+
+
+              if (item.type === 'deadline') {
+
+                title =
+                  '⏰ 即將截止';
+
+                detail =
+                  `
+                    🛍️ ${item.name || '未設定'}
+                    ｜📅 ${item.deadline || '未設定'}
+                  `;
+
+                targetPage =
+                  'groupbuy.html';
+
+              }
+
+
+              return `
+                <div
+                  class="dashboard-groupbuy-card"
+                  onclick="window.location.href='${targetPage}'"
+                  style="cursor: pointer;"
+                >
+
+                  <div
+                    class="dashboard-groupbuy-placeholder"
+                  >
+                    ${
+                      item.type === 'unpaid'
+                        ? '💳'
+                        : item.type === 'delivery'
+                          ? '📦'
+                          : '⏰'
+                    }
+                  </div>
+
+                  <div class="dashboard-groupbuy-info">
+
+                    <div class="dashboard-groupbuy-name">
+                      ${title}
+                    </div>
+
+                    <div class="dashboard-groupbuy-detail">
+                      ${detail}
+                    </div>
+
+                    ${
+                      item.groupBuy
+                        ? `
+                          <div class="dashboard-groupbuy-detail">
+                            🛍️ ${item.groupBuy}
+                          </div>
+                        `
+                        : ''
+                    }
+
+                  </div>
+
+                </div>
+              `;
+
+            })
+            .join('')
+        }
+
+      </div>
+    `;
+
+}
     
     const activeGroupBuyList =
   document.getElementById(
