@@ -242,31 +242,152 @@
   </div>
 
 
-  <script>
+<script>
 
-    const loginForm =
-      document.getElementById(
-        'loginForm'
-      );
+  const API_URL =
+    'https://script.google.com/macros/s/AKfycbz7CVrbddXxIvd86Z3PeMyM9MT6q7QBe7EJ5n1uQU7pTkwCYgc-4gjcg7EmRmz5itDSJQ/exec';
 
-    loginForm.addEventListener(
-      'submit',
-      function(event) {
 
-        event.preventDefault();
-
-        const message =
-          document.getElementById(
-            'loginMessage'
-          );
-
-        message.textContent =
-          '登入功能準備中 🔐';
-
-      }
+  const loginForm =
+    document.getElementById(
+      'loginForm'
     );
 
-  </script>
+  const loginButton =
+    document.getElementById(
+      'loginButton'
+    );
+
+  const loginMessage =
+    document.getElementById(
+      'loginMessage'
+    );
+
+
+  loginForm.addEventListener(
+    'submit',
+    async function(event) {
+
+      event.preventDefault();
+
+
+      const account =
+        document.getElementById(
+          'loginAccount'
+        ).value.trim();
+
+      const password =
+        document.getElementById(
+          'loginPassword'
+        ).value;
+
+
+      if (!account || !password) {
+
+        loginMessage.textContent =
+          '請輸入帳號與密碼';
+
+        return;
+
+      }
+
+
+      loginButton.disabled = true;
+
+      loginButton.textContent =
+        '登入中...';
+
+      loginMessage.textContent =
+        '';
+
+
+      try {
+
+        const response =
+          await fetch(
+            API_URL,
+            {
+              method: 'POST',
+
+              body:
+                JSON.stringify({
+                  action:
+                    'loginFanFlow',
+
+                  account:
+                    account,
+
+                  password:
+                    password
+                })
+            }
+          );
+
+
+        const result =
+          await response.json();
+
+
+        if (!result.success) {
+
+          loginMessage.textContent =
+            result.message ||
+            '登入失敗';
+
+          return;
+
+        }
+
+
+        // =========================
+        // 🔑 儲存登入 Session
+        // =========================
+
+        sessionStorage.setItem(
+          'fanflowSessionToken',
+          result.token
+        );
+
+        sessionStorage.setItem(
+          'fanflowUser',
+          JSON.stringify(
+            result.user
+          )
+        );
+
+
+        loginMessage.textContent =
+          '登入成功 ✨';
+
+
+        // =========================
+        // 🏠 前往 FanFlow 首頁
+        // =========================
+
+        window.location.href =
+          'index.html';
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        loginMessage.textContent =
+          '登入失敗，請稍後再試';
+
+      } finally {
+
+        loginButton.disabled = false;
+
+        loginButton.textContent =
+          '登入';
+
+      }
+
+    }
+  );
+
+</script>
 
 </body>
 
