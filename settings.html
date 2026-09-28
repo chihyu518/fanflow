@@ -781,6 +781,11 @@ const deadlineReminderDays =
     'deadlineReminderDays'
   );
 
+  const defaultCurrency =
+  document.getElementById(
+    'defaultCurrency'
+  );
+  
 
 const savedDeadlineDays =
   localStorage.getItem(
@@ -795,6 +800,18 @@ if (savedDeadlineDays) {
 
 }
 
+  const savedDefaultCurrency =
+  localStorage.getItem(
+    'fanflowDefaultCurrency'
+  );
+
+
+if (savedDefaultCurrency) {
+
+  defaultCurrency.value =
+    savedDefaultCurrency;
+
+}
 
 // =========================
 // 💾 儲存設定
@@ -812,6 +829,18 @@ deadlineReminderDays.addEventListener(
   }
 );
 
+  defaultCurrency.addEventListener(
+  'change',
+  function() {
+
+    localStorage.setItem(
+      'fanflowDefaultCurrency',
+      defaultCurrency.value
+    );
+
+  }
+);
+  
 </script>
   
 </body>
