@@ -1042,6 +1042,30 @@
 
 }
 
+    // =========================
+// ⚡ 首頁快速新增小卡
+// =========================
+
+const cardTradeUrlParams =
+  new URLSearchParams(
+    window.location.search
+  );
+
+if (
+  cardTradeUrlParams.get('action') ===
+  'new'
+) {
+
+  window.addEventListener(
+    'load',
+    function() {
+
+      openCardTradeModal();
+
+    }
+  );
+
+}
 
   // =========================
   // 🃏 關閉新增小卡視窗
