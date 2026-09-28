@@ -1161,6 +1161,80 @@ function editCollection(id) {
   ).classList.add('show');
 
 }
+
+    // =========================
+// 🗑️ 刪除收藏
+// =========================
+
+async function deleteCollectionItem(
+  id,
+  name
+) {
+
+  const confirmed =
+    confirm(
+      `確定要刪除「${name}」嗎？\n\n刪除後會移到 Notion 垃圾桶。`
+    );
+
+  if (!confirmed) {
+    return;
+  }
+
+
+  try {
+
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method: 'POST',
+
+          body:
+            JSON.stringify({
+              action:
+                'deleteCollection',
+
+              id:
+                id
+            })
+        }
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+
+      throw new Error(
+        result.message ||
+        '刪除收藏失敗'
+      );
+
+    }
+
+
+    alert(
+      '刪除收藏成功！🗑️'
+    );
+
+
+    await loadCollections();
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      '刪除失敗：' +
+      error.message
+    );
+
+  }
+
+}
     
 
 // =========================
