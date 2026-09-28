@@ -9,7 +9,7 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>FanFlow｜通知中心</title>
+  <title>FanFlow｜設定</title>
   
   <style>
 
@@ -580,7 +580,7 @@
 
     <a
   href="notifications.html"
-  class="menu-item active"
+  class="menu-item"
 >
   🔔
   <span class="menu-text">
@@ -589,14 +589,14 @@
 </a>
 
     <a
-      href="#"
-      class="menu-item"
-    >
-      ⚙️
-      <span class="menu-text">
-        設定
-      </span>
-    </a>
+  href="settings.html"
+  class="menu-item active"
+>
+  ⚙️
+  <span class="menu-text">
+    設定
+  </span>
+</a>
 
   </aside>
 
@@ -610,714 +610,147 @@
     <div>
 
       <h1 class="page-title">
-        🔔 通知中心
-      </h1>
+  ⚙️ 設定
+</h1>
 
-      <div class="page-subtitle">
-        集中查看需要處理的代購與交易提醒
-      </div>
-
-    </div>
-
-  </div>
-
-
-    <!-- 統計 -->
-
-<div class="stats">
-
-  <div class="stat-card">
-
-    <div class="stat-label">
-      🔔 待處理提醒
-    </div>
-
-    <div
-      class="stat-number"
-      id="totalNotificationCount"
-    >
-      0
-    </div>
-
-  </div>
-
-
-  <div class="stat-card">
-
-    <div class="stat-label">
-      💳 未付款
-    </div>
-
-    <div
-      class="stat-number"
-      id="unpaidNotificationCount"
-    >
-      0
-    </div>
-
-  </div>
-
-
-  <div class="stat-card">
-
-    <div class="stat-label">
-      📦 待交付
-    </div>
-
-    <div
-      class="stat-number"
-      id="deliveryNotificationCount"
-    >
-      0
-    </div>
-
-  </div>
-
-
-  <div class="stat-card">
-
-    <div class="stat-label">
-      ⏰ 即將截止
-    </div>
-
-    <div
-      class="stat-number"
-      id="deadlineNotificationCount"
-    >
-      0
-    </div>
-
-  </div>
-
+<div class="page-subtitle">
+  調整 FanFlow 的使用偏好與功能設定
 </div>
 
-<!-- 搜尋與篩選 -->
+    </div>
+
+  </div>
+
+<!-- 通知設定 -->
 
 <div class="toolbar">
 
-  <input
-    class="search-input"
-    id="notificationSearch"
-    type="text"
-    placeholder="🔍 搜尋姓名、代購、商品..."
-  >
+  <div style="width: 100%;">
 
-  <div class="filter-row">
-
-    <button
-      class="filter-button active"
-      data-type="all"
-      onclick="setNotificationFilter(this)"
+    <div
+      style="
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      "
     >
-      全部
-    </button>
+      🔔 通知設定
+    </div>
 
-    <button
-      class="filter-button"
-      data-type="unpaid"
-      onclick="setNotificationFilter(this)"
+    <div
+      style="
+        color: #777;
+        margin-bottom: 20px;
+      "
     >
-      💳 未付款
-    </button>
+      設定通知中心的提醒方式
+    </div>
 
-    <button
-      class="filter-button"
-      data-type="delivery"
-      onclick="setNotificationFilter(this)"
-    >
-      📦 待交付
-    </button>
 
-    <button
-      class="filter-button"
-      data-type="deadline"
-      onclick="setNotificationFilter(this)"
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+      "
     >
-      ⏰ 即將截止
-    </button>
+
+      <div>
+
+        <div style="font-weight: 600;">
+          ⏰ 即將截止提醒
+        </div>
+
+        <div
+          style="
+            color: #888;
+            font-size: 14px;
+            margin-top: 5px;
+          "
+        >
+          代購截止日前幾天開始顯示提醒
+        </div>
+
+      </div>
+
+
+      <select
+        id="deadlineReminderDays"
+        class="search-input"
+        style="
+          width: 140px;
+          margin: 0;
+        "
+      >
+        <option value="1">
+          提前 1 天
+        </option>
+
+        <option value="3" selected>
+          提前 3 天
+        </option>
+
+        <option value="5">
+          提前 5 天
+        </option>
+
+        <option value="7">
+          提前 7 天
+        </option>
+      </select>
+
+    </div>
 
   </div>
 
 </div>
-
-<!-- 通知列表 -->
-
-<div
-  class="card-grid"
-  id="notificationList"
->
-
-  <div class="empty-box">
-
-    🔔 通知資料載入中...
-
-  </div>
-
-</div>
-
+  
 </main>
   
- 
-  <script>
+<script>
 
-const API_URL =
-  'https://script.google.com/macros/s/AKfycbz7CVrbddXxIvd86Z3PeMyM9MT6q7QBe7EJ5n1uQU7pTkwCYgc-4gjcg7EmRmz5itDSJQ/exec';
-
-let notificationsData = [];
-
-let currentNotificationFilter =
-  'all';
-
-let currentNotificationSearch =
-  '';
-
-    // =========================
-// 💳 讀取未付款提醒
+// =========================
+// ⚙️ 讀取設定
 // =========================
 
-async function loadNotifications() {
-
-  const list =
-    document.getElementById(
-      'notificationList'
-    );
-
-
-  try {
-
-    list.innerHTML =
-      `
-        <div class="empty-box">
-          🔔 正在整理通知...
-        </div>
-      `;
-
-
-    // =========================
-// 🧾 讀取訂單資料
-// =========================
-
-const orderResponse =
-  await fetch(
-    API_URL +
-    '?action=getOrders'
+const deadlineReminderDays =
+  document.getElementById(
+    'deadlineReminderDays'
   );
 
 
-const orderResult =
-  await orderResponse.json();
-
-
-if (!orderResult.success) {
-
-  throw new Error(
-    orderResult.message ||
-    '讀取訂單資料失敗'
+const savedDeadlineDays =
+  localStorage.getItem(
+    'fanflowDeadlineReminderDays'
   );
+
+
+if (savedDeadlineDays) {
+
+  deadlineReminderDays.value =
+    savedDeadlineDays;
 
 }
 
 
-const orders =
-  orderResult.data || [];
-
-
 // =========================
-// 🛍️ 讀取代購資料
+// 💾 儲存設定
 // =========================
 
-const groupBuyResponse =
-  await fetch(
-    API_URL +
-    '?action=getGroupBuys'
-  );
+deadlineReminderDays.addEventListener(
+  'change',
+  function() {
 
-
-const groupBuyResult =
-  await groupBuyResponse.json();
-
-
-if (!groupBuyResult.success) {
-
-  throw new Error(
-    groupBuyResult.message ||
-    '讀取代購資料失敗'
-  );
-
-}
-
-
-const groupBuys =
-  groupBuyResult.data || [];
-
-
-// =========================
-// 💳 未付款訂單
-// =========================
-
-const unpaidOrders =
-  orders.filter(
-    function(item) {
-
-      return (
-        item.paymentStatus ===
-        '🔴 未付款'
-      );
-
-    }
-  );
-
-
-// =========================
-// 📦 已到貨待交付
-// =========================
-
-const deliveryOrders =
-  orders.filter(
-    function(item) {
-
-      return (
-        item.orderStatus ===
-        '🟡 已到貨'
-      );
-
-    }
-  );
-
-
-// =========================
-// 🔔 建立通知資料
-// =========================
-
-const unpaidNotifications =
-  unpaidOrders.map(
-    function(item) {
-
-      return {
-        type:
-          'unpaid',
-
-        name:
-          item.name || '',
-
-        groupBuy:
-          item.groupBuy || '',
-
-        product:
-          item.product || '',
-
-        amount:
-          item.total || 0
-      };
-
-    }
-  );
-
-
-const deliveryNotifications =
-  deliveryOrders.map(
-    function(item) {
-
-      return {
-        type:
-          'delivery',
-
-        name:
-          item.name || '',
-
-        groupBuy:
-          item.groupBuy || '',
-
-        product:
-          item.product || '',
-
-        amount:
-          item.total || 0
-      };
-
-    }
-  );
-
-
-// =========================
-// ⏰ 即將截止代購
-// =========================
-
-const today =
-  new Date();
-
-today.setHours(
-  0,
-  0,
-  0,
-  0
-);
-
-
-const deadlineLimit =
-  new Date(today);
-
-deadlineLimit.setDate(
-  deadlineLimit.getDate() + 3
-);
-
-
-const deadlineNotifications =
-  groupBuys
-    .filter(
-      function(item) {
-
-        if (!item.deadline) {
-          return false;
-        }
-
-
-        const deadline =
-          new Date(
-            item.deadline +
-            'T00:00:00'
-          );
-
-
-        return (
-          deadline >= today &&
-          deadline <= deadlineLimit
-        );
-
-      }
-    )
-    .map(
-      function(item) {
-
-        return {
-          type:
-            'deadline',
-
-          name:
-            item.name || '',
-
-          groupBuy:
-            item.group || '',
-
-          product:
-            '',
-
-          amount:
-            0,
-
-          deadline:
-            item.deadline || ''
-        };
-
-      }
+    localStorage.setItem(
+      'fanflowDeadlineReminderDays',
+      deadlineReminderDays.value
     );
-
-
-// =========================
-// 🔔 合併所有通知
-// =========================
-
-notificationsData = [
-  ...unpaidNotifications,
-  ...deliveryNotifications,
-  ...deadlineNotifications
-];
-
-// =========================
-// 🔔 更新通知統計
-// =========================
-
-document.getElementById(
-  'unpaidNotificationCount'
-).textContent =
-  unpaidNotifications.length;
-
-
-document.getElementById(
-  'deliveryNotificationCount'
-).textContent =
-  deliveryNotifications.length;
-
-
-document.getElementById(
-  'deadlineNotificationCount'
-).textContent =
-  deadlineNotifications.length;
-
-
-document.getElementById(
-  'totalNotificationCount'
-).textContent =
-  notificationsData.length;
-
-
-renderNotifications(
-  notificationsData
-);
-
-
-  } catch (error) {
-
-    console.error(
-      error
-    );
-
-
-    list.innerHTML =
-      `
-        <div class="empty-box">
-          ⚠️ 讀取通知失敗
-          <br><br>
-          ${error.message}
-        </div>
-      `;
 
   }
+);
 
-}
-
-    // =========================
-// 🔔 顯示通知卡片
-// =========================
-
-function renderNotifications(
-  notifications
-) {
-
-  const list =
-    document.getElementById(
-      'notificationList'
-    );
-
-
-  if (
-    notifications.length === 0
-  ) {
-
-    list.innerHTML =
-      `
-        <div class="empty-box">
-          🎉 目前沒有需要處理的通知
-        </div>
-      `;
-
-    return;
-
-  }
-
-
-  list.innerHTML =
-    notifications
-      .map(
-        function(item) {
-
-          let notificationTitle =
-            '🔔 待處理提醒';
-
-
-          if (
-            item.type === 'unpaid'
-          ) {
-
-            notificationTitle =
-              '💳 尚未付款';
-
-          }
-
-
-          if (
-            item.type === 'delivery'
-          ) {
-
-            notificationTitle =
-              '📦 已到貨待交付';
-
-          }
-
-          if (
-  item.type === 'deadline'
-) {
-
-  notificationTitle =
-    '⏰ 即將截止';
-
-}
-          
-
-          return `
-            <div class="trade-card">
-
-              <div class="trade-body">
-
-                <div class="trade-name">
-                  ${notificationTitle}
-                </div>
-
-                <div class="trade-detail">
-                  👤 ${item.name || '未填姓名'}
-                </div>
-
-                <div class="trade-detail">
-                  🛍️ ${item.groupBuy || '未填代購'}
-                </div>
-
-                ${
-                  item.product
-                    ? `
-                        <div class="trade-detail">
-                          📦 ${item.product}
-                        </div>
-                      `
-                    : ''
-                }
-
-                ${
-  item.type === 'deadline'
-    ? `
-        <div class="trade-detail">
-          📅 截止日期：${item.deadline || '未設定'}
-        </div>
-      `
-    : `
-        <div class="trade-detail">
-          💰 NT$ ${Number(
-            item.amount || 0
-          ).toLocaleString()}
-        </div>
-      `
-}
-
-              </div>
-
-            </div>
-          `;
-
-        }
-      )
-      .join('');
-
-}
-    
-// =========================
-// 🏷️ 通知類型篩選
-// =========================
-
-function setNotificationFilter(
-  button
-) {
-
-  currentNotificationFilter =
-    button.dataset.type;
-
-
-  document
-    .querySelectorAll(
-      '.filter-button'
-    )
-    .forEach(
-      function(item) {
-
-        item.classList.remove(
-          'active'
-        );
-
-      }
-    );
-
-
-  button.classList.add(
-    'active'
-  );
-
-
-  applyNotificationFilters();
-
-}
-
-
-// =========================
-// 🔍 搜尋與篩選通知
-// =========================
-
-function applyNotificationFilters() {
-
-  const searchInput =
-    document.getElementById(
-      'notificationSearch'
-    );
-
-
-  currentNotificationSearch =
-    searchInput.value
-      .trim()
-      .toLowerCase();
-
-
-  const filteredNotifications =
-    notificationsData.filter(
-      function(item) {
-
-        const matchesType =
-          currentNotificationFilter ===
-            'all' ||
-          item.type ===
-            currentNotificationFilter;
-
-
-        const searchText =
-          [
-            item.name,
-            item.groupBuy,
-            item.product
-          ]
-            .filter(Boolean)
-            .join(' ')
-            .toLowerCase();
-
-
-        const matchesSearch =
-          !currentNotificationSearch ||
-          searchText.includes(
-            currentNotificationSearch
-          );
-
-
-        return (
-          matchesType &&
-          matchesSearch
-        );
-
-      }
-    );
-
-
-  renderNotifications(
-    filteredNotifications
-  );
-
-}
-
-
-// =========================
-// 🔍 搜尋通知
-// =========================
-
-document
-  .getElementById(
-    'notificationSearch'
-  )
-  .addEventListener(
-    'input',
-    applyNotificationFilters
-  );
-
-
-// =========================
-// 🔔 開啟頁面時自動讀取
-// =========================
-
-loadNotifications();
-    
 </script>
   
 </body>
