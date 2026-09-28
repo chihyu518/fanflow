@@ -793,29 +793,62 @@ async function loadNotifications() {
       `;
 
 
-    const response =
-      await fetch(
-        API_URL +
-        '?action=getOrders'
-      );
+    // =========================
+// 🧾 讀取訂單資料
+// =========================
+
+const orderResponse =
+  await fetch(
+    API_URL +
+    '?action=getOrders'
+  );
 
 
-    const result =
-      await response.json();
+const orderResult =
+  await orderResponse.json();
 
 
-    if (!result.success) {
+if (!orderResult.success) {
 
-      throw new Error(
-        result.message ||
-        '讀取訂單資料失敗'
-      );
+  throw new Error(
+    orderResult.message ||
+    '讀取訂單資料失敗'
+  );
 
-    }
+}
 
 
-    const orders =
-      result.data || [];
+const orders =
+  orderResult.data || [];
+
+
+// =========================
+// 🛍️ 讀取代購資料
+// =========================
+
+const groupBuyResponse =
+  await fetch(
+    API_URL +
+    '?action=getGroupBuys'
+  );
+
+
+const groupBuyResult =
+  await groupBuyResponse.json();
+
+
+if (!groupBuyResult.success) {
+
+  throw new Error(
+    groupBuyResult.message ||
+    '讀取代購資料失敗'
+  );
+
+}
+
+
+const groupBuys =
+  groupBuyResult.data || [];
 
 
 // =========================
@@ -906,11 +939,89 @@ const deliveryNotifications =
   );
 
 
+// =========================
+// ⏰ 即將截止代購
+// =========================
+
+const today =
+  new Date();
+
+today.setHours(
+  0,
+  0,
+  0,
+  0
+);
+
+
+const deadlineLimit =
+  new Date(today);
+
+deadlineLimit.setDate(
+  deadlineLimit.getDate() + 3
+);
+
+
+const deadlineNotifications =
+  groupBuys
+    .filter(
+      function(item) {
+
+        if (!item.deadline) {
+          return false;
+        }
+
+
+        const deadline =
+          new Date(
+            item.deadline +
+            'T00:00:00'
+          );
+
+
+        return (
+          deadline >= today &&
+          deadline <= deadlineLimit
+        );
+
+      }
+    )
+    .map(
+      function(item) {
+
+        return {
+          type:
+            'deadline',
+
+          name:
+            item.name || '',
+
+          groupBuy:
+            item.group || '',
+
+          product:
+            '',
+
+          amount:
+            0,
+
+          deadline:
+            item.deadline || ''
+        };
+
+      }
+    );
+
+
+// =========================
+// 🔔 合併所有通知
+// =========================
+
 notificationsData = [
   ...unpaidNotifications,
-  ...deliveryNotifications
+  ...deliveryNotifications,
+  ...deadlineNotifications
 ];
-
 
 // =========================
 // 🔔 更新通知統計
@@ -926,6 +1037,12 @@ document.getElementById(
   'deliveryNotificationCount'
 ).textContent =
   deliveryNotifications.length;
+
+
+document.getElementById(
+  'deadlineNotificationCount'
+).textContent =
+  deadlineNotifications.length;
 
 
 document.getElementById(
@@ -1017,6 +1134,15 @@ function renderNotifications(
 
           }
 
+          if (
+  item.type === 'deadline'
+) {
+
+  notificationTitle =
+    '⏰ 即將截止';
+
+}
+          
 
           return `
             <div class="trade-card">
@@ -1045,11 +1171,21 @@ function renderNotifications(
                     : ''
                 }
 
-                <div class="trade-detail">
-                  💰 NT$ ${Number(
-                    item.amount || 0
-                  ).toLocaleString()}
-                </div>
+                ${
+  item.type === 'deadline'
+    ? `
+        <div class="trade-detail">
+          📅 截止日期：${item.deadline || '未設定'}
+        </div>
+      `
+    : `
+        <div class="trade-detail">
+          💰 NT$ ${Number(
+            item.amount || 0
+          ).toLocaleString()}
+        </div>
+      `
+}
 
               </div>
 
