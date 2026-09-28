@@ -692,21 +692,63 @@ if (dashboardNotifications.length === 0) {
               }
 
 
-              if (item.type === 'deadline') {
+             if (item.type === 'deadline') {
 
-                title =
-                  '⏰ 即將截止';
+  title =
+    '⏰ 即將截止';
 
-                detail =
-                  `
-                    🛍️ ${item.name || '未設定'}
-                    ｜📅 ${item.deadline || '未設定'}
-                  `;
 
-                targetPage =
-                  'groupbuy.html';
+  const deadlineDate =
+    new Date(
+      item.deadline +
+      'T00:00:00'
+    );
 
-              }
+
+  const daysLeft =
+    Math.ceil(
+      (
+        deadlineDate.getTime() -
+        today.getTime()
+      ) /
+      (
+        1000 *
+        60 *
+        60 *
+        24
+      )
+    );
+
+
+  let deadlineText = '';
+
+  if (daysLeft === 0) {
+
+    deadlineText =
+      '🔥 今天截止';
+
+  } else {
+
+    deadlineText =
+      '剩 ' +
+      daysLeft +
+      ' 天';
+
+  }
+
+
+  detail =
+    `
+      🛍️ ${item.name || '未設定'}
+      ｜📅 ${item.deadline || '未設定'}
+      ｜${deadlineText}
+    `;
+
+
+  targetPage =
+    'groupbuy.html';
+
+}
 
 
               return `
