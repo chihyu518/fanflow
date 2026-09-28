@@ -179,6 +179,27 @@ display: block;
   color: #777;
   margin-top: 5px;
 }
+
+    /* =========================
+   ⚡ 快速操作按鈕
+========================= */
+
+.quick-action-button {
+  border: none;
+  background: #5865f2;
+  color: white;
+  padding: 11px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.quick-action-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+}
     
     /* 手機 */
     @media (max-width: 800px) {
@@ -380,7 +401,7 @@ display: block;
 
     <button
       type="button"
-      class="create-button"
+      class="quick-action-button"
       onclick="window.location.href='groupbuy.html'"
     >
       ＋ 建立代購
@@ -388,7 +409,7 @@ display: block;
 
     <button
       type="button"
-      class="create-button"
+      class="quick-action-button"
       onclick="window.location.href='cardtrade.html'"
     >
       ＋ 新增小卡交易
@@ -396,7 +417,7 @@ display: block;
 
     <button
       type="button"
-      class="create-button"
+      class="quick-action-button"
       onclick="window.location.href='collection.html'"
     >
       ＋ 新增收藏
