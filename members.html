@@ -1044,12 +1044,22 @@ async function saveMember() {
     '儲存中...';
 
 
+  // 判斷現在是新增還是編輯
+  const isEditing =
+    Boolean(editingMemberId);
+
+
   try {
 
     const data = {
 
       action:
-        'createMember',
+        isEditing
+          ? 'updateMember'
+          : 'createMember',
+
+      id:
+        editingMemberId,
 
       name:
         name,
@@ -1105,20 +1115,35 @@ async function saveMember() {
 
       throw new Error(
         result.message ||
-        '新增成員失敗'
+        (
+          isEditing
+            ? '修改成員失敗'
+            : '新增成員失敗'
+        )
       );
 
     }
 
 
-    alert(
-      '新增成員成功！👥'
-    );
+    if (isEditing) {
+
+      alert(
+        '修改成員成功！👥'
+      );
+
+    } else {
+
+      alert(
+        '新增成員成功！👥'
+      );
+
+    }
 
 
     closeMemberModal();
 
 
+    // 清除編輯狀態
     editingMemberId = '';
 
 
@@ -1160,7 +1185,11 @@ async function saveMember() {
 
 
     alert(
-      '新增失敗：' +
+      (
+        isEditing
+          ? '修改失敗：'
+          : '新增失敗：'
+      ) +
       error.message
     );
 
@@ -1245,6 +1274,18 @@ function renderMembers(members) {
                     : ''
                 }
 
+ <div class="trade-actions">
+
+                  <button
+                    type="button"
+                    class="edit-trade-button"
+                    onclick="editMember('${item.id}')"
+                  >
+                    ✏️ 編輯
+                  </button>
+
+                </div>
+                
               </div>
 
             </div>
@@ -1255,6 +1296,8 @@ function renderMembers(members) {
       .join('');
 
 }
+
+                   
     
 // =========================
 // 👥 讀取成員名單
