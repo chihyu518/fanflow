@@ -1049,6 +1049,56 @@ deadlineReminderDays.addEventListener(
 
   }
 );
+
+  const resetPreferencesButton =
+  document.getElementById(
+    'resetPreferencesButton'
+  );
+
+
+resetPreferencesButton.addEventListener(
+  'click',
+  function() {
+
+    const confirmed =
+      confirm(
+        '確定要重設 FanFlow 的偏好設定嗎？\n\n提醒天數、預設幣別與預設取貨方式都會恢復預設值。'
+      );
+
+    if (!confirmed) {
+      return;
+    }
+
+
+    localStorage.removeItem(
+      'fanflowDeadlineReminderDays'
+    );
+
+    localStorage.removeItem(
+      'fanflowDefaultCurrency'
+    );
+
+    localStorage.removeItem(
+      'fanflowDefaultDeliveryMethod'
+    );
+
+
+    deadlineReminderDays.value =
+      '3';
+
+    defaultCurrency.value =
+      '🇹🇼 TWD 台幣';
+
+    defaultDeliveryMethod.value =
+      '🏪 賣貨便';
+
+
+    alert(
+      '偏好設定已恢復預設值！'
+    );
+
+  }
+);
   
 </script>
   
