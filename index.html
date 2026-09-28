@@ -292,8 +292,14 @@ display: block;
 
     <div class="stats">
 
-      <div class="card">
-  <div class="card-title">💳 未收款金額</div>
+      <div
+  class="card"
+  onclick="window.location.href='finance.html'"
+  style="cursor: pointer;"
+>
+  <div class="card-title">
+    💳 未收款金額
+  </div>
 
   <div
     class="card-number"
@@ -303,8 +309,14 @@ display: block;
   </div>
 </div>
 
-      <div class="card">
-  <div class="card-title">📦 未到貨商品</div>
+      <div
+  class="card"
+  onclick="window.location.href='groupbuy.html'"
+  style="cursor: pointer;"
+>
+  <div class="card-title">
+    📦 未到貨商品
+  </div>
 
   <div
     class="card-number"
@@ -314,18 +326,31 @@ display: block;
   </div>
 </div>
 
-      <div class="card">
-        <div class="card-title">🔄 進行中代購</div>
-        <div
-  class="card-number"
-  id="activeGroupBuyCount"
+      <div
+  class="card"
+  onclick="window.location.href='groupbuy.html'"
+  style="cursor: pointer;"
 >
-  0 團
-</div>
-      </div>
+  <div class="card-title">
+    🔄 進行中代購
+  </div>
 
-      <div class="card">
-  <div class="card-title">🟡 待交付商品</div>
+  <div
+    class="card-number"
+    id="activeGroupBuyCount"
+  >
+    0 團
+  </div>
+</div>
+
+      <div
+  class="card"
+  onclick="window.location.href='groupbuy.html'"
+  style="cursor: pointer;"
+>
+  <div class="card-title">
+    🟡 待交付商品
+  </div>
 
   <div
     class="card-number"
