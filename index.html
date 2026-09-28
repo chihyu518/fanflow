@@ -343,7 +343,20 @@ display: block;
 
 <div class="section">
 
-  <h2>🔔 待處理事項</h2>
+  <h2>
+  🔔 待處理事項
+  <span
+    id="dashboardNotificationCount"
+    style="
+      font-size: 14px;
+      font-weight: 500;
+      color: #888;
+      margin-left: 8px;
+    "
+  >
+    共 0 項
+  </span>
+</h2>
 
   <div
     class="empty-box"
@@ -608,6 +621,16 @@ const dashboardNotificationList =
     'dashboardNotificationList'
   );
 
+    const dashboardNotificationCount =
+  document.getElementById(
+    'dashboardNotificationCount'
+  );
+
+
+dashboardNotificationCount.textContent =
+  '共 ' +
+  dashboardNotifications.length +
+  ' 項';
 
 if (dashboardNotifications.length === 0) {
 
