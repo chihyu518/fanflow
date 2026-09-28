@@ -1350,6 +1350,11 @@ async function saveCollection() {
     '儲存中...';
 
 
+  // 判斷現在是新增還是編輯
+  const isEditing =
+    Boolean(editingCollectionId);
+
+
   try {
 
     // =========================
@@ -1368,7 +1373,28 @@ async function saveCollection() {
     let imageName = '';
     let imageType = '';
 
+    // 編輯時先取得原本圖片
+    let existingImageUrl = '';
 
+    if (isEditing) {
+
+      const existingItem =
+        collectionsData.find(
+          function(collection) {
+            return collection.id ===
+              editingCollectionId;
+          }
+        );
+
+      if (existingItem) {
+        existingImageUrl =
+          existingItem.imageUrl || '';
+      }
+
+    }
+
+
+    // 如果有重新選圖片
     if (imageFile) {
 
       imageData =
@@ -1390,7 +1416,12 @@ async function saveCollection() {
     const data = {
 
       action:
-        'createCollection',
+        isEditing
+          ? 'updateCollection'
+          : 'createCollection',
+
+      id:
+        editingCollectionId,
 
       name:
         name,
@@ -1439,6 +1470,11 @@ async function saveCollection() {
           'collectionNote'
         ).value.trim(),
 
+      // 編輯時如果沒有換圖，
+      // 後端會繼續使用原本圖片
+      imageUrl:
+        existingImageUrl,
+
       imageData:
         imageData,
 
@@ -1468,19 +1504,39 @@ async function saveCollection() {
 
 
     if (!result.success) {
+
       throw new Error(
         result.message ||
-        '新增收藏失敗'
+        (
+          isEditing
+            ? '修改收藏失敗'
+            : '新增收藏失敗'
+        )
       );
+
     }
 
 
-    alert(
-      '新增收藏成功！💖'
-    );
+    if (isEditing) {
+
+      alert(
+        '修改收藏成功！💖'
+      );
+
+    } else {
+
+      alert(
+        '新增收藏成功！💖'
+      );
+
+    }
 
 
     closeCollectionModal();
+
+
+    // 清除編輯狀態
+    editingCollectionId = '';
 
 
     // 清空表單
@@ -1535,7 +1591,11 @@ async function saveCollection() {
     console.error(error);
 
     alert(
-      '新增失敗：' +
+      (
+        isEditing
+          ? '修改失敗：'
+          : '新增失敗：'
+      ) +
       error.message
     );
 
