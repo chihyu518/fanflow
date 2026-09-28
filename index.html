@@ -478,6 +478,23 @@ display: block;
     'https://script.google.com/macros/s/AKfycbz7CVrbddXxIvd86Z3PeMyM9MT6q7QBe7EJ5n1uQU7pTkwCYgc-4gjcg7EmRmz5itDSJQ/exec';
 
     // =========================
+// 🔐 FanFlow 登入保護
+// =========================
+
+const fanflowSessionToken =
+  sessionStorage.getItem(
+    'fanflowSessionToken'
+  );
+
+if (!fanflowSessionToken) {
+
+  window.location.replace(
+    'login.html'
+  );
+
+}
+    
+    // =========================
 // 🛍️ 讀取代購 Dashboard
 // =========================
 
