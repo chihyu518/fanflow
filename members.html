@@ -1297,7 +1297,88 @@ function renderMembers(members) {
 
 }
 
-                   
+// =========================
+// ✏️ 編輯成員
+// =========================
+
+function editMember(id) {
+
+  const item =
+    membersData.find(
+      function(member) {
+
+        return (
+          member.id === id
+        );
+
+      }
+    );
+
+
+  if (!item) {
+
+    alert(
+      '找不到這筆成員資料'
+    );
+
+    return;
+
+  }
+
+
+  editingMemberId =
+    item.id;
+
+
+  document.getElementById(
+    'memberModalTitle'
+  ).textContent =
+    '✏️ 編輯成員';
+
+
+  document.getElementById(
+    'memberName'
+  ).value =
+    item.name || '';
+
+
+  document.getElementById(
+    'memberContact'
+  ).value =
+    item.contact || '';
+
+
+  document.getElementById(
+    'memberType'
+  ).value =
+    item.type || '';
+
+
+  document.getElementById(
+    'memberDeliveryMethod'
+  ).value =
+    item.deliveryMethod || '';
+
+
+  document.getElementById(
+    'memberShippingInfo'
+  ).value =
+    item.shippingInfo || '';
+
+
+  document.getElementById(
+    'memberNote'
+  ).value =
+    item.note || '';
+
+
+  document.getElementById(
+    'memberModal'
+  ).classList.add(
+    'show'
+  );
+
+}                   
     
 // =========================
 // 👥 讀取成員名單
