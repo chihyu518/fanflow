@@ -1538,12 +1538,18 @@ loadOrders(item.name);
   .value = '';
 
 
+const defaultCurrency =
+  localStorage.getItem(
+    'fanflowDefaultCurrency'
+  ) || '🇹🇼 TWD 台幣';
+
+
 document
   .getElementById(
     'productCurrency'
   )
   .value =
-    '🇹🇼 TWD 台幣';
+    defaultCurrency;
       
 
       document
