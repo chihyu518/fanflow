@@ -1063,6 +1063,31 @@ function openCollectionModal() {
 }
 
     // =========================
+// ⚡ 首頁快速新增收藏
+// =========================
+
+const collectionUrlParams =
+  new URLSearchParams(
+    window.location.search
+  );
+
+if (
+  collectionUrlParams.get('action') ===
+  'new'
+) {
+
+  window.addEventListener(
+    'load',
+    function() {
+
+      openCollectionModal();
+
+    }
+  );
+
+}
+    
+    // =========================
 // ✏️ 編輯收藏
 // =========================
 
