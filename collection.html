@@ -1062,6 +1062,106 @@ function openCollectionModal() {
 
 }
 
+    // =========================
+// ✏️ 編輯收藏
+// =========================
+
+function editCollection(id) {
+
+  const item =
+    collectionsData.find(
+      function(collection) {
+        return collection.id === id;
+      }
+    );
+
+
+  if (!item) {
+
+    alert(
+      '找不到這筆收藏資料'
+    );
+
+    return;
+
+  }
+
+
+  editingCollectionId =
+    item.id;
+
+
+  document.getElementById(
+    'collectionModalTitle'
+  ).textContent =
+    '✏️ 編輯收藏';
+
+
+  document.getElementById(
+    'collectionName'
+  ).value =
+    item.name || '';
+
+
+  document.getElementById(
+    'collectionType'
+  ).value =
+    item.type || '🃏 小卡';
+
+
+  document.getElementById(
+    'collectionGroup'
+  ).value =
+    item.group || '';
+
+
+  document.getElementById(
+    'collectionMember'
+  ).value =
+    item.member || '';
+
+
+  document.getElementById(
+    'collectionVersion'
+  ).value =
+    item.version || '';
+
+
+  document.getElementById(
+    'collectionQuantity'
+  ).value =
+    item.quantity || 1;
+
+
+  document.getElementById(
+    'collectionPrice'
+  ).value =
+    item.price || '';
+
+
+  document.getElementById(
+    'collectionDate'
+  ).value =
+    item.acquiredDate || '';
+
+
+  document.getElementById(
+    'collectionImage'
+  ).value = '';
+
+
+  document.getElementById(
+    'collectionNote'
+  ).value =
+    item.note || '';
+
+
+  document.getElementById(
+    'collectionModal'
+  ).classList.add('show');
+
+}
+    
 
 // =========================
 // ♡ 關閉收藏視窗
