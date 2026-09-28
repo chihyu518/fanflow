@@ -9,7 +9,7 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>FanFlow｜收藏庫</title>
+  <title>FanFlow｜成員管理</title>
 
   <style>
 
@@ -559,24 +559,24 @@
     </a>
 
     <a
-      href="collection.html"
-      class="menu-item active"
-    >
-      ♡
-      <span class="menu-text">
-        收藏庫
-      </span>
-    </a>
+  href="collection.html"
+  class="menu-item"
+>
+  ♡
+  <span class="menu-text">
+    收藏庫
+  </span>
+</a>
 
     <a
-      href="#"
-      class="menu-item"
-    >
-      👥
-      <span class="menu-text">
-        成員管理
-      </span>
-    </a>
+  href="members.html"
+  class="menu-item active"
+>
+  👥
+  <span class="menu-text">
+    成員管理
+  </span>
+</a>
 
     <a
       href="#"
@@ -610,20 +610,20 @@
       <div>
 
         <h1 class="page-title">
-  ♡ 收藏庫
+  👥 成員管理
 </h1>
 
         <div class="page-subtitle">
-  整理與記錄你的收藏
+  管理代購與交易成員資料
 </div>
 
       </div>
 
       <button
   class="add-button"
-  onclick="openCollectionModal()"
+  onclick="openMemberModal()"
 >
-  ＋ 新增收藏
+  ＋ 新增成員
 </button>
 
     </div>
@@ -636,12 +636,12 @@
   <div class="stat-card">
 
     <div class="stat-label">
-      💖 收藏總數
+      👥 成員總數
     </div>
 
     <div
       class="stat-number"
-      id="totalCollectionCount"
+      id="totalMemberCount"
     >
       0
     </div>
@@ -652,12 +652,12 @@
   <div class="stat-card">
 
     <div class="stat-label">
-      🃏 小卡
+      👥 團員
     </div>
 
     <div
       class="stat-number"
-      id="cardCollectionCount"
+      id="groupMemberCount"
     >
       0
     </div>
@@ -668,12 +668,12 @@
   <div class="stat-card">
 
     <div class="stat-label">
-      💿 專輯
+      🛒 買家
     </div>
 
     <div
       class="stat-number"
-      id="albumCollectionCount"
+      id="buyerMemberCount"
     >
       0
     </div>
@@ -684,12 +684,12 @@
   <div class="stat-card">
 
     <div class="stat-label">
-      🎁 周邊
+      🔄 交易對象
     </div>
 
     <div
       class="stat-number"
-      id="merchCollectionCount"
+      id="tradePartnerCount"
     >
       0
     </div>
@@ -705,9 +705,9 @@
 
   <input
     class="search-input"
-    id="collectionSearch"
+    id="memberSearch"
     type="text"
-    placeholder="🔍 搜尋收藏、團體、成員、版本..."
+    placeholder="🔍 搜尋姓名、聯絡方式、寄送資訊..."
   >
 
   <div class="filter-row">
@@ -715,41 +715,33 @@
     <button
       class="filter-button active"
       data-type="all"
-      onclick="setCollectionFilter(this)"
+      onclick="setMemberFilter(this)"
     >
       全部
     </button>
 
     <button
       class="filter-button"
-      data-type="🃏 小卡"
-      onclick="setCollectionFilter(this)"
+      data-type="👥 團員"
+      onclick="setMemberFilter(this)"
     >
-      🃏 小卡
+      👥 團員
     </button>
 
     <button
       class="filter-button"
-      data-type="💿 專輯"
-      onclick="setCollectionFilter(this)"
+      data-type="🛒 買家"
+      onclick="setMemberFilter(this)"
     >
-      💿 專輯
+      🛒 買家
     </button>
 
     <button
       class="filter-button"
-      data-type="🎁 周邊"
-      onclick="setCollectionFilter(this)"
+      data-type="🔄 交易對象"
+      onclick="setMemberFilter(this)"
     >
-      🎁 周邊
-    </button>
-
-    <button
-      class="filter-button"
-      data-type="📦 其他"
-      onclick="setCollectionFilter(this)"
-    >
-      📦 其他
+      🔄 交易對象
     </button>
 
   </div>
@@ -761,14 +753,14 @@
 
 <div
   class="card-grid"
-  id="collectionList"
+  id="memberList"
 >
 
   <div class="empty-box">
 
-    ♡ 目前還沒有收藏資料
+    👥 目前還沒有成員資料
     <br><br>
-    點右上角「＋ 新增收藏」開始建立
+    點右上角「＋ 新增成員」開始建立
 
   </div>
 
@@ -782,20 +774,20 @@
 
 <div
   class="modal-overlay"
-  id="collectionModal"
+  id="memberModal"
 >
 
   <div class="modal-box">
 
     <div class="modal-header">
 
-      <h2 id="collectionModalTitle">
-        ＋ 新增收藏
+      <h2 id="memberModalTitle">
+        ＋ 新增成員
       </h2>
 
       <button
         class="modal-close"
-        onclick="closeCollectionModal()"
+        onclick="closeMemberModal()"
       >
         ×
       </button>
@@ -805,12 +797,25 @@
 
     <div class="form-group">
 
-      <label>💖 收藏名稱</label>
+      <label>👤 姓名</label>
 
       <input
         type="text"
-        id="collectionName"
-        placeholder="例如：泰山 Lucky Draw"
+        id="memberName"
+        placeholder="請輸入姓名"
+      >
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>📱 聯絡方式</label>
+
+      <input
+        type="text"
+        id="memberContact"
+        placeholder="例如：LINE、IG、Threads 帳號"
       >
 
     </div>
@@ -820,24 +825,24 @@
 
       <div class="form-group">
 
-        <label>🏷️ 收藏類型</label>
+        <label>🏷️ 成員類型</label>
 
-        <select id="collectionType">
+        <select id="memberType">
 
-          <option value="🃏 小卡">
-            🃏 小卡
+          <option value="">
+            請選擇
           </option>
 
-          <option value="💿 專輯">
-            💿 專輯
+          <option value="👥 團員">
+            👥 團員
           </option>
 
-          <option value="🎁 周邊">
-            🎁 周邊
+          <option value="🛒 買家">
+            🛒 買家
           </option>
 
-          <option value="📦 其他">
-            📦 其他
+          <option value="🔄 交易對象">
+            🔄 交易對象
           </option>
 
         </select>
@@ -847,75 +852,27 @@
 
       <div class="form-group">
 
-        <label>🎤 團體／藝人</label>
+        <label>📦 取貨方式</label>
 
-        <input
-          type="text"
-          id="collectionGroup"
-          placeholder="例如：BOYNEXTDOOR"
-        >
+        <select id="memberDeliveryMethod">
 
-      </div>
+          <option value="">
+            請選擇
+          </option>
 
-    </div>
+          <option value="🏪 賣貨便">
+            🏪 賣貨便
+          </option>
 
+          <option value="📦 店到店">
+            📦 店到店
+          </option>
 
-    <div class="form-row">
+          <option value="🤝 面交">
+            🤝 面交
+          </option>
 
-      <div class="form-group">
-
-        <label>👤 成員</label>
-
-        <input
-          type="text"
-          id="collectionMember"
-          placeholder="例如：泰山"
-        >
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label>📝 版本／來源</label>
-
-        <input
-          type="text"
-          id="collectionVersion"
-          placeholder="例如：Weverse 特典"
-        >
-
-      </div>
-
-    </div>
-
-
-    <div class="form-row">
-
-      <div class="form-group">
-
-        <label>🔢 數量</label>
-
-        <input
-          type="number"
-          id="collectionQuantity"
-          min="1"
-          value="1"
-        >
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label>💰 入手價格</label>
-
-        <input
-          type="number"
-          id="collectionPrice"
-          min="0"
-          placeholder="0"
-        >
+        </select>
 
       </div>
 
@@ -924,25 +881,13 @@
 
     <div class="form-group">
 
-      <label>📅 入手日期</label>
+      <label>📮 寄送資訊</label>
 
-      <input
-        type="date"
-        id="collectionDate"
-      >
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label>🖼️ 圖片</label>
-
-      <input
-        type="file"
-        id="collectionImage"
-        accept="image/*"
-      >
+      <textarea
+        id="memberShippingInfo"
+        rows="3"
+        placeholder="例如：取貨門市、收件資訊等"
+      ></textarea>
 
     </div>
 
@@ -952,7 +897,7 @@
       <label>📝 備註</label>
 
       <textarea
-        id="collectionNote"
+        id="memberNote"
         rows="3"
         placeholder="其他備註..."
       ></textarea>
@@ -965,7 +910,7 @@
       <button
         class="cancel-button"
         type="button"
-        onclick="closeCollectionModal()"
+        onclick="closeMemberModal()"
       >
         取消
       </button>
@@ -973,8 +918,8 @@
       <button
         class="save-button"
         type="button"
-        id="saveCollectionButton"
-        onclick="saveCollection()"
+        id="saveMemberButton"
+        onclick="saveMember()"
       >
         儲存
       </button>
@@ -988,13 +933,13 @@
   
   <script>
 
-  const API_URL =
-    'https://script.google.com/macros/s/AKfycbz7CVrbddXxIvd86Z3PeMyM9MT6q7QBe7EJ5n1uQU7pTkwCYgc-4gjcg7EmRmz5itDSJQ/exec';
+ const API_URL =
+  'https://script.google.com/macros/s/AKfycbz7CVrbddXxIvd86Z3PeMyM9MT6q7QBe7EJ5n1uQU7pTkwCYgc-4gjcg7EmRmz5itDSJQ/exec';
 
-    let collectionsData = [];
-let editingCollectionId = '';
-let currentCollectionFilter = 'all';
-let currentCollectionSearch = '';
+let membersData = [];
+let editingMemberId = '';
+let currentMemberFilter = 'all';
+let currentMemberSearch = '';
     
       // =========================
   // 🃏 開啟新增小卡視窗
@@ -1004,396 +949,63 @@ let currentCollectionSearch = '';
 // ♡ 開啟新增收藏視窗
 // =========================
 
-function openCollectionModal() {
+function openMemberModal() {
 
-  editingCollectionId = '';
+  editingMemberId = '';
 
   document.getElementById(
-    'collectionModalTitle'
+    'memberModalTitle'
   ).textContent =
-    '＋ 新增收藏';
+    '＋ 新增成員';
 
 
   document.getElementById(
-    'collectionName'
+    'memberName'
   ).value = '';
 
   document.getElementById(
-    'collectionType'
-  ).value =
-    '🃏 小卡';
-
-  document.getElementById(
-    'collectionGroup'
+    'memberContact'
   ).value = '';
 
   document.getElementById(
-    'collectionMember'
+    'memberType'
   ).value = '';
 
   document.getElementById(
-    'collectionVersion'
+    'memberDeliveryMethod'
   ).value = '';
 
   document.getElementById(
-    'collectionQuantity'
-  ).value = 1;
-
-  document.getElementById(
-    'collectionPrice'
+    'memberShippingInfo'
   ).value = '';
 
   document.getElementById(
-    'collectionDate'
-  ).value = '';
-
-  document.getElementById(
-    'collectionImage'
-  ).value = '';
-
-  document.getElementById(
-    'collectionNote'
+    'memberNote'
   ).value = '';
 
 
   document.getElementById(
-    'collectionModal'
+    'memberModal'
   ).classList.add('show');
 
 }
 
-    // =========================
-// ✏️ 編輯收藏
-// =========================
 
-function editCollection(id) {
-
-  const item =
-    collectionsData.find(
-      function(collection) {
-        return collection.id === id;
-      }
-    );
-
-
-  if (!item) {
-
-    alert(
-      '找不到這筆收藏資料'
-    );
-
-    return;
-
-  }
-
-
-  editingCollectionId =
-    item.id;
-
-
-  document.getElementById(
-    'collectionModalTitle'
-  ).textContent =
-    '✏️ 編輯收藏';
-
-
-  document.getElementById(
-    'collectionName'
-  ).value =
-    item.name || '';
-
-
-  document.getElementById(
-    'collectionType'
-  ).value =
-    item.type || '🃏 小卡';
-
-
-  document.getElementById(
-    'collectionGroup'
-  ).value =
-    item.group || '';
-
-
-  document.getElementById(
-    'collectionMember'
-  ).value =
-    item.member || '';
-
-
-  document.getElementById(
-    'collectionVersion'
-  ).value =
-    item.version || '';
-
-
-  document.getElementById(
-    'collectionQuantity'
-  ).value =
-    item.quantity || 1;
-
-
-  document.getElementById(
-    'collectionPrice'
-  ).value =
-    item.price || '';
-
-
-  document.getElementById(
-    'collectionDate'
-  ).value =
-    item.acquiredDate || '';
-
-
-  document.getElementById(
-    'collectionImage'
-  ).value = '';
-
-
-  document.getElementById(
-    'collectionNote'
-  ).value =
-    item.note || '';
-
-
-  document.getElementById(
-    'collectionModal'
-  ).classList.add('show');
-
-}
-
-    // =========================
-// 🗑️ 刪除收藏
-// =========================
-
-async function deleteCollectionItem(
-  id,
-  name
-) {
-
-  const confirmed =
-    confirm(
-      `確定要刪除「${name}」嗎？\n\n刪除後會移到 Notion 垃圾桶。`
-    );
-
-  if (!confirmed) {
-    return;
-  }
-
-
-  try {
-
-    const response =
-      await fetch(
-        API_URL,
-        {
-          method: 'POST',
-
-          body:
-            JSON.stringify({
-              action:
-                'deleteCollection',
-
-              id:
-                id
-            })
-        }
-      );
-
-
-    const result =
-      await response.json();
-
-
-    if (!result.success) {
-
-      throw new Error(
-        result.message ||
-        '刪除收藏失敗'
-      );
-
-    }
-
-
-    alert(
-      '刪除收藏成功！🗑️'
-    );
-
-
-    await loadCollections();
-
-
-  } catch (error) {
-
-    console.error(error);
-
-    alert(
-      '刪除失敗：' +
-      error.message
-    );
-
-  }
-
-}
     
-
 // =========================
 // ♡ 關閉收藏視窗
 // =========================
 
-function closeCollectionModal() {
+function closeMemberModal() {
 
   document
     .getElementById(
-      'collectionModal'
+      'memberModal'
     )
     .classList
     .remove('show');
 
 }
-
-    function compressImage(file) {
-
-      return new Promise(
-        (
-          resolve,
-          reject
-        ) => {
-
-          const reader =
-            new FileReader();
-
-
-          reader.onload =
-            function(event) {
-
-              const img =
-                new Image();
-
-
-              img.onload =
-                function() {
-
-                  const maxWidth =
-                    1200;
-
-                  const maxHeight =
-                    1200;
-
-
-                  let width =
-                    img.width;
-
-                  let height =
-                    img.height;
-
-
-                  if (
-                    width > maxWidth ||
-                    height > maxHeight
-                  ) {
-
-                    const ratio =
-                      Math.min(
-                        maxWidth / width,
-                        maxHeight / height
-                      );
-
-
-                    width =
-                      Math.round(
-                        width * ratio
-                      );
-
-
-                    height =
-                      Math.round(
-                        height * ratio
-                      );
-
-                  }
-
-
-                  const canvas =
-                    document.createElement(
-                      'canvas'
-                    );
-
-
-                  canvas.width =
-                    width;
-
-                  canvas.height =
-                    height;
-
-
-                  const ctx =
-                    canvas.getContext(
-                      '2d'
-                    );
-
-
-                  ctx.drawImage(
-                    img,
-                    0,
-                    0,
-                    width,
-                    height
-                  );
-
-
-                  const compressedData =
-                    canvas.toDataURL(
-                      'image/jpeg',
-                      0.8
-                    );
-
-
-                  resolve(
-                    compressedData
-                  );
-
-                };
-
-
-              img.onerror =
-                function() {
-
-                  reject(
-                    new Error(
-                      '圖片處理失敗'
-                    )
-                  );
-
-                };
-
-
-              img.src =
-                event.target.result;
-
-            };
-
-
-          reader.onerror =
-            function() {
-
-              reject(
-                new Error(
-                  '圖片讀取失敗'
-                )
-              );
-
-            };
-
-
-          reader.readAsDataURL(
-            file
-          );
-
-        }
-      );
-
-    }
 
 
 
@@ -1401,162 +1013,71 @@ function closeCollectionModal() {
 // ♡ 儲存收藏
 // =========================
 
-async function saveCollection() {
+async function saveMember() {
 
   const name =
     document.getElementById(
-      'collectionName'
+      'memberName'
     ).value.trim();
 
+
   if (!name) {
-    alert('請輸入收藏名稱');
+
+    alert(
+      '請輸入成員姓名'
+    );
+
     return;
+
   }
 
 
   const saveButton =
     document.getElementById(
-      'saveCollectionButton'
+      'saveMemberButton'
     );
 
+
   saveButton.disabled = true;
+
   saveButton.textContent =
     '儲存中...';
 
 
-  // 判斷現在是新增還是編輯
-  const isEditing =
-    Boolean(editingCollectionId);
-
-
   try {
-
-    // =========================
-    // 📸 處理收藏圖片
-    // =========================
-
-    const imageInput =
-      document.getElementById(
-        'collectionImage'
-      );
-
-    const imageFile =
-      imageInput.files[0];
-
-    let imageData = '';
-    let imageName = '';
-    let imageType = '';
-
-    // 編輯時先取得原本圖片
-    let existingImageUrl = '';
-
-    if (isEditing) {
-
-      const existingItem =
-        collectionsData.find(
-          function(collection) {
-            return collection.id ===
-              editingCollectionId;
-          }
-        );
-
-      if (existingItem) {
-        existingImageUrl =
-          existingItem.imageUrl || '';
-      }
-
-    }
-
-
-    // 如果有重新選圖片
-    if (imageFile) {
-
-      imageData =
-        await compressImage(
-          imageFile
-        );
-
-      imageName =
-        'collection-' +
-        Date.now() +
-        '.jpg';
-
-      imageType =
-        'image/jpeg';
-
-    }
-
 
     const data = {
 
       action:
-        isEditing
-          ? 'updateCollection'
-          : 'createCollection',
-
-      id:
-        editingCollectionId,
+        'createMember',
 
       name:
         name,
 
+      contact:
+        document.getElementById(
+          'memberContact'
+        ).value.trim(),
+
       type:
         document.getElementById(
-          'collectionType'
+          'memberType'
         ).value,
 
-      group:
+      deliveryMethod:
         document.getElementById(
-          'collectionGroup'
-        ).value.trim(),
-
-      member:
-        document.getElementById(
-          'collectionMember'
-        ).value.trim(),
-
-      version:
-        document.getElementById(
-          'collectionVersion'
-        ).value.trim(),
-
-      quantity:
-        Number(
-          document.getElementById(
-            'collectionQuantity'
-          ).value
-        ) || 1,
-
-      price:
-        Number(
-          document.getElementById(
-            'collectionPrice'
-          ).value
-        ) || 0,
-
-      acquiredDate:
-        document.getElementById(
-          'collectionDate'
+          'memberDeliveryMethod'
         ).value,
+
+      shippingInfo:
+        document.getElementById(
+          'memberShippingInfo'
+        ).value.trim(),
 
       note:
         document.getElementById(
-          'collectionNote'
-        ).value.trim(),
-
-      // 編輯時如果沒有換圖，
-      // 後端會繼續使用原本圖片
-      imageUrl:
-        existingImageUrl,
-
-      imageData:
-        imageData,
-
-      imageName:
-        imageName,
-
-      imageType:
-        imageType
+          'memberNote'
+        ).value.trim()
 
     };
 
@@ -1565,10 +1086,13 @@ async function saveCollection() {
       await fetch(
         API_URL,
         {
-          method: 'POST',
+          method:
+            'POST',
 
           body:
-            JSON.stringify(data)
+            JSON.stringify(
+              data
+            )
         }
       );
 
@@ -1581,102 +1105,71 @@ async function saveCollection() {
 
       throw new Error(
         result.message ||
-        (
-          isEditing
-            ? '修改收藏失敗'
-            : '新增收藏失敗'
-        )
+        '新增成員失敗'
       );
 
     }
 
 
-    if (isEditing) {
-
-      alert(
-        '修改收藏成功！💖'
-      );
-
-    } else {
-
-      alert(
-        '新增收藏成功！💖'
-      );
-
-    }
+    alert(
+      '新增成員成功！👥'
+    );
 
 
-    closeCollectionModal();
+    closeMemberModal();
 
 
-    // 清除編輯狀態
-    editingCollectionId = '';
+    editingMemberId = '';
 
 
     // 清空表單
     document.getElementById(
-      'collectionName'
+      'memberName'
     ).value = '';
 
     document.getElementById(
-      'collectionType'
-    ).value =
-      '🃏 小卡';
-
-    document.getElementById(
-      'collectionGroup'
+      'memberContact'
     ).value = '';
 
     document.getElementById(
-      'collectionMember'
+      'memberType'
     ).value = '';
 
     document.getElementById(
-      'collectionVersion'
+      'memberDeliveryMethod'
     ).value = '';
 
     document.getElementById(
-      'collectionQuantity'
-    ).value = 1;
-
-    document.getElementById(
-      'collectionPrice'
+      'memberShippingInfo'
     ).value = '';
 
     document.getElementById(
-      'collectionDate'
-    ).value = '';
-
-    document.getElementById(
-      'collectionImage'
-    ).value = '';
-
-    document.getElementById(
-      'collectionNote'
+      'memberNote'
     ).value = '';
 
 
-    // 重新讀取收藏
-    await loadCollections();
+    // 重新讀取成員資料
+    await loadMembers();
 
 
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      error
+    );
+
 
     alert(
-      (
-        isEditing
-          ? '修改失敗：'
-          : '新增失敗：'
-      ) +
+      '新增失敗：' +
       error.message
     );
 
 
   } finally {
 
-    saveButton.disabled = false;
+    saveButton.disabled =
+      false;
+
     saveButton.textContent =
       '儲存';
 
@@ -1690,20 +1183,20 @@ async function saveCollection() {
 // ♡ 顯示收藏卡片
 // =========================
 
-function renderCollections(collections) {
+function renderMembers(members) {
 
   const list =
     document.getElementById(
-      'collectionList'
+      'memberList'
     );
 
 
-  if (collections.length === 0) {
+  if (members.length === 0) {
 
     list.innerHTML =
       `
         <div class="empty-box">
-          🔍 找不到符合條件的收藏
+          🔍 找不到符合條件的成員
         </div>
       `;
 
@@ -1713,86 +1206,34 @@ function renderCollections(collections) {
 
 
   list.innerHTML =
-    collections
+    members
       .map(
         function(item) {
-
-          const imageHtml =
-            item.imageUrl
-              ? `
-                <img
-                  class="trade-image"
-                  src="${item.imageUrl}"
-                  alt=""
-                >
-              `
-              : `
-                <div
-                  class="trade-placeholder"
-                >
-                  ${item.type || '♡'}
-                </div>
-              `;
-
-
-          const price =
-            Number(
-              item.price
-            ) || 0;
-
-
-          const quantity =
-            Number(
-              item.quantity
-            ) || 1;
-
 
           return `
             <div class="trade-card">
 
-              ${imageHtml}
-
               <div class="trade-body">
 
                 <div class="trade-name">
-                  ${item.name || '未命名收藏'}
+                  👤 ${item.name || '未命名成員'}
                 </div>
 
                 <div class="trade-detail">
-                  ${item.type || '📦 其他'}
+                  ${item.type || '🏷️ 未設定類型'}
                 </div>
 
                 <div class="trade-detail">
-                  🎤 ${item.group || '未設定'}
+                  📱 聯絡方式：${item.contact || '未設定'}
                 </div>
 
                 <div class="trade-detail">
-                  👤 ${item.member || '未設定'}
+                  📦 取貨方式：${item.deliveryMethod || '未設定'}
                 </div>
 
                 <div class="trade-detail">
-                  🏷️ ${item.version || '未設定'}
+                  📮 寄送資訊：${item.shippingInfo || '未設定'}
                 </div>
-
-                <div class="trade-detail">
-                  🔢 數量：${quantity}
-                </div>
-
-                <div class="trade-detail">
-                  💰 入手價格：NT$ ${
-                    price.toLocaleString()
-                  }
-                </div>
-
-                ${
-                  item.acquiredDate
-                    ? `
-                      <div class="trade-detail">
-                        📅 ${item.acquiredDate}
-                      </div>
-                    `
-                    : ''
-                }
 
                 ${
                   item.note
@@ -1803,26 +1244,6 @@ function renderCollections(collections) {
                     `
                     : ''
                 }
-
-<div class="trade-actions">
-
-  <button
-    type="button"
-    class="edit-trade-button"
-    onclick="editCollection('${item.id}')"
-  >
-    ✏️ 編輯
-  </button>
-
-  <button
-    type="button"
-    class="delete-trade-button"
-    onclick="deleteCollectionItem('${item.id}', '${item.name}')"
-  >
-    🗑️ 刪除
-  </button>
-
-</div>
 
               </div>
 
@@ -1835,23 +1256,24 @@ function renderCollections(collections) {
 
 }
     
-  // =========================
-// ♡ 讀取收藏庫
+// =========================
+// 👥 讀取成員名單
 // =========================
 
-async function loadCollections() {
+async function loadMembers() {
 
   const list =
     document.getElementById(
-      'collectionList'
+      'memberList'
     );
+
 
   try {
 
     list.innerHTML =
       `
         <div class="empty-box">
-          正在讀取收藏庫...
+          正在讀取成員資料...
         </div>
       `;
 
@@ -1859,7 +1281,7 @@ async function loadCollections() {
     const response =
       await fetch(
         API_URL +
-        '?action=getCollections'
+        '?action=getMembers'
       );
 
 
@@ -1871,104 +1293,73 @@ async function loadCollections() {
 
       throw new Error(
         result.message ||
-        '讀取收藏庫失敗'
+        '讀取成員資料失敗'
       );
 
     }
 
 
-    const collections =
+    const members =
       result.data || [];
 
-    collectionsData =
-      collections;
+
+    membersData =
+      members;
 
 
     // =========================
-    // 更新統計
+    // 👥 更新統計
     // =========================
 
     document.getElementById(
-      'totalCollectionCount'
+      'totalMemberCount'
     ).textContent =
-      collections.reduce(
-        function(total, item) {
+      members.length;
+
+
+    document.getElementById(
+      'groupMemberCount'
+    ).textContent =
+      members.filter(
+        function(item) {
+
           return (
-            total +
-            (Number(item.quantity) || 0)
+            item.type ===
+            '👥 團員'
           );
-        },
-        0
-      );
+
+        }
+      ).length;
 
 
     document.getElementById(
-      'cardCollectionCount'
+      'buyerMemberCount'
     ).textContent =
-      collections
-        .filter(
-          function(item) {
-            return (
-              item.type ===
-              '🃏 小卡'
-            );
-          }
-        )
-        .reduce(
-          function(total, item) {
-            return (
-              total +
-              (Number(item.quantity) || 0)
-            );
-          },
-          0
-        );
+      members.filter(
+        function(item) {
+
+          return (
+            item.type ===
+            '🛒 買家'
+          );
+
+        }
+      ).length;
 
 
     document.getElementById(
-      'albumCollectionCount'
+      'tradePartnerCount'
     ).textContent =
-      collections
-        .filter(
-          function(item) {
-            return (
-              item.type ===
-              '💿 專輯'
-            );
-          }
-        )
-        .reduce(
-          function(total, item) {
-            return (
-              total +
-              (Number(item.quantity) || 0)
-            );
-          },
-          0
-        );
+      members.filter(
+        function(item) {
 
+          return (
+            item.type ===
+            '🔄 交易對象'
+          );
 
-    document.getElementById(
-      'merchCollectionCount'
-    ).textContent =
-      collections
-        .filter(
-          function(item) {
-            return (
-              item.type ===
-              '🎁 周邊'
-            );
-          }
-        )
-        .reduce(
-          function(total, item) {
-            return (
-              total +
-              (Number(item.quantity) || 0)
-            );
-          },
-          0
-        );
+        }
+      ).length;
 
 
     // =========================
@@ -1976,18 +1367,18 @@ async function loadCollections() {
     // =========================
 
     if (
-      collections.length === 0
+      members.length === 0
     ) {
 
       list.innerHTML =
         `
           <div class="empty-box">
 
-            ♡ 目前還沒有收藏資料
+            👥 目前還沒有成員資料
 
             <br><br>
 
-            點右上角「＋ 新增收藏」開始建立
+            點右上角「＋ 新增成員」開始建立
 
           </div>
         `;
@@ -1998,22 +1389,25 @@ async function loadCollections() {
 
 
     // =========================
-    // 顯示收藏
+    // 顯示成員
     // =========================
 
-    renderCollections(
-      collections
+    renderMembers(
+      members
     );
 
 
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      error
+    );
+
 
     list.innerHTML =
       `
         <div class="empty-box">
-          ⚠️ 讀取收藏庫失敗
+          ⚠️ 讀取成員資料失敗
           <br><br>
           ${error.message}
         </div>
@@ -2023,86 +1417,15 @@ async function loadCollections() {
 
 }
 
-    // =========================
-// 🔍 搜尋＋類型篩選
-// =========================
-
-// =========================
-// 🔍 收藏搜尋＋類型篩選
-// =========================
-
-function applyCollectionFilters() {
-
-  const searchInput =
-    document.getElementById(
-      'collectionSearch'
-    );
-
-  const keyword =
-    searchInput.value
-      .trim()
-      .toLowerCase();
-
-  currentCollectionSearch =
-    keyword;
-
-
-  const filteredCollections =
-    collectionsData.filter(
-      function(item) {
-
-        // 收藏類型
-        const typeMatched =
-          currentCollectionFilter === 'all' ||
-          item.type ===
-            currentCollectionFilter;
-
-
-        // 搜尋文字
-        const searchText = [
-          item.name,
-          item.group,
-          item.member,
-          item.version,
-          item.note,
-          item.type
-        ]
-          .join(' ')
-          .toLowerCase();
-
-
-        const keywordMatched =
-          !keyword ||
-          searchText.includes(
-            keyword
-          );
-
-
-        return (
-          typeMatched &&
-          keywordMatched
-        );
-
-      }
-    );
-
-
-  renderCollections(
-    filteredCollections
-  );
-
-}
-
-
 // =========================
 // 🏷️ 收藏類型篩選
 // =========================
 
-function setCollectionFilter(
+function setMemberFilter(
   button
 ) {
 
-  currentCollectionFilter =
+  currentMemberFilter =
     button.dataset.type;
 
 
@@ -2126,30 +1449,96 @@ function setCollectionFilter(
   );
 
 
-  applyCollectionFilters();
+  applyMemberFilters();
 
 }
 
 
 // =========================
-// 🔍 搜尋收藏
+// 🔍 搜尋與篩選成員
+// =========================
+
+function applyMemberFilters() {
+
+  const searchInput =
+    document.getElementById(
+      'memberSearch'
+    );
+
+  currentMemberSearch =
+    searchInput.value
+      .trim()
+      .toLowerCase();
+
+
+  const filteredMembers =
+    membersData.filter(
+      function(item) {
+
+        // 成員類型篩選
+        const matchesType =
+          currentMemberFilter === 'all' ||
+          item.type ===
+            currentMemberFilter;
+
+
+        // 關鍵字搜尋
+        const searchText =
+          [
+            item.name,
+            item.contact,
+            item.type,
+            item.deliveryMethod,
+            item.shippingInfo,
+            item.note
+          ]
+            .filter(Boolean)
+            .join(' ')
+            .toLowerCase();
+
+
+        const matchesSearch =
+          !currentMemberSearch ||
+          searchText.includes(
+            currentMemberSearch
+          );
+
+
+        return (
+          matchesType &&
+          matchesSearch
+        );
+
+      }
+    );
+
+
+  renderMembers(
+    filteredMembers
+  );
+
+}
+
+
+// =========================
+// 🔍 搜尋成員
 // =========================
 
 document
   .getElementById(
-    'collectionSearch'
+    'memberSearch'
   )
   .addEventListener(
     'input',
-    applyCollectionFilters
+    applyMemberFilters
   );
 
 
 // =========================
-// ♡ 開啟頁面時自動讀取
+// 👥 開啟頁面時自動讀取
 // =========================
 
-loadCollections();
+loadMembers();
 </script>
   
 </body>
