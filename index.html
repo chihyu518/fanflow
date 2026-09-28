@@ -644,8 +644,59 @@ if (dashboardNotifications.length === 0) {
       <div class="dashboard-groupbuy-list">
 
         ${
-          dashboardNotifications
-            .map(function(item) {
+  dashboardNotifications
+    .slice()
+    .sort(function(a, b) {
+
+      // ⏰ 兩筆都是截止提醒
+      if (
+        a.type === 'deadline' &&
+        b.type === 'deadline'
+      ) {
+
+        return (
+          new Date(
+            a.deadline + 'T00:00:00'
+          ) -
+          new Date(
+            b.deadline + 'T00:00:00'
+          )
+        );
+
+      }
+
+
+      // ⏰ 截止提醒優先
+      if (a.type === 'deadline') {
+        return -1;
+      }
+
+      if (b.type === 'deadline') {
+        return 1;
+      }
+
+
+      // 💳 未付款排第二
+      if (
+        a.type === 'unpaid' &&
+        b.type !== 'unpaid'
+      ) {
+        return -1;
+      }
+
+      if (
+        b.type === 'unpaid' &&
+        a.type !== 'unpaid'
+      ) {
+        return 1;
+      }
+
+
+      // 📦 其他維持原本順序
+      return 0;
+
+    })
+    .map(function(item) {
 
               let title = '';
               let detail = '';
