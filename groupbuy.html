@@ -4888,6 +4888,30 @@ if (groupBuyName) {
 
     }
 
+    // =========================
+// ⚡ 首頁快速建立代購
+// =========================
+
+const urlParams =
+  new URLSearchParams(
+    window.location.search
+  );
+
+if (
+  urlParams.get('action') ===
+  'new'
+) {
+
+  window.addEventListener(
+    'load',
+    function() {
+
+      openNewGroupBuy();
+
+    }
+  );
+
+}
 
     // =========================
     // Modal 基本控制
