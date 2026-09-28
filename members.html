@@ -1276,15 +1276,23 @@ function renderMembers(members) {
 
  <div class="trade-actions">
 
-                  <button
-                    type="button"
-                    class="edit-trade-button"
-                    onclick="editMember('${item.id}')"
-                  >
-                    ✏️ 編輯
-                  </button>
+  <button
+    type="button"
+    class="edit-trade-button"
+    onclick="editMember('${item.id}')"
+  >
+    ✏️ 編輯
+  </button>
 
-                </div>
+  <button
+    type="button"
+    class="delete-trade-button"
+    onclick="deleteMemberItem('${item.id}', '${item.name}')"
+  >
+    🗑️ 刪除
+  </button>
+
+</div>
                 
               </div>
 
@@ -1379,6 +1387,87 @@ function editMember(id) {
   );
 
 }                   
+
+    // =========================
+// 🗑️ 刪除成員
+// =========================
+
+async function deleteMemberItem(
+  id,
+  name
+) {
+
+  const confirmed =
+    confirm(
+      `確定要刪除「${name}」嗎？\n\n刪除後會移到 Notion 垃圾桶。`
+    );
+
+
+  if (!confirmed) {
+
+    return;
+
+  }
+
+
+  try {
+
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method:
+            'POST',
+
+          body:
+            JSON.stringify({
+              action:
+                'deleteMember',
+
+              id:
+                id
+            })
+        }
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+
+      throw new Error(
+        result.message ||
+        '刪除成員失敗'
+      );
+
+    }
+
+
+    alert(
+      '刪除成員成功！🗑️'
+    );
+
+
+    await loadMembers();
+
+
+  } catch (error) {
+
+    console.error(
+      error
+    );
+
+
+    alert(
+      '刪除失敗：' +
+      error.message
+    );
+
+  }
+
+}
     
 // =========================
 // 👥 讀取成員名單
