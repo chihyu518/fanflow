@@ -954,13 +954,26 @@ today.setHours(
 );
 
 
+const savedDeadlineDays =
+  localStorage.getItem(
+    'fanflowDeadlineReminderDays'
+  );
+
+
+const reminderDays =
+  Number(
+    savedDeadlineDays || 3
+  );
+
+
 const deadlineLimit =
   new Date(today);
 
-deadlineLimit.setDate(
-  deadlineLimit.getDate() + 3
-);
 
+deadlineLimit.setDate(
+  deadlineLimit.getDate() +
+  reminderDays
+);
 
 const deadlineNotifications =
   groupBuys
