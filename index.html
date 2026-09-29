@@ -301,6 +301,39 @@ display: block;
   </span>
 </a>
 
+    <!-- ========================
+     👤 目前登入者
+======================== -->
+
+<div
+  id="currentUserBox"
+  style="
+    margin-top: 20px;
+    padding: 14px 12px;
+    border-top: 1px solid #eeeeee;
+  "
+>
+  <div
+    id="currentUserName"
+    style="
+      font-size: 14px;
+      font-weight: 700;
+    "
+  >
+    👤 載入中...
+  </div>
+
+  <div
+    id="currentUserRole"
+    style="
+      margin-top: 4px;
+      font-size: 12px;
+      opacity: 0.65;
+    "
+  >
+  </div>
+</div>
+    
   </aside>
 
 
@@ -552,6 +585,36 @@ async function verifyFanFlowSession() {
         result.user
       )
     );
+
+    const currentUserName =
+  document.getElementById(
+    'currentUserName'
+  );
+
+const currentUserRole =
+  document.getElementById(
+    'currentUserRole'
+  );
+
+
+if (
+  currentUserName &&
+  currentUserRole
+) {
+
+  currentUserName.textContent =
+    result.user.role ===
+    '👑 管理員'
+      ? '👑 ' + result.user.name
+      : '👤 ' + result.user.name;
+
+  currentUserRole.textContent =
+    result.user.role ===
+    '👑 管理員'
+      ? '管理員'
+      : '一般成員';
+
+}
 
 
   } catch (error) {
