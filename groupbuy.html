@@ -1338,42 +1338,59 @@ async function verifyFanFlowSession() {
 
     async function loadGroupBuys() {
 
-      try {
+  try {
 
-        const response =
-          await fetch(
-            API_URL + '?action=getGroupBuys'
-          );
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method: 'POST',
 
-        const result =
-          await response.json();
+          body:
+            JSON.stringify({
+              action:
+                'getGroupBuys',
 
-        if (!result.success) {
-
-          throw new Error(
-            result.message ||
-            '讀取代購失敗'
-          );
-
+              token:
+                fanflowSessionToken
+            })
         }
+      );
 
-        window.currentGroupBuys =
-          result.data || [];
 
-        renderGroupBuys(
-          window.currentGroupBuys
-        );
+    const result =
+      await response.json();
 
-      } catch (error) {
 
-        console.error(
-          '讀取代購失敗：',
-          error
-        );
+    if (!result.success) {
 
-      }
+      throw new Error(
+        result.message ||
+        '讀取代購失敗'
+      );
 
     }
+
+
+    window.currentGroupBuys =
+      result.data || [];
+
+
+    renderGroupBuys(
+      window.currentGroupBuys
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      '讀取代購失敗：',
+      error
+    );
+
+  }
+
+}
 
 
     // =========================
