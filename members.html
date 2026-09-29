@@ -972,7 +972,7 @@ async function verifyFanFlowSession() {
           body:
             JSON.stringify({
               action:
-                'verifyFanFlowSession',
+                'verifyFanFlowAdmin',
 
               token:
                 fanflowSessionToken
@@ -986,6 +986,24 @@ async function verifyFanFlowSession() {
 
 
     if (!result.success) {
+
+      if (
+        result.message ===
+        '沒有管理員權限'
+      ) {
+
+        alert(
+          '此頁面僅限管理員使用'
+        );
+
+        window.location.replace(
+          'index.html'
+        );
+
+        return;
+
+      }
+
 
       sessionStorage.removeItem(
         'fanflowSessionToken'
@@ -1015,7 +1033,7 @@ async function verifyFanFlowSession() {
   } catch (error) {
 
     console.error(
-      'Session 驗證失敗：',
+      '管理員權限驗證失敗：',
       error
     );
 
@@ -1040,13 +1058,7 @@ let editingMemberId = '';
 let currentMemberFilter = 'all';
 let currentMemberSearch = '';
     
-      // =========================
-  // 🃏 開啟新增小卡視窗
-  // =========================
 
-// =========================
-// ♡ 開啟新增收藏視窗
-// =========================
 
 function openMemberModal() {
 
