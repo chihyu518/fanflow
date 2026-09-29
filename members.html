@@ -1250,21 +1250,7 @@ async function saveMember() {
       name:
         name,
 
-      login:
-  document.getElementById(
-    'memberLogin'
-  ).value.trim(),
 
-password:
-  document.getElementById(
-    'memberPassword'
-  ).value,
-
-role:
-  document.getElementById(
-    'memberRole'
-  ).value,
-      
       contact:
         document.getElementById(
           'memberContact'
@@ -1407,7 +1393,24 @@ role:
 
 }
     
+if (!isEditing) {
 
+  data.login =
+    document.getElementById(
+      'memberLogin'
+    ).value.trim();
+
+  data.password =
+    document.getElementById(
+      'memberPassword'
+    ).value;
+
+  data.role =
+    document.getElementById(
+      'memberRole'
+    ).value;
+
+}
 
 // =========================
 // ♡ 顯示收藏卡片
