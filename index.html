@@ -277,7 +277,11 @@ display: block;
   ♡<span class="menu-text">收藏庫</span>
 </a>
 
-   <a href="members.html" class="menu-item">
+   <a
+  href="members.html"
+  class="menu-item"
+  id="adminMembersMenu"
+>
   👥 <span class="menu-text">成員管理</span>
 </a>
 
@@ -616,6 +620,23 @@ if (
 
 }
 
+    const adminMembersMenu =
+  document.getElementById(
+    'adminMembersMenu'
+  );
+
+
+if (
+  adminMembersMenu &&
+  result.user.role !==
+  '👑 管理員'
+) {
+
+  adminMembersMenu.style.display =
+    'none';
+
+}
+    
 
   } catch (error) {
 
