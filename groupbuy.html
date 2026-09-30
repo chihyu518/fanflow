@@ -4217,6 +4217,16 @@ async function loadOrderMembers() {
     const members =
       result.data || [];
 
+    console.log(
+  'loadOrderMembers result:',
+  result
+);
+
+console.log(
+  'loadOrderMembers members:',
+  members
+);
+    
     console.log('成員資料:', members);
 
     members.forEach(function(item){
