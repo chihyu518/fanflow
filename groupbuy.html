@@ -1403,6 +1403,19 @@ async function loadProductMembers(currentUser) {
     const members =
       result.data || [];
 
+    membersData =
+  members;
+
+    console.log(
+  '收到成員數量:',
+  members.length
+);
+
+console.log(
+  '成員資料:',
+  members
+);
+
 
     // 清空原本選項
     select.innerHTML = '';
