@@ -1031,6 +1031,8 @@ async function verifyFanFlowSession() {
     const result =
       await response.json();
 
+    console.log('API回傳:', result);
+
 
     if (!result.success) {
 
