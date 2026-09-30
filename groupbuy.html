@@ -1096,17 +1096,17 @@
 
       <div class="form-group">
 
-        <label for="orderName">
-          👤 姓名
-        </label>
+  <label for="orderName">
+    👤 姓名
+  </label>
 
-        <input
-          id="orderName"
-          type="text"
-          placeholder="輸入購買者姓名">
+  <select id="orderName">
+    <option value="">
+      請選擇成員
+    </option>
+  </select>
 
-      </div>
-
+</div>
 
       <!-- 數量 -->
 
@@ -4447,15 +4447,18 @@ if (groupBuyName) {
                 'POST',
 
               body:
-                JSON.stringify({
+  JSON.stringify({
 
-                  action:
-                    'deleteGroupBuy',
+    action:
+      'deleteGroupBuy',
 
-                  id:
-                    id
+    id:
+      id,
 
-                })
+    token:
+      fanflowSessionToken
+
+  })
 
             }
           );
@@ -4765,6 +4768,9 @@ if (groupBuyName) {
             ? 'updateGroupBuy'
             : 'createGroupBuy',
 
+                token:
+          fanflowSessionToken,
+        
         id:
           isEditing
             ? window.editingGroupBuyId
