@@ -4136,6 +4136,9 @@ function openNewOrder(productId) {
   calculateOrderTotal();
 
 
+  // 載入成員下拉選單
+loadOrderMembers();
+  
   // 開啟視窗
   document
     .getElementById(
@@ -4146,7 +4149,89 @@ function openNewOrder(productId) {
 
 }
 
+async function loadOrderMembers() {
 
+  const select =
+    document.getElementById(
+      'orderName'
+    );
+
+
+  if (!select) {
+    return;
+  }
+
+
+  select.innerHTML =
+    `
+      <option value="">
+        請選擇成員
+      </option>
+    `;
+
+
+  try {
+
+    const response =
+      await fetch(
+        API_URL +
+        '?action=getMembers'
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+
+      console.error(
+        result.message
+      );
+
+      return;
+
+    }
+
+
+    const members =
+      result.data || [];
+
+
+    members.forEach(function(item){
+
+      const option =
+        document.createElement(
+          'option'
+        );
+
+
+      option.value =
+        item.name;
+
+
+      option.textContent =
+        item.name;
+
+
+      select.appendChild(
+        option
+      );
+
+    });
+
+
+  } catch(error) {
+
+    console.error(
+      '讀取成員失敗',
+      error
+    );
+
+  }
+
+}
+    
 // =========================
 // 💵 計算訂單總額
 // =========================
