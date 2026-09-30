@@ -1369,10 +1369,21 @@ async function loadProductMembers(currentUser) {
   try {
 
     const response =
-      await fetch(
-        API_URL +
-        '?action=getMembers'
-      );
+  await fetch(
+    API_URL,
+    {
+      method: 'POST',
+
+      body:
+        JSON.stringify({
+          action:
+            'getMembers',
+
+          token:
+            fanflowSessionToken
+        })
+    }
+  );
 
 
     const result =
