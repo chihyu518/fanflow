@@ -4175,10 +4175,11 @@ async function loadOrderMembers() {
   try {
 
     const response =
-      await fetch(
-        API_URL +
-        '?action=getMembers'
-      );
+  await fetch(
+    API_URL +
+    '?action=getMembers&token=' +
+    fanflowSessionToken
+  );
 
 
     const result =
