@@ -4191,16 +4191,33 @@ async function loadOrderMembers() {
 
   try {
 
+
     const response =
-  await fetch(
-    API_URL +
-    '?action=getMembers&token=' +
-    fanflowSessionToken
-  );
+      await fetch(
+        API_URL,
+        {
+          method: 'POST',
+
+          body:
+            JSON.stringify({
+              action:
+                'getMembers',
+
+              token:
+                fanflowSessionToken
+            })
+        }
+      );
 
 
     const result =
       await response.json();
+
+
+    console.log(
+      '訂單讀取成員結果:',
+      result
+    );
 
 
     if (!result.success) {
@@ -4217,47 +4234,51 @@ async function loadOrderMembers() {
     const members =
       result.data || [];
 
+
     console.log(
-  'loadOrderMembers result:',
-  result
-);
+      '訂單成員資料:',
+      members
+    );
 
-console.log(
-  'loadOrderMembers members:',
-  members
-);
-    
-    console.log('成員資料:', members);
 
-    members.forEach(function(item){
 
-      const option =
-        document.createElement(
-          'option'
+    members.forEach(
+      function(member) {
+
+
+        const option =
+          document.createElement(
+            'option'
+          );
+
+
+        option.value =
+          member.id;
+
+
+        option.textContent =
+          member.name ||
+          '未命名成員';
+
+
+        select.appendChild(
+          option
         );
 
 
-      option.value =
-        item.name;
+      }
+    );
 
-
-      option.textContent =
-        item.name;
-
-
-      select.appendChild(
-        option
-      );
-
-    });
 
 
   } catch(error) {
+
 
     console.error(
       '讀取成員失敗',
       error
     );
+
 
   }
 
