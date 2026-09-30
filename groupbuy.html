@@ -4029,7 +4029,7 @@ async function deleteCurrentProduct(id) {
 // 🧾 開啟新增訂單
 // =========================
 
-function openNewOrder(productId) {
+async function openNewOrder(productId) {
 
   window.editingOrderId = '';
   
@@ -4137,7 +4137,7 @@ function openNewOrder(productId) {
 
 
   // 載入成員下拉選單
-loadOrderMembers();
+await loadOrderMembers();
 
   console.log('開始載入成員');
   
