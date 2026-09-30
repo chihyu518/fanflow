@@ -670,9 +670,21 @@ async function loadDashboardGroupBuys() {
   try {
 
     const response =
-      await fetch(
-        API_URL + '?action=getGroupBuys'
-      );
+  await fetch(
+    API_URL,
+    {
+      method: 'POST',
+
+      body:
+        JSON.stringify({
+          action:
+            'getGroupBuys',
+
+          token:
+            fanflowSessionToken
+        })
+    }
+  );
 
     const result =
       await response.json();
