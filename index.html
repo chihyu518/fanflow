@@ -343,7 +343,7 @@ display: block;
 
   <main class="main">
 
-    <h1>嗨，Yu 👋</h1>
+    <h1 id="welcomeTitle">嗨 👋</h1>
     <div class="subtitle">
       今天也是快樂追星的一天！
     </div>
@@ -590,6 +590,18 @@ async function verifyFanFlowSession() {
       )
     );
 
+    const welcomeTitle =
+  document.getElementById(
+    'welcomeTitle'
+  );
+
+if (welcomeTitle) {
+  welcomeTitle.textContent =
+    '嗨，' +
+    result.user.name +
+    ' 👋';
+}
+    
     const currentUserName =
   document.getElementById(
     'currentUserName'
