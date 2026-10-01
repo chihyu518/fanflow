@@ -1467,56 +1467,55 @@ async function loadProductMembers(currentUser) {
 
 
     // =========================
-    // 👑 管理員
-    // 可以選擇所有成員
-    // =========================
+// 👑 管理員
+// 可以選擇所有成員
+// 自己會標示「我自己」
+// =========================
 
-    if (
-      currentUser &&
-      currentUser.role ===
-      '👑 管理員'
-    ) {
+if (
+  currentUser &&
+  currentUser.role ===
+  '👑 管理員'
+) {
 
-      const placeholder =
+  members.forEach(
+    function(member) {
+
+      const option =
         document.createElement(
           'option'
         );
 
-      placeholder.value = '';
+      option.value =
+        member.id;
 
-      placeholder.textContent =
-        '請選擇成員';
+      if (
+        String(member.id) ===
+        String(currentUser.id)
+      ) {
+
+        option.textContent =
+          (member.name || '未命名成員') +
+          '（我自己）';
+
+      } else {
+
+        option.textContent =
+          member.name ||
+          '未命名成員';
+
+      }
 
       select.appendChild(
-        placeholder
+        option
       );
-
-
-      members.forEach(
-        function(member) {
-
-          const option =
-            document.createElement(
-              'option'
-            );
-
-          option.value =
-            member.id;
-
-          option.textContent =
-            member.name ||
-            '未命名成員';
-
-          select.appendChild(
-            option
-          );
-
-        }
-      );
-
-      return;
 
     }
+  );
+
+  return;
+
+}
 
 
     // =========================
