@@ -4331,43 +4331,50 @@ async function loadOrderMembers(currentUser) {
 
 
     // =========================
-    // 👤 一般成員
-    // 只能選擇自己
-    // =========================
+// 👤 一般成員
+// 自動帶入自己的成員資料
+// =========================
 
-    if (currentUser) {
+if (currentUser) {
 
-      const option =
-        document.createElement(
-          'option'
-        );
+  const myMember =
+    members.find(
+      function(member) {
 
-      option.value =
-        currentUser.id;
+        return member.name ===
+          currentUser.name;
 
-      option.textContent =
-        currentUser.name ||
-        '目前登入者';
-
-      select.appendChild(
-        option
-      );
-
-      select.value =
-        currentUser.id;
-
-    }
-
-
-
-  } catch(error) {
-
-
-    console.error(
-      '讀取成員失敗',
-      error
+      }
     );
 
+
+  if (myMember) {
+
+    const option =
+      document.createElement(
+        'option'
+      );
+
+    option.value =
+      myMember.id;
+
+    option.textContent =
+      myMember.name ||
+      '目前登入者';
+
+    select.appendChild(
+      option
+    );
+
+    select.value =
+      myMember.id;
+
+  } else {
+
+    console.error(
+      '找不到目前登入者的成員資料:',
+      currentUser.name
+    );
 
   }
 
