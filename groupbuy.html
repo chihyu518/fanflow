@@ -1476,6 +1476,38 @@ console.log(
 
     }
 
+        // =========================
+    // 👤 一般成員
+    // 只能選擇自己
+    // =========================
+
+    if (
+      currentUser.role !==
+      '👑 管理員'
+    ) {
+
+      const option =
+        document.createElement(
+          'option'
+        );
+
+      option.value =
+        currentUser.id;
+
+      option.textContent =
+        currentUser.name ||
+        '目前登入者';
+
+      select.appendChild(
+        option
+      );
+
+      select.value =
+        currentUser.id;
+
+      return;
+
+    }
 
     // =========================
     // 👤 一般成員
