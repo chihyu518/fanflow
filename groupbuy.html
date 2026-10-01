@@ -1369,21 +1369,21 @@ async function loadProductMembers(currentUser) {
   try {
 
     const response =
-  await fetch(
-    API_URL,
-    {
-      method: 'POST',
+      await fetch(
+        API_URL,
+        {
+          method: 'POST',
 
-      body:
-        JSON.stringify({
-          action:
-            'getMembers',
+          body:
+            JSON.stringify({
+              action:
+                'getMembers',
 
-          token:
-            fanflowSessionToken
-        })
-    }
-  );
+              token:
+                fanflowSessionToken
+            })
+        }
+      );
 
 
     const result =
@@ -1404,22 +1404,24 @@ async function loadProductMembers(currentUser) {
       result.data || [];
 
     membersData =
-  members;
+      members;
+
 
     console.log(
-  '收到成員數量:',
-  members.length
-);
-
-console.log(
-  '成員資料:',
-  members
-);
+      '收到成員數量:',
+      members.length
+    );
 
     console.log(
-  '目前登入角色:',
-  currentUser
-);
+      '成員資料:',
+      members
+    );
+
+    console.log(
+      '目前登入角色:',
+      currentUser
+    );
+
 
     // 清空原本選項
     select.innerHTML = '';
@@ -1431,6 +1433,7 @@ console.log(
     // =========================
 
     if (
+      currentUser &&
       currentUser.role ===
       '👑 管理員'
     ) {
@@ -1476,95 +1479,69 @@ console.log(
 
     }
 
-        // =========================
-    // 👤 一般成員
-    // 只能選擇自己
-    // =========================
-
-    if (
-      currentUser.role !==
-      '👑 管理員'
-    ) {
-
-      const option =
-        document.createElement(
-          'option'
-        );
-
-      option.value =
-        currentUser.id;
-
-      option.textContent =
-        currentUser.name ||
-        '目前登入者';
-
-      select.appendChild(
-        option
-      );
-
-      select.value =
-        currentUser.id;
-
-      return;
-
-    }
 
     // =========================
     // 👤 一般成員
     // 自動帶入自己
     // =========================
 
-    const myMember =
-      members.find(
-        function(member) {
+    if (currentUser) {
 
-          return String(member.id) ===
-            String(currentUser.id);
+      const myMember =
+        members.find(
+          function(member) {
 
-        }
-      );
+            return String(member.id) ===
+              String(currentUser.id);
 
-
-    if (myMember) {
-
-      const option =
-        document.createElement(
-          'option'
+          }
         );
 
-      option.value =
-        myMember.id;
 
-      option.textContent =
-        myMember.name ||
-        '未命名成員';
+      if (myMember) {
 
-      select.appendChild(
-        option
-      );
+        const option =
+          document.createElement(
+            'option'
+          );
 
-      select.value =
-        myMember.id;
+        option.value =
+          myMember.id;
 
-      select.disabled = true;
+        option.textContent =
+          myMember.name ||
+          '未命名成員';
 
-    } else {
-
-      const option =
-        document.createElement(
-          'option'
+        select.appendChild(
+          option
         );
 
-      option.value = '';
+        select.value =
+          myMember.id;
 
-      option.textContent =
-        '找不到目前登入者的成員資料';
+        select.disabled =
+          true;
 
-      select.appendChild(
-        option
-      );
+      } else {
 
-      select.disabled = true;
+        const option =
+          document.createElement(
+            'option'
+          );
+
+        option.value = '';
+
+        option.textContent =
+          '找不到目前登入者的成員資料';
+
+        select.appendChild(
+          option
+        );
+
+        select.disabled =
+          true;
+
+      }
 
     }
 
