@@ -474,6 +474,24 @@
   </span>
 </a>
 
+    <button
+  type="button"
+  class="menu-item"
+  onclick="logoutFanFlow()"
+  style="
+    width: 100%;
+    border: none;
+    background: transparent;
+    text-align: left;
+    font-family: inherit;
+  "
+>
+  🚪
+  <span class="menu-text">
+    登出
+  </span>
+</button>
+    
   </aside>
 
 
@@ -1248,6 +1266,26 @@
     const API_URL =
       'https://script.google.com/macros/s/AKfycbz7CVrbddXxIvd86Z3PeMyM9MT6q7QBe7EJ5n1uQU7pTkwCYgc-4gjcg7EmRmz5itDSJQ/exec';
 
+    // =========================
+// 🚪 FanFlow 登出
+// =========================
+
+function logoutFanFlow() {
+
+  sessionStorage.removeItem(
+    'fanflowSessionToken'
+  );
+
+  sessionStorage.removeItem(
+    'fanflowUser'
+  );
+
+  window.location.replace(
+    'login.html'
+  );
+
+}
+    
     // =========================
 // 🔐 FanFlow 登入保護
 // =========================
