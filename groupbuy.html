@@ -1481,21 +1481,19 @@ async function loadProductMembers(currentUser) {
 
 
     // =========================
-    // 👤 一般成員
-    // 自動帶入自己
-    // =========================
+// 👤 一般成員
+// 用「姓名」找到自己的成員資料
+// =========================
 
-    if (currentUser) {
+const myMember =
+  members.find(
+    function(member) {
 
-      const myMember =
-        members.find(
-          function(member) {
+      return String(member.name).trim() ===
+        String(currentUser.name).trim();
 
-            return String(member.id) ===
-              String(currentUser.id);
-
-          }
-        );
+    }
+  );
 
 
       if (myMember) {
