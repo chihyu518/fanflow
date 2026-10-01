@@ -355,8 +355,7 @@
   // =========================
 
   const API_URL =
-    '你的 FanFlow GAS Web App URL';
-
+  'https://script.google.com/macros/s/AKfycbz7CVvhddXxIvd863ZPeMyM9MT6q7Qe7EJ5n1uQU7pTkwCYgc-4gcjgGEmRmz5idSDJQ/exec';
 
   // =========================
   // 註冊表單
@@ -443,7 +442,45 @@
 
 
         message.textContent =
-          '註冊功能準備中…';
+  '註冊中…';
+
+try {
+
+  const response =
+    await fetch(API_URL, {
+      method: 'POST',
+
+      body: JSON.stringify({
+        action: 'registerFanFlow',
+        name: name,
+        account: account,
+        password: password
+      })
+    });
+
+  const result =
+    await response.json();
+
+  if (!result.success) {
+    throw new Error(
+      result.message || '註冊失敗'
+    );
+  }
+
+  message.textContent =
+    '✅ 註冊成功！';
+
+} catch (error) {
+
+  console.error(
+    'FanFlow 註冊失敗：',
+    error
+  );
+
+  message.textContent =
+    '❌ ' + error.message;
+
+}
 
       });
 
