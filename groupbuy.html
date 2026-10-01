@@ -4357,13 +4357,15 @@ function closeOrderModal() {
 
 async function saveOrder() {
 
-  const name =
-    document
-      .getElementById(
-        'orderName'
-      )
-      .value
-      .trim();
+  const nameSelect =
+  document.getElementById(
+    'orderName'
+  );
+
+const name =
+  nameSelect.options[
+    nameSelect.selectedIndex
+  ].textContent.trim();
 
 
   const quantity =
