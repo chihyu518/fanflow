@@ -452,17 +452,20 @@
         
 try {
 
-  const response =
-    await fetch(API_URL, {
-      method: 'POST',
+  const requestData = {
+  action: 'registerFanFlow',
+  name: name,
+  account: account,
+  password: password
+};
 
-      body: JSON.stringify({
-        action: 'registerFanFlow',
-        name: name,
-        account: account,
-        password: password
-      })
-    });
+console.log('送出的註冊資料：', requestData);
+
+const response =
+  await fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify(requestData)
+  });
 
   const result =
     await response.json();
