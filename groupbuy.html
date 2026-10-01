@@ -4080,6 +4080,13 @@ async function deleteCurrentProduct(id) {
 
 async function openNewOrder(productId) {
 
+    const currentUser =
+    JSON.parse(
+      sessionStorage.getItem(
+        'fanflowUser'
+      ) || 'null'
+    );
+  
   window.editingOrderId = '';
   
   const product =
@@ -4186,7 +4193,7 @@ async function openNewOrder(productId) {
 
 
   // 載入成員下拉選單
-await loadOrderMembers();
+await loadOrderMembers(currentUser);
 
   console.log('開始載入成員');
   
@@ -4200,8 +4207,8 @@ await loadOrderMembers();
 
 }
 
-async function loadOrderMembers() {
-
+async function loadOrderMembers(currentUser) {
+  
   const select =
     document.getElementById(
       'orderName'
@@ -4274,32 +4281,71 @@ async function loadOrderMembers() {
 
 
 
-    members.forEach(
-      function(member) {
+        // =========================
+    // 👑 管理員
+    // 可以選擇所有成員
+    // =========================
 
+    if (
+      currentUser &&
+      currentUser.role ===
+      '👑 管理員'
+    ) {
 
-        const option =
-          document.createElement(
-            'option'
+      members.forEach(
+        function(member) {
+
+          const option =
+            document.createElement(
+              'option'
+            );
+
+          option.value =
+            member.id;
+
+          option.textContent =
+            member.name ||
+            '未命名成員';
+
+          select.appendChild(
+            option
           );
 
+        }
+      );
 
-        option.value =
-          member.id;
+      return;
 
-
-        option.textContent =
-          member.name ||
-          '未命名成員';
+    }
 
 
-        select.appendChild(
-          option
+    // =========================
+    // 👤 一般成員
+    // 只能選擇自己
+    // =========================
+
+    if (currentUser) {
+
+      const option =
+        document.createElement(
+          'option'
         );
 
+      option.value =
+        currentUser.id;
 
-      }
-    );
+      option.textContent =
+        currentUser.name ||
+        '目前登入者';
+
+      select.appendChild(
+        option
+      );
+
+      select.value =
+        currentUser.id;
+
+    }
 
 
 
