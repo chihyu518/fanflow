@@ -519,9 +519,9 @@ display: block;
 // =========================
 
 const fanflowSessionToken =
-  sessionStorage.getItem(
-    'fanflowSessionToken'
-  );
+  localStorage.getItem(
+  'fanflowSessionToken'
+);
 
 
 if (!fanflowSessionToken) {
@@ -565,11 +565,11 @@ async function verifyFanFlowSession() {
 
     if (!result.success) {
 
-      sessionStorage.removeItem(
+      localStorage.removeItem(
         'fanflowSessionToken'
       );
 
-      sessionStorage.removeItem(
+      localStorage.removeItem(
         'fanflowUser'
       );
 
@@ -583,7 +583,7 @@ async function verifyFanFlowSession() {
 
 
     // 更新目前登入者資料
-    sessionStorage.setItem(
+    localStorage.setItem(
       'fanflowUser',
       JSON.stringify(
         result.user
@@ -657,11 +657,11 @@ if (
       error
     );
 
-    sessionStorage.removeItem(
+    localStorage.removeItem(
       'fanflowSessionToken'
     );
 
-    sessionStorage.removeItem(
+    localStorage.removeItem(
       'fanflowUser'
     );
 
