@@ -910,11 +910,9 @@
 
       <label>👥 交易對象</label>
 
-      <input
-        type="text"
-        id="cardPartner"
-        placeholder="可稍後填寫"
-      >
+      <select id="cardPartner">
+  <option value="">請選擇交易對象</option>
+</select>
 
     </div>
 
@@ -1167,6 +1165,25 @@ async function loadCardMembers() {
         memberSelect.appendChild(
           option
         );
+        const partnerOption =
+  document.createElement(
+    'option'
+  );
+
+partnerOption.value =
+  member.name;
+
+partnerOption.textContent =
+  member.name;
+
+const partnerSelect =
+  document.getElementById(
+    'cardPartner'
+  );
+
+partnerSelect.appendChild(
+  partnerOption
+);
 
       }
     );
