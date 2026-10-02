@@ -1090,6 +1090,7 @@ async function verifyFanFlowSession() {
 }
 
     let collectionsData = [];
+    let membersData = [];
 let editingCollectionId = '';
 let currentCollectionFilter = 'all';
 let currentCollectionSearch = '';
@@ -2153,6 +2154,110 @@ async function loadCollections() {
 }
 
     // =========================
+// 👥 載入收藏庫成員
+// =========================
+
+async function loadCollectionMembers() {
+
+  const select =
+    document.getElementById(
+      'collectionMember'
+    );
+
+  if (!select) {
+    return;
+  }
+
+  try {
+
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method: 'POST',
+
+          body:
+            JSON.stringify({
+              action:
+                'getMembers',
+
+              token:
+                fanflowSessionToken
+            })
+        }
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+
+      throw new Error(
+        result.message ||
+        '讀取成員資料失敗'
+      );
+
+    }
+
+
+    const members =
+      result.data || [];
+
+    membersData =
+      members;
+
+
+    console.log(
+      '收藏庫收到成員:',
+      members
+    );
+
+
+    // 清空下拉選單
+    select.innerHTML =
+      '<option value="">請選擇成員</option>';
+
+
+    members.forEach(
+      function(member) {
+
+        const option =
+          document.createElement(
+            'option'
+          );
+
+        option.value =
+          member.id;
+
+        option.textContent =
+          member.name ||
+          '未命名成員';
+
+        select.appendChild(
+          option
+        );
+
+      }
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      '收藏庫載入成員失敗:',
+      error
+    );
+
+    select.innerHTML =
+      '<option value="">成員資料載入失敗</option>';
+
+  }
+
+}
+    
+    // =========================
 // 🔍 搜尋＋類型篩選
 // =========================
 
@@ -2279,6 +2384,7 @@ document
 // =========================
 
 loadCollections();
+loadCollectionMembers();
 </script>
   
 </body>
