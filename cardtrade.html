@@ -852,11 +852,9 @@
 
         <label>👤 成員</label>
 
-        <input
-          type="text"
-          id="cardMember"
-          placeholder="泰山"
-        >
+        <select id="cardMember">
+  <option value="">請選擇成員</option>
+</select>
 
       </div>
 
@@ -996,6 +994,8 @@ if (!fanflowSessionToken) {
 
   verifyFanFlowSession();
 
+  loadCardMembers();
+
 }
 
 
@@ -1074,10 +1074,122 @@ async function verifyFanFlowSession() {
   }
 
 }
-    
-    let cardTradesData = [];
-    let editingCardTradeId = '';
-    let currentCardTradeFilter = 'all';
+
+    }
+
+
+/* =========================
+   👤 讀取成員名單
+========================= */
+
+async function loadCardMembers() {
+
+  try {
+
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method: 'POST',
+
+          body:
+            JSON.stringify({
+              action:
+                'getMembers',
+
+              token:
+                fanflowSessionToken
+            })
+        }
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+
+      console.error(
+        '讀取成員名單失敗：',
+        result.message || ''
+      );
+
+      return;
+
+    }
+
+
+    const memberSelect =
+      document.getElementById(
+        'cardMember'
+      );
+
+
+    if (!memberSelect) {
+
+      console.error(
+        '找不到 cardMember'
+      );
+
+      return;
+
+    }
+
+
+    memberSelect.innerHTML =
+      '<option value="">請選擇成員</option>';
+
+
+    const members =
+      result.data || [];
+
+
+    members.forEach(
+      function(member) {
+
+        if (!member.name) {
+          return;
+        }
+
+
+        const option =
+          document.createElement(
+            'option'
+          );
+
+
+        option.value =
+          member.name;
+
+        option.textContent =
+          member.name;
+
+
+        memberSelect.appendChild(
+          option
+        );
+
+      }
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      '讀取成員名單失敗：',
+      error
+    );
+
+  }
+
+}
+
+
+let cardTradesData = [];
+let editingCardTradeId = '';
+let currentCardTradeFilter = 'all';
+
     
       // =========================
   // 🃏 開啟新增小卡視窗
