@@ -992,8 +992,6 @@ if (!fanflowSessionToken) {
 
   verifyFanFlowSession();
 
-  loadCardMembers();
-
 }
 
 
@@ -1054,6 +1052,8 @@ async function verifyFanFlowSession() {
   result.user
 );
 
+    loadCardMembers();
+    
   } catch (error) {
 
     console.error(
@@ -1192,6 +1192,35 @@ partnerSelect.appendChild(
       }
     );
 
+    // =========================
+// 👤 自動帶入目前登入者
+// =========================
+
+const fanflowUser =
+  JSON.parse(
+    sessionStorage.getItem(
+      'fanflowUser'
+    ) || 'null'
+  );
+
+if (fanflowUser && fanflowUser.name) {
+
+  if (fanflowUser.role === '👑 管理員') {
+
+    // 管理員：可以自由選擇成員
+    memberSelect.disabled = false;
+
+  } else {
+
+    // 一般成員：自動帶入自己
+    memberSelect.value =
+      fanflowUser.name;
+
+    memberSelect.disabled = true;
+
+  }
+
+}
 
   } catch (error) {
 
