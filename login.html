@@ -382,17 +382,17 @@
         // 🔑 儲存登入 Session
         // =========================
 
-        sessionStorage.setItem(
-          'fanflowSessionToken',
-          result.token
-        );
+        localStorage.setItem(
+  'fanflowSessionToken',
+  result.token
+);
 
-        sessionStorage.setItem(
-          'fanflowUser',
-          JSON.stringify(
-            result.user
-          )
-        );
+localStorage.setItem(
+  'fanflowUser',
+  JSON.stringify(
+    result.user
+  )
+);
 
 
         loginMessage.textContent =
