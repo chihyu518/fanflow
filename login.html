@@ -382,12 +382,30 @@
         // 🔑 儲存登入 Session
         // =========================
 
-        localStorage.setItem(
+        // =========================
+// 🔐 儲存登入 Session
+// =========================
+
+// 儲存到 localStorage
+localStorage.setItem(
   'fanflowSessionToken',
   result.token
 );
 
 localStorage.setItem(
+  'fanflowUser',
+  JSON.stringify(
+    result.user
+  )
+);
+
+// 同時儲存到 sessionStorage
+sessionStorage.setItem(
+  'fanflowSessionToken',
+  result.token
+);
+
+sessionStorage.setItem(
   'fanflowUser',
   JSON.stringify(
     result.user
