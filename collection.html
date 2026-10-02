@@ -1982,10 +1982,13 @@ async function loadCollections() {
 
 
     const response =
-      await fetch(
-        API_URL +
-        '?action=getCollections'
-      );
+  await fetch(
+    API_URL +
+    '?action=getCollections&token=' +
+    encodeURIComponent(
+      fanflowSessionToken
+    )
+  );
 
 
     const result =
