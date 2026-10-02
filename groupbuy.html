@@ -1292,9 +1292,8 @@ function logoutFanFlow() {
 // =========================
 
 const fanflowSessionToken =
-  localStorage.getItem(
-    'fanflowSessionToken'
-  );
+  localStorage.getItem('fanflowSessionToken') ||
+  sessionStorage.getItem('fanflowSessionToken');
 
 
 if (!fanflowSessionToken) {
