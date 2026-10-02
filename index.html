@@ -520,8 +520,11 @@ display: block;
 
 const fanflowSessionToken =
   localStorage.getItem(
-  'fanflowSessionToken'
-);
+    'fanflowSessionToken'
+  ) ||
+  sessionStorage.getItem(
+    'fanflowSessionToken'
+  );
 
 
 if (!fanflowSessionToken) {
