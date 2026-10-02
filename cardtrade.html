@@ -1144,6 +1144,10 @@ async function loadCardMembers() {
     const members =
       result.data || [];
 
+    const currentUser =
+  JSON.parse(
+    sessionStorage.getItem('fanflowUser') || '{}'
+  );
 
     members.forEach(
       function(member) {
@@ -1165,7 +1169,7 @@ async function loadCardMembers() {
         option.textContent =
           member.name;
 
-
+        
         memberSelect.appendChild(
           option
         );
