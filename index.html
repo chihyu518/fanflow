@@ -816,11 +816,24 @@ activeGroupBuys.forEach(
 for (const groupBuy of activeGroupBuys) {
 
   const orderResponse =
-    await fetch(
-      API_URL +
-      '?action=getOrders&groupBuyName=' +
-      encodeURIComponent(groupBuy.name)
-    );
+  await fetch(
+    API_URL,
+    {
+      method: 'POST',
+
+      body:
+        JSON.stringify({
+          action:
+            'getOrders',
+
+          token:
+            fanflowSessionToken,
+
+          groupBuyName:
+            groupBuy.name
+        })
+    }
+  );
 
 
   const orderResult =
