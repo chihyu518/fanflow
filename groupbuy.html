@@ -1273,11 +1273,11 @@
 
 function logoutFanFlow() {
 
-  sessionStorage.removeItem(
+  localStorage.removeItem(
     'fanflowSessionToken'
   );
 
-  sessionStorage.removeItem(
+  localStorage.removeItem(
     'fanflowUser'
   );
 
@@ -1292,7 +1292,7 @@ function logoutFanFlow() {
 // =========================
 
 const fanflowSessionToken =
-  sessionStorage.getItem(
+  localStorage.getItem(
     'fanflowSessionToken'
   );
 
@@ -1338,11 +1338,11 @@ async function verifyFanFlowSession() {
 
     if (!result.success) {
 
-      sessionStorage.removeItem(
+      localStorage.removeItem(
         'fanflowSessionToken'
       );
 
-      sessionStorage.removeItem(
+      localStorage.removeItem(
         'fanflowUser'
       );
 
@@ -1355,7 +1355,7 @@ async function verifyFanFlowSession() {
     }
 
 
-    sessionStorage.setItem(
+    localStorage.setItem(
       'fanflowUser',
       JSON.stringify(
         result.user
@@ -1373,11 +1373,11 @@ async function verifyFanFlowSession() {
       error
     );
 
-    sessionStorage.removeItem(
+    localStorage.removeItem(
       'fanflowSessionToken'
     );
 
-    sessionStorage.removeItem(
+    localStorage.removeItem(
       'fanflowUser'
     );
 
@@ -4093,7 +4093,7 @@ async function openNewOrder(productId) {
 
     const currentUser =
     JSON.parse(
-      sessionStorage.getItem(
+      localStorage.getItem(
         'fanflowUser'
       ) || 'null'
     );
