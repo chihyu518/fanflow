@@ -1335,24 +1335,39 @@ async function verifyFanFlowSession() {
       await response.json();
 
 
+    console.log(
+      '📱 Session 驗證結果：',
+      result
+    );
+
+
+    // =========================
+    // ❌ Session 驗證失敗
+    // 暫時不要刪除 Token
+    // 先把真正原因顯示出來
+    // =========================
+
     if (!result.success) {
 
-      localStorage.removeItem(
-        'fanflowSessionToken'
-      );
-
-      localStorage.removeItem(
-        'fanflowUser'
-      );
-
-      window.location.replace(
-        'login.html'
+      alert(
+        '❌ Session 驗證失敗\n\n' +
+        '原因：' +
+        (result.message || '沒有收到錯誤訊息') +
+        '\n\n' +
+        'Token：' +
+        (fanflowSessionToken
+          ? '有取得'
+          : '沒有取得')
       );
 
       return;
 
     }
 
+
+    // =========================
+    // ✅ Session 驗證成功
+    // =========================
 
     localStorage.setItem(
       'fanflowUser',
@@ -1361,9 +1376,10 @@ async function verifyFanFlowSession() {
       )
     );
 
+
     await loadProductMembers(
-  result.user
-);
+      result.user
+    );
 
   } catch (error) {
 
@@ -1372,22 +1388,16 @@ async function verifyFanFlowSession() {
       error
     );
 
-    localStorage.removeItem(
-      'fanflowSessionToken'
-    );
 
-    localStorage.removeItem(
-      'fanflowUser'
-    );
-
-    window.location.replace(
-      'login.html'
+    alert(
+      '❌ Session 驗證發生錯誤\n\n' +
+      error.message
     );
 
   }
 
 }
-
+    
     // =========================
 // 👤 載入商品登記成員
 // =========================
