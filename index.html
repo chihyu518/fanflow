@@ -655,25 +655,13 @@ if (
 
   } catch (error) {
 
-    console.error(
-      'Session 驗證失敗：',
-      error
-    );
+  console.error(
+    'Session 驗證暫時失敗：',
+    error
+  );
 
-    localStorage.removeItem(
-      'fanflowSessionToken'
-    );
-
-    localStorage.removeItem(
-      'fanflowUser'
-    );
-
-    window.location.replace(
-      'login.html'
-    );
-
-  }
-
+}
+  
 }
     
     // =========================
