@@ -334,7 +334,7 @@
       loginButton.disabled = true;
 
       loginButton.textContent =
-        '登入中...';
+  '連線中...';
 
       loginMessage.textContent =
         '';
@@ -342,30 +342,39 @@
 
       try {
 
-        const response =
-          await fetch(
-            API_URL,
-            {
-              method: 'POST',
+        console.log('開始送出登入請求');
 
-              body:
-                JSON.stringify({
-                  action:
-                    'loginFanFlow',
+loginMessage.textContent =
+  '正在連線伺服器...';
 
-                  account:
-                    account,
+const response =
+  await fetch(
+    API_URL,
+    {
+      method: 'POST',
 
-                  password:
-                    password
-                })
-            }
-          );
+      body:
+        JSON.stringify({
+          action:
+            'loginFanFlow',
 
+          account:
+            account,
 
+          password:
+            password
+        })
+    }
+  );
+
+console.log(
+  '登入 API 回應'
+);
         const result =
           await response.json();
 
+        loginMessage.textContent =
+  '伺服器已回應，正在登入...';
 
         if (!result.success) {
 
