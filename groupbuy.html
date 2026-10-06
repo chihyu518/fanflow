@@ -1311,293 +1311,149 @@ if (!fanflowSessionToken) {
 
 async function verifyFanFlowSession() {
 
-  try {
+  // =========================
+  // 📱 Session 驗證
+  // 第一次失敗會自動重試一次
+  // =========================
 
-    const response =
-      await fetch(
-        API_URL,
-        {
-          method: 'POST',
+  const maxAttempts = 2;
 
-          body:
-            JSON.stringify({
-              action:
-                'verifyFanFlowSession',
+  for (
+    let attempt = 1;
+    attempt <= maxAttempts;
+    attempt++
+  ) {
 
-              token:
-                fanflowSessionToken
-            })
-        }
+    try {
+
+      console.log(
+        '📱 Session 驗證，第 ' +
+        attempt +
+        ' 次'
       );
 
 
-    const result =
-      await response.json();
+      const response =
+        await fetch(
+          API_URL,
+          {
+            method: 'POST',
+
+            body:
+              JSON.stringify({
+                action:
+                  'verifyFanFlowSession',
+
+                token:
+                  fanflowSessionToken
+              })
+          }
+        );
 
 
-    console.log(
-      '📱 Session 驗證結果：',
-      result
-    );
+      const result =
+        await response.json();
 
 
-    // =========================
-    // ❌ Session 驗證失敗
-    // 暫時不要刪除 Token
-    // 先把真正原因顯示出來
-    // =========================
-
-    if (!result.success) {
-
-      alert(
-        '❌ Session 驗證失敗\n\n' +
-        '原因：' +
-        (result.message || '沒有收到錯誤訊息') +
-        '\n\n' +
-        'Token：' +
-        (fanflowSessionToken
-          ? '有取得'
-          : '沒有取得')
+      console.log(
+        '📱 Session 驗證結果：',
+        result
       );
 
+
+      // =========================
+      // ❌ Session 確定無效
+      // =========================
+
+      if (!result.success) {
+
+        alert(
+          '❌ Session 驗證失敗\n\n' +
+          '原因：' +
+          (
+            result.message ||
+            '沒有收到錯誤訊息'
+          )
+        );
+
+        return;
+
+      }
+
+
+      // =========================
+      // ✅ Session 驗證成功
+      // =========================
+
+      localStorage.setItem(
+        'fanflowUser',
+        JSON.stringify(
+          result.user
+        )
+      );
+
+
+      await loadProductMembers(
+        result.user
+      );
+
+
+      // 成功就直接結束
       return;
 
-    }
 
+    } catch (error) {
 
-    // =========================
-    // ✅ Session 驗證成功
-    // =========================
-
-    localStorage.setItem(
-      'fanflowUser',
-      JSON.stringify(
-        result.user
-      )
-    );
-
-
-    await loadProductMembers(
-      result.user
-    );
-
-  } catch (error) {
-
-    console.error(
-      'Session 驗證失敗：',
-      error
-    );
-
-
-    alert(
-      '❌ Session 驗證發生錯誤\n\n' +
-      error.message
-    );
-
-  }
-
-}
-    
-    // =========================
-// 👤 載入商品登記成員
-// =========================
-
-async function loadProductMembers(currentUser) {
-
-  const select =
-    document.getElementById(
-      'productMember'
-    );
-
-  if (!select) {
-    return;
-  }
-
-
-  try {
-
-    const response =
-      await fetch(
-        API_URL,
-        {
-          method: 'POST',
-
-          body:
-            JSON.stringify({
-              action:
-                'getMembers',
-
-              token:
-                fanflowSessionToken
-            })
-        }
+      console.error(
+        '📱 Session 驗證失敗，第 ' +
+        attempt +
+        ' 次：',
+        error
       );
 
 
-    const result =
-      await response.json();
+      // =========================
+      // 📱 第一次失敗
+      // 等一下再試一次
+      // =========================
 
+      if (attempt < maxAttempts) {
 
-    if (!result.success) {
-
-      throw new Error(
-        result.message ||
-        '讀取成員資料失敗'
-      );
-
-    }
-
-
-    const members =
-      result.data || [];
-
-    membersData =
-      members;
-
-
-    console.log(
-      '收到成員數量:',
-      members.length
-    );
-
-    console.log(
-      '成員資料:',
-      members
-    );
-
-    console.log(
-      '目前登入角色:',
-      currentUser
-    );
-
-
-    // 清空原本選項
-    select.innerHTML = '';
-
-
-    // =========================
-// 👑 管理員
-// 可以選擇所有成員
-// 自己會標示「我自己」
-// =========================
-
-if (
-  currentUser &&
-  currentUser.role ===
-  '👑 管理員'
-) {
-
-  members.forEach(
-    function(member) {
-
-      const option =
-        document.createElement(
-          'option'
+        console.log(
+          '📱 Session 驗證失敗，' +
+          '1 秒後重新嘗試...'
         );
 
-      option.value =
-        member.id;
 
-      if (
-        String(member.id) ===
-        String(currentUser.id)
-      ) {
+        await new Promise(
+          function(resolve) {
 
-        option.textContent =
-          (member.name || '未命名成員') +
-          '（我自己）';
+            setTimeout(
+              resolve,
+              1000
+            );
 
-      } else {
-
-        option.textContent =
-          member.name ||
-          '未命名成員';
-
-      }
-
-      select.appendChild(
-        option
-      );
-
-    }
-  );
-
-  return;
-
-}
-
-
-    // =========================
-// 👤 一般成員
-// 用「姓名」找到自己的成員資料
-// =========================
-
-const myMember =
-  members.find(
-    function(member) {
-
-      return String(member.name).trim() ===
-        String(currentUser.name).trim();
-
-    }
-  );
-
-
-      if (myMember) {
-
-        const option =
-          document.createElement(
-            'option'
-          );
-
-        option.value =
-          myMember.id;
-
-        option.textContent =
-          myMember.name ||
-          '未命名成員';
-
-        select.appendChild(
-          option
+          }
         );
 
-        select.value =
-          myMember.id;
 
-        select.disabled =
-          true;
-
-      } else {
-
-        const option =
-          document.createElement(
-            'option'
-          );
-
-        option.value = '';
-
-        option.textContent =
-          '找不到目前登入者的成員資料';
-
-        select.appendChild(
-          option
-        );
-
-        select.disabled =
-          true;
+        continue;
 
       }
 
 
-  } catch (error) {
+      // =========================
+      // ❌ 兩次都失敗
+      // 不刪除 Token
+      // 不踢回登入頁
+      // =========================
 
-    console.error(
-      '載入商品成員失敗：',
-      error
-    );
+      alert(
+        '⚠️ Session 驗證暫時失敗\n\n' +
+        '目前沒有登出，請重新整理頁面再試一次。'
+      );
 
-    select.innerHTML =
-      '<option value="">成員資料載入失敗</option>';
+    }
 
   }
 
