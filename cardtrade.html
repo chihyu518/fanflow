@@ -1224,80 +1224,100 @@ async function loadCardMembers() {
 
 
     const memberSelect =
-      document.getElementById(
-        'cardMember'
-      );
-
-
-    if (!memberSelect) {
-
-      console.error(
-        '找不到 cardMember'
-      );
-
-      return;
-
-    }
-
-
-    memberSelect.innerHTML =
-      '<option value="">請選擇成員</option>';
-
-
-    const members =
-      result.data || [];
-
-    const currentUser =
-  JSON.parse(
-    sessionStorage.getItem('fanflowUser') || '{}'
+  document.getElementById(
+    'cardMember'
   );
-
-    members.forEach(
-      function(member) {
-
-        if (!member.name) {
-          return;
-        }
-
-
-        const option =
-          document.createElement(
-            'option'
-          );
-
-
-        option.value =
-          member.name;
-
-        option.textContent =
-          member.name;
-
-        
-        memberSelect.appendChild(
-          option
-        );
-        const partnerOption =
-  document.createElement(
-    'option'
-  );
-
-partnerOption.value =
-  member.name;
-
-partnerOption.textContent =
-  member.name;
 
 const partnerSelect =
   document.getElementById(
     'cardPartner'
   );
 
-partnerSelect.appendChild(
-  partnerOption
-);
 
-      }
+if (!memberSelect) {
+
+  console.error(
+    '找不到 cardMember'
+  );
+
+  return;
+
+}
+
+
+if (!partnerSelect) {
+
+  console.error(
+    '找不到 cardPartner'
+  );
+
+  return;
+
+}
+
+
+memberSelect.innerHTML =
+  '<option value="">請選擇成員</option>';
+
+partnerSelect.innerHTML =
+  '<option value="">請選擇交易對象</option>';
+
+
+const members =
+  result.data || [];
+
+
+const currentUser =
+  JSON.parse(
+    sessionStorage.getItem(
+      'fanflowUser'
+    ) || '{}'
+  );
+
+
+members.forEach(
+  function(member) {
+
+    if (!member.name) {
+      return;
+    }
+
+
+    // 👤 成員
+    const option =
+      document.createElement(
+        'option'
+      );
+
+    option.value =
+      member.name;
+
+    option.textContent =
+      member.name;
+
+    memberSelect.appendChild(
+      option
     );
+
+
+    // 👥 交易對象
+    const partnerOption =
+      document.createElement(
+        'option'
+      );
+
+    partnerOption.value =
+      member.name;
+
+    partnerOption.textContent =
+      member.name;
+
+    partnerSelect.appendChild(
+      partnerOption
+    );
+
+  }
+);
 
     // =========================
 // 👤 自動帶入目前登入者
