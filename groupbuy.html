@@ -1292,8 +1292,12 @@ function logoutFanFlow() {
 // =========================
 
 const fanflowSessionToken =
-  localStorage.getItem('fanflowSessionToken') ||
-  sessionStorage.getItem('fanflowSessionToken');
+  sessionStorage.getItem(
+    'fanflowSessionToken'
+  ) ||
+  localStorage.getItem(
+    'fanflowSessionToken'
+  );
 
 
 if (!fanflowSessionToken) {
@@ -1303,6 +1307,13 @@ if (!fanflowSessionToken) {
   );
 
 } else {
+
+  // 如果 sessionStorage 沒有，
+  // 從 localStorage 找到，就補回 sessionStorage
+  sessionStorage.setItem(
+    'fanflowSessionToken',
+    fanflowSessionToken
+  );
 
   verifyFanFlowSession();
 
