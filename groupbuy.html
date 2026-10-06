@@ -1313,10 +1313,10 @@ async function verifyFanFlowSession() {
 
   // =========================
   // 📱 Session 驗證
-  // 第一次失敗會自動重試一次
+  // 最多嘗試 3 次
   // =========================
 
-  const maxAttempts = 2;
+  const maxAttempts = 3;
 
   for (
     let attempt = 1;
@@ -1362,18 +1362,52 @@ async function verifyFanFlowSession() {
 
 
       // =========================
-      // ❌ Session 確定無效
+      // ❌ API 明確表示 Session 無效
       // =========================
 
       if (!result.success) {
 
+        console.error(
+          '📱 Session 驗證失敗：',
+          result.message
+        );
+
+
+        // 如果還有重試機會
+        if (attempt < maxAttempts) {
+
+          console.log(
+            '📱 Session 驗證失敗，' +
+            '1 秒後重新嘗試...'
+          );
+
+
+          await new Promise(
+            function(resolve) {
+
+              setTimeout(
+                resolve,
+                1000
+              );
+
+            }
+          );
+
+
+          continue;
+
+        }
+
+
+        // =========================
+        // ❌ 連續 3 次都失敗
+        // 不刪除 Token
+        // 不踢回登入頁
+        // =========================
+
         alert(
-          '❌ Session 驗證失敗\n\n' +
-          '原因：' +
-          (
-            result.message ||
-            '沒有收到錯誤訊息'
-          )
+          '⚠️ Session 驗證暫時失敗\n\n' +
+          '目前沒有登出，請重新整理頁面再試一次。'
         );
 
         return;
@@ -1385,6 +1419,11 @@ async function verifyFanFlowSession() {
       // ✅ Session 驗證成功
       // =========================
 
+      console.log(
+        '✅ Session 驗證成功'
+      );
+
+
       localStorage.setItem(
         'fanflowUser',
         JSON.stringify(
@@ -1393,19 +1432,38 @@ async function verifyFanFlowSession() {
       );
 
 
-      await loadProductMembers(
-        result.user
-      );
+      // =========================
+      // 👤 載入商品成員
+      // =========================
+
+      try {
+
+        await loadProductMembers(
+          result.user
+        );
+
+      } catch (memberError) {
+
+        console.error(
+          '👤 商品成員載入失敗：',
+          memberError
+        );
+
+        // 這裡不再把它誤判成 Session 失敗
+      }
 
 
-      // 成功就直接結束
+      // =========================
+      // ✅ 完成
+      // =========================
+
       return;
 
 
     } catch (error) {
 
       console.error(
-        '📱 Session 驗證失敗，第 ' +
+        '📱 Session 驗證連線失敗，第 ' +
         attempt +
         ' 次：',
         error
@@ -1413,14 +1471,13 @@ async function verifyFanFlowSession() {
 
 
       // =========================
-      // 📱 第一次失敗
-      // 等一下再試一次
+      // 📱 還有重試機會
       // =========================
 
       if (attempt < maxAttempts) {
 
         console.log(
-          '📱 Session 驗證失敗，' +
+          '📱 Session 驗證連線失敗，' +
           '1 秒後重新嘗試...'
         );
 
@@ -1443,7 +1500,7 @@ async function verifyFanFlowSession() {
 
 
       // =========================
-      // ❌ 兩次都失敗
+      // ❌ 3 次都失敗
       // 不刪除 Token
       // 不踢回登入頁
       // =========================
