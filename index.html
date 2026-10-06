@@ -568,21 +568,19 @@ async function verifyFanFlowSession() {
 
     if (!result.success) {
 
-      localStorage.removeItem(
-        'fanflowSessionToken'
-      );
+  console.error(
+    'Session 驗證失敗：',
+    result.message
+  );
 
-      localStorage.removeItem(
-        'fanflowUser'
-      );
+  alert(
+    '⚠️ Session 驗證暫時失敗\n\n' +
+    '目前沒有登出，請重新整理頁面再試一次。'
+  );
 
-      window.location.replace(
-        'login.html'
-      );
+  return;
 
-      return;
-
-    }
+}
 
 
     // 更新目前登入者資料
