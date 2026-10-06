@@ -142,6 +142,17 @@ display: block;
   padding: 14px;
 }
 
+    .dashboard-notification-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: white;
+  border: 1px solid #eeeeee;
+  border-radius: 14px;
+  padding: 14px;
+  cursor: pointer;
+}
+    
 .dashboard-groupbuy-image {
   width: 85px;
   height: 85px;
@@ -246,6 +257,7 @@ display: block;
   height: 70px;
 }
 
+      
       /* 📱 手機版快速操作 */
 .quick-action-button {
   flex: 1;
@@ -254,6 +266,31 @@ display: block;
 
 .quick-action-button:last-child {
   flex-basis: 100%;
+}
+
+      /* 📱 手機版待處理事項 */
+.dashboard-notification-card {
+  gap: 12px;
+  padding: 12px;
+}
+
+.dashboard-notification-card .dashboard-groupbuy-placeholder {
+  width: 70px;
+  height: 70px;
+  flex-shrink: 0;
+}
+
+.dashboard-notification-card .dashboard-groupbuy-info {
+  min-width: 0;
+}
+
+.dashboard-notification-card .dashboard-groupbuy-name {
+  font-size: 18px;
+}
+
+.dashboard-notification-card .dashboard-groupbuy-detail {
+  font-size: 14px;
+  line-height: 1.5;
 }
       
     }
@@ -1126,7 +1163,7 @@ if (dashboardNotifications.length === 0) {
 
               return `
                 <div
-                  class="dashboard-groupbuy-card"
+                  class="dashboard-notification-card"
                   onclick="window.location.href='${targetPage}'"
                   style="cursor: pointer;"
                 >
