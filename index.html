@@ -269,6 +269,13 @@ display: block;
 }
 
       /* 📱 手機版待處理事項 */
+
+      .dashboard-notification-box {
+  min-height: 0;
+  height: auto;
+  padding: 20px;
+}
+      
 .dashboard-notification-card {
   gap: 12px;
   padding: 12px;
@@ -535,7 +542,7 @@ display: block;
 </h2>
 
   <div
-    class="empty-box"
+    class="empty-box dashboard-notification-box"
     id="dashboardNotificationList"
   >
     正在讀取待處理事項...
