@@ -961,28 +961,58 @@
   // 🔐 FanFlow 登入保護
   // =========================
 
-  const fanflowSessionToken =
-    sessionStorage.getItem(
-      'fanflowSessionToken'
-    );
+  // =========================
+// 🔐 FanFlow Session 驗證
+// =========================
+
+const fanflowSessionToken =
+  sessionStorage.getItem(
+    'fanflowSessionToken'
+  ) ||
+  localStorage.getItem(
+    'fanflowSessionToken'
+  );
 
 
-  if (!fanflowSessionToken) {
+if (!fanflowSessionToken) {
 
-    window.location.replace(
-      'login.html'
-    );
+  window.location.replace(
+    'login.html'
+  );
 
-  } else {
+} else {
 
-    verifyFanFlowSession();
+  // 如果 sessionStorage 沒有，
+  // 從 localStorage 找到，就補回 sessionStorage
+  sessionStorage.setItem(
+    'fanflowSessionToken',
+    fanflowSessionToken
+  );
 
-  }
+  verifyFanFlowSession();
+
+}
 
 
-  async function verifyFanFlowSession() {
+async function verifyFanFlowSession() {
+
+  const maxAttempts = 2;
+
+
+  for (
+    let attempt = 1;
+    attempt <= maxAttempts;
+    attempt++
+  ) {
 
     try {
+
+      console.log(
+        '📱 Session 驗證，第 ' +
+        attempt +
+        ' 次'
+      );
+
 
       const response =
         await fetch(
@@ -1006,23 +1036,62 @@
         await response.json();
 
 
+      console.log(
+        '📱 Session 驗證結果：',
+        result
+      );
+
+
+      // =========================
+      // ❌ Session 驗證失敗
+      // =========================
+
       if (!result.success) {
 
-        sessionStorage.removeItem(
-          'fanflowSessionToken'
+        console.error(
+          'Session 驗證失敗：',
+          result.message
         );
 
-        sessionStorage.removeItem(
-          'fanflowUser'
-        );
 
-        window.location.replace(
-          'login.html'
+        if (attempt < maxAttempts) {
+
+          await new Promise(
+            function(resolve) {
+
+              setTimeout(
+                resolve,
+                1000
+              );
+
+            }
+          );
+
+          continue;
+
+        }
+
+
+        alert(
+          '⚠️ Session 驗證暫時失敗\n\n' +
+          '目前沒有登出，請重新整理頁面再試一次。'
         );
 
         return;
 
       }
+
+
+      // =========================
+      // ✅ Session 驗證成功
+      // =========================
+
+      localStorage.setItem(
+        'fanflowUser',
+        JSON.stringify(
+          result.user
+        )
+      );
 
 
       sessionStorage.setItem(
@@ -1033,29 +1102,50 @@
       );
 
 
+      return;
+
+
     } catch (error) {
 
       console.error(
-        'Session 驗證失敗：',
+        '📱 Session 驗證失敗，第 ' +
+        attempt +
+        ' 次：',
         error
       );
 
-      sessionStorage.removeItem(
-        'fanflowSessionToken'
-      );
 
-      sessionStorage.removeItem(
-        'fanflowUser'
-      );
+      if (attempt < maxAttempts) {
 
-      window.location.replace(
-        'login.html'
+        await new Promise(
+          function(resolve) {
+
+            setTimeout(
+              resolve,
+              1000
+            );
+
+          }
+        );
+
+        continue;
+
+      }
+
+
+      // 不刪除 Token
+      // 不踢回登入頁
+
+      alert(
+        '⚠️ Session 驗證暫時失敗\n\n' +
+        '目前沒有登出，請重新整理頁面再試一次。'
       );
 
     }
 
   }
 
+}
 
   // =========================
   // ⚙️ 讀取設定
