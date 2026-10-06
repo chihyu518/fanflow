@@ -862,20 +862,13 @@ async function verifyFanFlowSession() {
   } catch (error) {
 
     console.error(
-      'Session 驗證失敗：',
+      'Session 驗證暫時失敗：',
       error
     );
 
-    sessionStorage.removeItem(
-      'fanflowSessionToken'
-    );
-
-    sessionStorage.removeItem(
-      'fanflowUser'
-    );
-
-    window.location.replace(
-      'login.html'
+    alert(
+      '⚠️ Session 驗證暫時失敗\n\n' +
+      '目前沒有登出，請重新整理頁面再試一次。'
     );
 
   }
