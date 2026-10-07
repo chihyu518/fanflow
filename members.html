@@ -807,6 +807,18 @@
 
 </div>
 
+    <div class="form-group">
+
+  <label>🌟 顯示名稱</label>
+
+  <input
+    type="text"
+    id="memberDisplayName"
+    placeholder="例如：Yu、chihyu、YuYu"
+  >
+
+</div>
+    
 <div id="memberLoginFields">
   
 <div class="form-group">
@@ -1355,6 +1367,11 @@ async function saveMember() {
           'memberContact'
         ).value.trim(),
 
+      displayName:
+  document.getElementById(
+    'memberDisplayName'
+  ).value.trim(),
+      
       type:
         document.getElementById(
           'memberType'
