@@ -1567,12 +1567,16 @@ function renderMembers(members) {
               <div class="trade-body">
 
                 <div class="trade-name">
-                  👤 ${item.name || '未命名成員'}
-                </div>
+  👤 ${item.name || '未命名成員'}
+</div>
 
-                <div class="trade-detail">
-                  ${item.type || '🏷️ 未設定類型'}
-                </div>
+<div class="trade-detail">
+  ✨ 顯示名稱：${item.displayName || '未設定'}
+</div>
+
+<div class="trade-detail">
+  ${item.type || '🏷️ 未設定類型'}
+</div>
 
                 <div class="trade-detail">
                   📱 聯絡方式：${item.contact || '未設定'}
