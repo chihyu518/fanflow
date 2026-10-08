@@ -1310,6 +1310,57 @@ async function verifyFanFlowSession() {
 }
 
   // =========================
+// 👤 讀取目前登入者資料
+// =========================
+
+const savedFanFlowUser =
+  sessionStorage.getItem('fanflowUser') ||
+  localStorage.getItem('fanflowUser');
+
+
+if (savedFanFlowUser) {
+
+  try {
+
+    const currentUser =
+      JSON.parse(savedFanFlowUser);
+
+
+    // ✨ 顯示名稱
+
+    const myDisplayName =
+      document.getElementById(
+        'myDisplayName'
+      );
+
+    if (myDisplayName) {
+
+      myDisplayName.value =
+        currentUser.displayName ||
+        currentUser.name ||
+        '';
+
+    }
+
+
+    console.log(
+      '👤 目前登入者：',
+      currentUser
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      '讀取登入者資料失敗：',
+      error
+    );
+
+  }
+
+}
+  
+  // =========================
   // ⚙️ 讀取設定
   // =========================
 
