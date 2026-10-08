@@ -4496,8 +4496,9 @@ async function loadProductMembers(currentUser) {
             member.id;
 
           option.textContent =
-            member.name ||
-            '未命名成員';
+  member.displayName ||
+  member.name ||
+  '未命名成員';
 
           select.appendChild(
             option
@@ -4540,8 +4541,9 @@ async function loadProductMembers(currentUser) {
           myMember.id;
 
         option.textContent =
-          myMember.name ||
-          '目前登入者';
+  myMember.displayName ||
+  myMember.name ||
+  '目前登入者';
 
         select.appendChild(
           option
