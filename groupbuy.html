@@ -4278,8 +4278,8 @@ if (currentUser) {
     members.find(
       function(member) {
 
-        return member.name ===
-          currentUser.name;
+        return String(member.userId) ===
+  String(currentUser.id);
 
       }
     );
