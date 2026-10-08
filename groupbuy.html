@@ -971,33 +971,31 @@
     🎯 商品對象
   </label>
 
-  <select id="productTarget">
+  <select id="productTarget" onchange="toggleProductTarget()">
 
     <option value="specific">
-      👤 指定成員
+        👤 指定成員
     </option>
 
     <option value="all">
-      👥 所有人都可以購買
+        👥 所有人都可以購買
     </option>
 
-  </select>
+</select>
 
 </div>
       
       <!-- 👤 姓名／成員 -->
-<div class="form-group">
+<div class="form-group" id="productMemberGroup">
 
   <label for="productMember">
     👤 姓名／成員
   </label>
 
   <select id="productMember">
-
     <option value="">
       請選擇成員
     </option>
-
   </select>
 
 </div>
@@ -4349,6 +4347,39 @@ if (currentUser) {
 
 }
 
+    function toggleProductTarget() {
+
+  const target =
+    document.getElementById('productTarget');
+
+  const memberGroup =
+    document.getElementById('productMemberGroup');
+
+  const memberSelect =
+    document.getElementById('productMember');
+
+  if (!target || !memberGroup) {
+    return;
+  }
+
+  if (target.value === 'all') {
+
+    // 所有人都可以購買
+    memberGroup.style.display = 'none';
+
+    if (memberSelect) {
+      memberSelect.value = '';
+    }
+
+  } else {
+
+    // 指定成員
+    memberGroup.style.display = '';
+
+  }
+
+}
+    
     // =========================
 // 👤 載入商品登記成員
 // =========================
