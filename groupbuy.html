@@ -973,13 +973,13 @@
 
   <select id="productTarget" onchange="toggleProductTarget()">
 
-    <option value="specific">
-        👤 指定成員
-    </option>
+    <option value="👤 指定成員">
+  👤 指定成員
+</option>
 
-    <option value="all">
-        👥 所有人都可以購買
-    </option>
+<option value="👥 所有人都可以購買">
+  👥 所有人都可以購買
+</option>
 
 </select>
 
@@ -3866,6 +3866,15 @@ function openEditProduct(id) {
     .value =
       product.name || '';
 
+    document
+    .getElementById(
+      'productTarget'
+    )
+    .value =
+      product.productTarget ||
+      '👤 指定成員';
+
+  toggleProductTarget();
 
   document
     .getElementById(
@@ -4370,7 +4379,7 @@ if (currentUser) {
     return;
   }
 
-  if (target.value === 'all') {
+  if (target.value === '👥 所有人都可以購買') {
 
     // 所有人都可以購買
     memberGroup.style.display = 'none';
