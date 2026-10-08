@@ -4104,10 +4104,10 @@ if (
 ) {
 
   if (
-    product.memberId &&
-    String(product.memberId) !==
-      String(currentUser?.memberId)
-  ) {
+  product.memberId &&
+  String(product.memberId) !==
+    String(document.getElementById('orderName')?.value)
+) {
 
     alert(
       '這項商品是指定成員專屬，您無法登記。'
