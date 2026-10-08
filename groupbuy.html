@@ -4090,6 +4090,34 @@ async function openNewOrder(productId) {
 
   }
 
+  console.log('🎯 商品對象:', product.productTarget);
+console.log('👤 商品指定成員 ID:', product.memberId);
+console.log('👤 目前訂單成員 ID:', document.getElementById('orderName')?.value);
+  
+  // =========================
+// 🎯 檢查商品購買對象
+// =========================
+
+if (
+  product.productTarget ===
+  '👤 指定成員'
+) {
+
+  if (
+    product.memberId &&
+    String(product.memberId) !==
+      String(currentUser?.memberId)
+  ) {
+
+    alert(
+      '這項商品是指定成員專屬，您無法登記。'
+    );
+
+    return;
+
+  }
+
+}
 
   const groupBuy =
     (window.currentGroupBuys || [])
@@ -4179,9 +4207,56 @@ async function openNewOrder(productId) {
   // 載入成員下拉選單
 await loadOrderMembers(currentUser);
 
-  console.log('開始載入成員');
-  
-  // 開啟視窗
+console.log('開始載入成員');
+
+
+// =========================
+// 🎯 檢查商品購買對象
+// =========================
+
+if (
+  product.productTarget ===
+  '👤 指定成員'
+) {
+
+  // 管理員不受限制
+  if (
+    !currentUser ||
+    currentUser.role !==
+      '👑 管理員'
+  ) {
+
+    const orderNameSelect =
+      document.getElementById(
+        'orderName'
+      );
+
+    const myMemberId =
+      orderNameSelect
+        ? orderNameSelect.value
+        : '';
+
+    // 目前登入者不是指定成員
+    if (
+      !product.memberId ||
+      String(product.memberId) !==
+        String(myMemberId)
+    ) {
+
+      alert(
+        '這項商品是指定成員專屬，您無法登記。'
+      );
+
+      return;
+
+    }
+
+  }
+
+}
+
+
+// 開啟視窗
   document
     .getElementById(
       'orderModal'
