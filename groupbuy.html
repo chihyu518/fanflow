@@ -4064,15 +4064,15 @@ async function deleteCurrentProduct(id) {
 
 async function openNewOrder(productId) {
 
-    const currentUser =
+  const currentUser =
     JSON.parse(
       localStorage.getItem(
         'fanflowUser'
       ) || 'null'
     );
-  
+
   window.editingOrderId = '';
-  
+
   const product =
     (window.currentProducts || [])
       .find(function(item) {
@@ -4090,34 +4090,6 @@ async function openNewOrder(productId) {
 
   }
 
-  console.log('🎯 商品對象:', product.productTarget);
-console.log('👤 商品指定成員 ID:', product.memberId);
-console.log('👤 目前訂單成員 ID:', document.getElementById('orderName')?.value);
-  
-  // =========================
-// 🎯 檢查商品購買對象
-// =========================
-
-if (
-  product.productTarget ===
-  '👤 指定成員'
-) {
-
-  if (
-  product.memberId &&
-  String(product.memberId) !==
-    String(document.getElementById('orderName')?.value)
-) {
-
-    alert(
-      '這項商品是指定成員專屬，您無法登記。'
-    );
-
-    return;
-
-  }
-
-}
 
   const groupBuy =
     (window.currentGroupBuys || [])
@@ -4147,61 +4119,6 @@ if (
 
   window.currentOrderProductName =
     product.name || '';
-
-
-  // 自動帶入商品
-  document
-    .getElementById(
-      'orderProduct'
-    )
-    .value =
-      product.name || '';
-
-
-  // 姓名清空
-  document
-    .getElementById(
-      'orderName'
-    )
-    .value = '';
-
-
-  // 數量預設 1
-  document
-    .getElementById(
-      'orderQuantity'
-    )
-    .value = '1';
-
-
-  // 自動帶入單價
-  document
-    .getElementById(
-      'orderPrice'
-    )
-    .value =
-      product.price ?? 0;
-
-
-  // 二補預設 0
-  document
-    .getElementById(
-      'orderSecondPayment'
-    )
-    .value = '0';
-
-
-  // 預設未付款
-  document
-    .getElementById(
-      'orderPaymentStatus'
-    )
-    .value =
-      '🔴 未付款';
-
-
-  // 計算第一次總額
-  calculateOrderTotal();
 
 
   // 載入成員下拉選單
