@@ -2025,7 +2025,12 @@ async function saveProduct() {
 
  const memberId =
   document
-    .getElementById('orderName')
+    .getElementById('productMember')
+    .value;
+
+  const productTarget =
+  document
+    .getElementById('productTarget')
     .value;
 
   const price =
@@ -2141,6 +2146,9 @@ const currency =
 
     memberId:
   memberId,
+
+    productTarget:
+  productTarget,
     
     name:
       name,
