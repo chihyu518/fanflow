@@ -4378,6 +4378,12 @@ async function openNewOrder(productId) {
 
   window.editingOrderId = '';
 
+  // 👤 新增訂單時恢復成員選單
+  const orderNameSelect =
+    document.getElementById('orderName');
+
+  orderNameSelect.disabled = false;
+
   const product =
     (window.currentProducts || [])
       .find(function(item) {
