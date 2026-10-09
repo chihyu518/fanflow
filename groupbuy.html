@@ -4435,6 +4435,28 @@ window.currentOrderGroupBuyName =
 window.currentOrderProductName =
   product.name || '';
 
+  // 🧾 新增訂單時重設表單
+  document.getElementById('orderProduct').value =
+    product.name || '';
+
+  document.getElementById('orderQuantity').value =
+    1;
+
+  document.getElementById('orderPrice').value =
+    product.price ?? 0;
+
+  document.getElementById('orderSecondPayment').value =
+    0;
+
+  document.getElementById('orderPaymentStatus').value =
+    '🔴 未付款';
+
+  // 重新計算總額
+  calculateOrderTotal();
+
+  // 恢復新增按鈕文字
+  document.getElementById('orderSaveButton').textContent =
+    '儲存登記';
 
 
   // 載入成員下拉選單
