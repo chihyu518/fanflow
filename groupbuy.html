@@ -1825,6 +1825,31 @@ groupBuySearch.addEventListener(
     // 開啟代購詳細資料
     // =========================
 
+function canManageCurrentGroupBuy(groupBuyId) {
+
+  const currentUser = JSON.parse(
+    localStorage.getItem('fanflowUser') || 'null'
+  );
+
+  if (!currentUser || !currentUser.id) {
+    return false;
+  }
+
+  const groupBuy = (window.currentGroupBuys || [])
+    .find(item => item.id === groupBuyId);
+
+  if (!groupBuy) {
+    return false;
+  }
+
+  if (currentUser.role === '👑 管理員') {
+    return true;
+  }
+
+  return Boolean(groupBuy.creatorId) &&
+    String(groupBuy.creatorId) === String(currentUser.id);
+}
+
     function openGroupBuyDetail(id) {
 
       const item =
