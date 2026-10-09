@@ -4991,16 +4991,33 @@ function calculateOrderTotal() {
 // 🧾 關閉訂單 Modal
 // =========================
 
+
 function closeOrderModal() {
 
+  // 關閉訂單視窗
   document
-    .getElementById(
-      'orderModal'
-    )
-    .style.display =
-      'none';
+    .getElementById('orderModal')
+    .style.display = 'none';
+
+  // 清除編輯狀態
+  window.editingOrderId = '';
+
+  // 清除暫存的商品及活動資料
+  window.currentOrderProductId = '';
+  window.currentOrderProductName = '';
+  window.currentOrderGroupBuyId = '';
+  window.currentOrderGroupBuyName = '';
+
+  // 恢復成員選單可操作狀態
+  const orderNameSelect =
+    document.getElementById('orderName');
+
+  if (orderNameSelect) {
+    orderNameSelect.disabled = false;
+  }
 
 }
+
 
 
 // =========================
