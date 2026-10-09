@@ -787,12 +787,15 @@
             📦 代購商品
           </div>
 
-          <button
-            class="save-button"
-            type="button"
-            onclick="openNewProduct()">
-            ＋ 新增商品
-          </button>
+          
+<button
+  id="addProductButton"
+  class="save-button"
+  type="button"
+  onclick="openNewProduct()">
+  ＋ 新增商品
+</button>
+
 
         </div>
 
@@ -1880,6 +1883,9 @@ function canManageCurrentGroupBuy(groupBuyId) {
       window.currentGroupBuyId = id;
 
 const canManage = canManageCurrentGroupBuy(id);
+
+document.getElementById('addProductButton').style.display =
+  canManage ? '' : 'none';
 
 document.getElementById('editGroupBuyButton').style.display =
   canManage ? '' : 'none';
