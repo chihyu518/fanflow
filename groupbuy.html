@@ -4728,8 +4728,9 @@ if (currentUser) {
     members.find(
       function(member) {
 
-        return String(member.userId) ===
-  String(currentUser.id);
+return String(member.id) ===
+  String(currentUser.memberId);
+
 
       }
     );
@@ -4937,8 +4938,9 @@ async function loadProductMembers(currentUser) {
         members.find(
           function(member) {
 
-            return String(member.userId) ===
-              String(currentUser.id);
+return String(member.id) ===
+  String(currentUser.memberId);
+
 
           }
         );
