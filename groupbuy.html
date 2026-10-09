@@ -3120,6 +3120,34 @@ if (searchText) {
   ${escapeHtml(order.purchaseStatus || '⚪ 尚未購買')}
 </div>
 
+
+${
+  (order.purchaseStatus || '⚪ 尚未購買') === '⚪ 尚未購買'
+    ? `
+      <div style="margin-top: 10px;">
+        <button
+          type="button"
+          class="save-button"
+          onclick="updateOrderPurchaseStatus('${order.id}', '🟢 已購買')"
+        >
+          🛒 設為已購買
+        </button>
+      </div>
+    `
+    : `
+      <div style="margin-top: 10px;">
+        <button
+          type="button"
+          class="cancel-button"
+          onclick="updateOrderPurchaseStatus('${order.id}', '⚪ 尚未購買')"
+        >
+          ↩️ 改回尚未購買
+        </button>
+      </div>
+    `
+}
+
+
 <div style="margin-top: 4px;">
   📦 到貨狀態：
   ${escapeHtml(order.orderStatus || '⚪ 未到貨')}
