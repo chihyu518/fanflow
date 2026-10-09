@@ -450,9 +450,16 @@
   ♡ <span class="menu-text">收藏庫</span>
 </a>
 
-    <a href="members.html" class="menu-item">
+    
+<a
+  id="adminMembersMenu"
+  href="members.html"
+  class="menu-item"
+  style="display:none;"
+>
   👥 <span class="menu-text">成員管理</span>
 </a>
+
 
     <a
   href="notifications.html"
@@ -1495,6 +1502,16 @@ async function verifyFanFlowSession() {
           result.user
         )
       );
+
+const membersMenu =
+  document.getElementById('adminMembersMenu');
+
+if (membersMenu) {
+  membersMenu.style.display =
+    result.user?.role === '👑 管理員'
+      ? ''
+      : 'none';
+}
 
 
       // =========================
