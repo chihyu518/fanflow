@@ -3679,6 +3679,63 @@ async function updateOrderDeliveryStatus(
   }
 
 }
+
+    
+/* =========================
+   🛒 更新訂單購買狀態
+========================= */
+
+async function updateOrderPurchaseStatus(
+  orderId,
+  purchaseStatus
+) {
+
+  try {
+
+    const response = await fetch(API_URL, {
+      method: 'POST',
+
+      body: JSON.stringify({
+        action: 'updatePurchaseStatus',
+        token: fanflowSessionToken,
+        id: orderId,
+        purchaseStatus: purchaseStatus
+      })
+    });
+
+    const result = await response.json();
+
+    if (!result.success) {
+      throw new Error(
+        result.message || '購買狀態修改失敗'
+      );
+    }
+
+    // 更新成功後重新讀取目前代購的訂單
+    const groupBuy =
+      (window.currentGroupBuys || [])
+        .find(function(item) {
+          return item.id ===
+            window.currentGroupBuyId;
+        });
+
+    if (groupBuy) {
+      await loadOrders(groupBuy.name);
+    }
+
+  } catch (error) {
+
+    console.error('購買狀態修改失敗：', error);
+
+    alert(
+      '購買狀態修改失敗：' +
+      error.message
+    );
+
+  }
+
+}
+
     // =========================
 // 📦 設為已到貨
 // =========================
