@@ -2068,6 +2068,15 @@ async function saveProduct() {
     .getElementById('productTarget')
     .value;
 
+  // 🔒 指定成員商品必須選擇成員
+  if (
+    productTarget === '👤 指定成員' &&
+    !memberId
+  ) {
+    alert('請先選擇指定成員');
+    return;
+  }
+
   const price =
     document
       .getElementById('productPrice')
