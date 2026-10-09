@@ -3610,17 +3610,27 @@ ${quantityHtml}
                     margin-top: 10px;
                   ">
 
+
 <button
   type="button"
   class="save-button"
   onclick="openNewOrder('${product.id}')"
+  ${remainingQuantity !== null && remainingQuantity <= 0
+    ? 'disabled'
+    : ''}
   style="
     width: auto;
     padding: 7px 10px;
     font-size: 12px;
+    ${remainingQuantity !== null && remainingQuantity <= 0
+      ? 'background: #ddd; color: #888; cursor: not-allowed;'
+      : ''}
   ">
-  + 我要一份
+  ${remainingQuantity !== null && remainingQuantity <= 0
+    ? '🔴 已額滿'
+    : '+ 我要一份'}
 </button>
+
 
                   <button
                     type="button"
