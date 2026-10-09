@@ -3450,6 +3450,12 @@ function renderProducts(
   products
 ) {
 
+  // 🔐 確認目前登入者是否能管理這團代購
+  const canManage =
+    canManageCurrentGroupBuy(
+      window.currentGroupBuyId
+    );
+
   const productList =
     document.getElementById(
       'productList'
@@ -3690,7 +3696,7 @@ ${quantityHtml}
     : '+ 我要一份'}
 </button>
 
-
+${canManage ? `
                   <button
                     type="button"
                     class="cancel-button"
@@ -3715,7 +3721,7 @@ ${quantityHtml}
                     ">
                     🗑️ 刪除
                   </button>
-
+` : ''}
                 </div>
 
               </div>
