@@ -5297,6 +5297,12 @@ if (groupBuyName) {
 
 }
 
+  // 📦 同步更新商品已登記與剩餘數量
+  if (window.currentGroupBuyId) {
+    await loadProducts(
+      window.currentGroupBuyId
+    );
+  }
 
 } catch (error) {
 
