@@ -4891,6 +4891,7 @@ const name =
   }
 
 
+
 const data = {
 
   action:
@@ -4898,8 +4899,12 @@ const data = {
       ? 'updateOrder'
       : 'createOrder',
 
+  token:
+    fanflowSessionToken,
+
   id:
     window.editingOrderId || '',
+
 
 
     name:
