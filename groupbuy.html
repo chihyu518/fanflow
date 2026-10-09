@@ -3681,7 +3681,7 @@ ${quantityHtml}
 // ✏️ 開啟編輯訂單
 // =========================
 
-function openEditOrder(orderId) {
+async function openEditOrder(orderId) {
 
   const order =
     (window.currentOrders || [])
@@ -3694,6 +3694,15 @@ function openEditOrder(orderId) {
     alert('找不到這筆訂單資料');
     return;
   }
+
+  // 👤 取得目前登入者
+  const currentUser =
+    JSON.parse(
+      localStorage.getItem('fanflowUser') || 'null'
+    );
+
+  // 等待成員選單載入完成
+  await loadOrderMembers(currentUser);
 
 
   // 記住目前正在編輯哪一筆訂單
