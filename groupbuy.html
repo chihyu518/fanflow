@@ -3486,12 +3486,18 @@ function openEditOrder(orderId) {
     order.id;
 
 
-  // 保留目前代購名稱與商品名稱
-  window.currentOrderGroupBuyName =
-    order.groupBuy || '';
+  
+ // 保留目前代購名稱與商品名稱
+window.currentOrderGroupBuyName =
+  order.groupBuy || '';
 
-  window.currentOrderProductName =
-    order.product || '';
+// 保留代購活動 ID
+window.currentOrderGroupBuyId =
+  order.groupBuyId || '';
+
+window.currentOrderProductName =
+  order.product || '';
+
 
 
   // 把原本資料帶回表單
