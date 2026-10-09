@@ -4157,7 +4157,8 @@ async function markOrderUnpaid(orderId) {
 // ✏️ 開啟編輯商品
 // =========================
 
-function openEditProduct(id) {
+async function openEditProduct(id) {
+
 
   const product =
     (window.currentProducts || [])
