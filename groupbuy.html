@@ -3727,8 +3727,15 @@ window.currentOrderProductName =
   document.getElementById('orderProduct').value =
     order.product || '';
 
-  document.getElementById('orderName').value =
-    order.name || '';
+  // 👤 使用原本的成員 ID 選取購買者
+  const orderNameSelect =
+    document.getElementById('orderName');
+
+  orderNameSelect.value =
+    order.memberId || '';
+
+  // 🔒 編輯訂單時禁止更換購買者
+  orderNameSelect.disabled = true;
 
   document.getElementById('orderQuantity').value =
     order.quantity ?? 1;
