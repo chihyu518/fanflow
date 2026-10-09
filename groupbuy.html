@@ -3523,6 +3523,44 @@ const originalPriceHtml =
               `
               : '';
 
+          
+          // 商品數量統計
+          const orderedQuantity =
+            Number(product.orderedQuantity ?? 0);
+
+          const quantityLimit =
+            product.quantityLimit == null
+              ? null
+              : Number(product.quantityLimit);
+
+          const remainingQuantity =
+            quantityLimit === null
+              ? null
+              : Math.max(
+                  0,
+                  quantityLimit - orderedQuantity
+                );
+
+          const quantityHtml = `
+            <div
+              style="
+                margin-top: 8px;
+                font-size: 12px;
+                color: #777;
+                line-height: 1.7;
+              ">
+              已登記：${orderedQuantity} 件
+
+              <div>
+                ${
+                  quantityLimit === null
+                    ? '♾️ 不限量'
+                    : `數量上限：${quantityLimit} 件｜剩餘：${remainingQuantity} 件`
+                }
+              </div>
+            </div>
+          `;
+
 
           return `
             <div
@@ -3558,10 +3596,12 @@ ${originalPriceHtml}
 
                 ${priceHtml}
 
-                ${noteHtml}
+${noteHtml}
+
+${quantityHtml}
 
 
-                <!-- 商品操作按鈕 -->
+<!-- 商品操作按鈕 -->
 
                 <div
                   style="
