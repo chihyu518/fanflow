@@ -4110,15 +4110,20 @@ async function openNewOrder(productId) {
   }
 
 
-  // 記住目前商品與代購
-  window.currentOrderProductId =
-    product.id;
+  
+ // 記住目前商品與代購
+window.currentOrderProductId =
+  product.id;
 
-  window.currentOrderGroupBuyName =
-    groupBuy.name || '';
+window.currentOrderGroupBuyId =
+  groupBuy.id;
 
-  window.currentOrderProductName =
-    product.name || '';
+window.currentOrderGroupBuyName =
+  groupBuy.name || '';
+
+window.currentOrderProductName =
+  product.name || '';
+
 
 
   // 載入成員下拉選單
