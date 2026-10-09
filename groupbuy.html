@@ -890,19 +890,23 @@
           關閉
         </button>
 
-        <button
-          class="save-button"
-          type="button"
-          onclick="openEditGroupBuy()">
-          ✏️ 編輯
-        </button>
+        
+<button
+  id="editGroupBuyButton"
+  class="save-button"
+  type="button"
+  onclick="openEditGroupBuy()">
+  ✏️ 編輯
+</button>
 
-        <button
-          class="cancel-button"
-          type="button"
-          onclick="deleteCurrentGroupBuy()">
-          🗑️ 刪除
-        </button>
+<button
+  id="deleteGroupBuyButton"
+  class="cancel-button"
+  type="button"
+  onclick="deleteCurrentGroupBuy()">
+  🗑️ 刪除
+</button>
+
 
       </div>
 
@@ -1874,6 +1878,14 @@ function canManageCurrentGroupBuy(groupBuyId) {
 
 
       window.currentGroupBuyId = id;
+
+const canManage = canManageCurrentGroupBuy(id);
+
+document.getElementById('editGroupBuyButton').style.display =
+  canManage ? '' : 'none';
+
+document.getElementById('deleteGroupBuyButton').style.display =
+  canManage ? '' : 'none';
 
 
       const modal =
