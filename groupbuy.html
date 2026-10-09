@@ -2605,6 +2605,37 @@ const response =
     window.currentOrders =
   orders;
 
+    
+    // =========================
+    // 🔐 購買按鈕顯示權限
+    // =========================
+
+    const currentUser =
+      JSON.parse(
+        localStorage.getItem('fanflowUser') || 'null'
+      );
+
+    const currentGroupBuy =
+      (window.currentGroupBuys || [])
+        .find(function(item) {
+          return item.id === window.currentGroupBuyId;
+        });
+
+    const canEditPurchase =
+      Boolean(
+        currentUser &&
+        currentGroupBuy &&
+        (
+          currentUser.role === '👑 管理員' ||
+          (
+            currentGroupBuy.creatorId &&
+            String(currentGroupBuy.creatorId) ===
+              String(currentUser.id)
+          )
+        )
+      );
+
+    
     // =========================
 // 📊 訂單統計
 // =========================
