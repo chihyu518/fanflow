@@ -2459,15 +2459,20 @@ document
 
       try {
 
-        const response =
-          await fetch(
-            API_URL +
-            '?action=getProducts&groupBuyId=' +
-            encodeURIComponent(
-              groupBuyId
-            )
-          );
+        
+const response =
+  await fetch(
+    API_URL,
+    {
+      method: 'POST',
 
+      body: JSON.stringify({
+        action: 'getProducts',
+        groupBuyId: groupBuyId,
+        token: fanflowSessionToken
+      })
+    }
+  );
 
         const result =
           await response.json();
