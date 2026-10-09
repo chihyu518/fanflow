@@ -3161,9 +3161,13 @@ if (searchText) {
 </div>
 
 
+
 ${
-  (order.purchaseStatus || '⚪ 尚未購買') === '⚪ 尚未購買'
-    ? `
+  canEditPurchase
+    ? (
+      (order.purchaseStatus || '⚪ 尚未購買') === '⚪ 尚未購買'
+        ? `
+
       <div style="margin-top: 10px;">
         <button
           type="button"
@@ -3183,9 +3187,13 @@ ${
         >
           ↩️ 改回尚未購買
         </button>
-      </div>
-    `
+      
+        </div>
+      `
+    )
+    : ''
 }
+
 
 
 <div style="margin-top: 4px;">
