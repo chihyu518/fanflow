@@ -3740,10 +3740,25 @@ window.currentOrderProductName =
   const orderNameSelect =
     document.getElementById('orderName');
 
+  
+  // 👤 選取訂單原本的購買者
   orderNameSelect.value =
     order.memberId || '';
 
-  // 🔒 編輯訂單時禁止更換購買者
+  // 🔍 確認原本成員已成功選取
+  if (
+    !order.memberId ||
+    orderNameSelect.value !== order.memberId
+  ) {
+    alert(
+      '找不到訂單原本的成員資料，請重新整理後再試。'
+    );
+
+    window.editingOrderId = '';
+    return;
+  }
+
+  // 🔒 編輯時禁止更換購買者
   orderNameSelect.disabled = true;
 
   document.getElementById('orderQuantity').value =
