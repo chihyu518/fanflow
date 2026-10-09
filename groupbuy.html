@@ -3891,11 +3891,14 @@ async function updateOrderPaymentStatus(
         API_URL,
         {
           method: 'POST',
-          body: JSON.stringify({
-            action: 'updateOrderPayment',
-            id: orderId,
-            paymentStatus: paymentStatus
-          })
+          
+body: JSON.stringify({
+  action: 'updateOrderPayment',
+  token: fanflowSessionToken,
+  id: orderId,
+  paymentStatus: paymentStatus
+})
+
         }
       );
 
@@ -3961,6 +3964,7 @@ async function updateOrderDeliveryStatus(
           method: 'POST',
           body: JSON.stringify({
             action: 'updateOrderStatus',
+            token: fanflowSessionToken,
             id: orderId,
             orderStatus: orderStatus
           })
@@ -4150,11 +4154,13 @@ async function deleteCurrentOrder(orderId) {
         {
           method: 'POST',
 
-          body:
-            JSON.stringify({
-              action: 'deleteOrder',
-              pageId: orderId
-            })
+          
+body: JSON.stringify({
+  action: 'deleteOrder',
+  token: fanflowSessionToken,
+  pageId: orderId
+})
+
         }
       );
 
