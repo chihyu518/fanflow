@@ -4209,6 +4209,37 @@ async function openEditProduct(id) {
 
   toggleProductTarget();
 
+  
+  // 👤 取得目前登入的使用者
+  const currentUser =
+    JSON.parse(
+      localStorage.getItem('fanflowUser') || 'null'
+    );
+
+  // ⏳ 等待商品成員名單載入完成
+  await loadProductMembers(currentUser);
+
+  // 🎯 如果商品指定了成員，選取原本的成員
+  if (product.productTarget === '👤 指定成員') {
+
+    const memberSelect =
+      document.getElementById('productMember');
+
+    memberSelect.value = product.memberId || '';
+
+    // 🔒 確認原本的成員存在於選單
+    if (
+      !product.memberId ||
+      memberSelect.value !== product.memberId
+    ) {
+      alert('無法載入原本的指定成員，請確認成員資料');
+
+      window.editingProductId = '';
+      return;
+    }
+
+  }
+
   document
     .getElementById(
       'productPrice'
