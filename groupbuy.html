@@ -4946,6 +4946,15 @@ async function saveOrder() {
   document.getElementById(
     'orderName'
   );
+  
+  // 👤 取得選中的 Notion 成員 ID
+  const memberId =
+    nameSelect.value;
+
+  if (!memberId) {
+    alert('請先選擇登記成員');
+    return;
+  }
 
 const name =
   nameSelect.options[
@@ -5055,9 +5064,11 @@ const data = {
 
 
     name:
-      name,
+  name,
 
-    
+memberId:
+  memberId,
+
 groupBuy:
   window.currentOrderGroupBuyName,
 
