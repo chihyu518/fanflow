@@ -2100,6 +2100,22 @@ const currency =
       .getElementById('productQuantityLimit')
       .value;
 
+  
+  // =========================
+  // 🔢 驗證商品數量上限
+  // =========================
+
+  if (
+    quantityLimit !== '' &&
+    (
+      !Number.isSafeInteger(Number(quantityLimit)) ||
+      Number(quantityLimit) < 0
+    )
+  ) {
+    alert('數量上限只能輸入 0 或正整數');
+    return;
+  }
+
 
   const note =
     document
