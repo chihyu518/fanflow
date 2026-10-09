@@ -2570,12 +2570,21 @@ async function loadOrders(groupBuyName) {
 
   try {
 
-    const response =
-      await fetch(
-        API_URL +
-        '?action=getOrders&groupBuyName=' +
-        encodeURIComponent(groupBuyName)
-      );
+    
+const response =
+  await fetch(
+    API_URL,
+    {
+      method: 'POST',
+
+      body: JSON.stringify({
+        action: 'getOrders',
+        groupBuyName: groupBuyName,
+        token: fanflowSessionToken
+      })
+    }
+  );
+
 
 
     const result =
