@@ -1321,6 +1321,17 @@
 
   <script>
 
+
+// 將 Notion 資料安全轉成文字，避免插入 HTML
+function fanflowEscapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
     const API_URL =
       'https://script.google.com/macros/s/AKfycbz7CVrbddXxIvd86Z3PeMyM9MT6q7QBe7EJ5n1uQU7pTkwCYgc-4gjcg7EmRmz5itDSJQ/exec';
 
@@ -1355,11 +1366,6 @@ const fanflowSessionToken =
   localStorage.getItem(
     'fanflowSessionToken'
   );
-
-    console.log(
-  '🔐 目前 Token：',
-  fanflowSessionToken
-);
 
 if (!fanflowSessionToken) {
 
@@ -1720,7 +1726,7 @@ if (membersMenu) {
                 ? `
                   <img
                     class="groupbuy-image"
-                    src="${item.imageUrl}"
+                    src="${fanflowEscapeHtml(item.imageUrl)}"
                     alt="${item.name}">
                 `
                 : '';
@@ -5231,10 +5237,6 @@ product:
       paymentStatus
 
   };
-console.log(
-  '準備送出的訂單資料：',
-  data
-);
 
 console.log(
   'editingOrderId：',

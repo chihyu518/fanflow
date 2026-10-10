@@ -563,6 +563,17 @@ display: block;
 
   <script>
 
+
+// 將 Notion 資料安全轉成文字，避免插入 HTML
+function fanflowEscapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
   const API_URL =
     'https://script.google.com/macros/s/AKfycbz7CVrbddXxIvd86Z3PeMyM9MT6q7QBe7EJ5n1uQU7pTkwCYgc-4gjcg7EmRmz5itDSJQ/exec';
 
@@ -887,12 +898,6 @@ groupBuyId:
   const orderResult =
     await orderResponse.json();
 
-    console.log(
-    '訂單 API 回應：',
-    groupBuy.name,
-    orderResult
-  );
-
   if (!orderResult.success) {
     continue;
   }
@@ -1077,8 +1082,8 @@ if (dashboardNotifications.length === 0) {
 
                 detail =
                   `
-                    👤 ${item.name || '未設定'}
-                    ｜📦 ${item.product || '未設定'}
+                    👤 ${fanflowEscapeHtml(item.name || '未設定')}
+                    ｜📦 ${fanflowEscapeHtml(item.product || '未設定')}
                     ｜💰 NT$ ${Number(
                       item.amount || 0
                     ).toLocaleString()}
@@ -1097,8 +1102,8 @@ if (dashboardNotifications.length === 0) {
 
                 detail =
                   `
-                    👤 ${item.name || '未設定'}
-                    ｜📦 ${item.product || '未設定'}
+                    👤 ${fanflowEscapeHtml(item.name || '未設定')}
+                    ｜📦 ${fanflowEscapeHtml(item.product || '未設定')}
                     ｜🔢 ${Number(
                       item.quantity || 0
                     ).toLocaleString()} 件
@@ -1157,8 +1162,8 @@ if (dashboardNotifications.length === 0) {
 
   detail =
     `
-      🛍️ ${item.name || '未設定'}
-      ｜📅 ${item.deadline || '未設定'}
+      🛍️ ${fanflowEscapeHtml(item.name || '未設定')}
+      ｜📅 ${fanflowEscapeHtml(item.deadline || '未設定')}
       ｜${deadlineText}
     `;
 
@@ -1202,7 +1207,7 @@ if (dashboardNotifications.length === 0) {
                       item.groupBuy
                         ? `
                           <div class="dashboard-groupbuy-detail">
-                            🛍️ ${item.groupBuy}
+                            🛍️ ${fanflowEscapeHtml(item.groupBuy)}
                           </div>
                         `
                         : ''
@@ -1248,7 +1253,7 @@ if (activeGroupBuys.length === 0) {
                   ? `
                     <img
                       class="dashboard-groupbuy-image"
-                      src="${item.imageUrl}"
+                      src="${fanflowEscapeHtml(item.imageUrl)}"
                       alt=""
                     >
                   `
@@ -1272,15 +1277,15 @@ if (activeGroupBuys.length === 0) {
                   <div class="dashboard-groupbuy-info">
 
                     <div class="dashboard-groupbuy-name">
-                      🛍️ ${item.name || ''}
+                      🛍️ ${fanflowEscapeHtml(item.name || '')}
                     </div>
 
                     <div class="dashboard-groupbuy-detail">
-                      🎤 ${item.group || '未設定'}
+                      🎤 ${fanflowEscapeHtml(item.group || '未設定')}
                     </div>
 
                     <div class="dashboard-groupbuy-detail">
-                      📅 截止：${item.deadline || '未設定'}
+                      📅 截止：${fanflowEscapeHtml(item.deadline || '未設定')}
                     </div>
 
                   </div>

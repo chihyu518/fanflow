@@ -1055,6 +1055,17 @@
   
   <script>
 
+
+// 將 Notion 資料安全轉成文字，避免插入 HTML
+function fanflowEscapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
  const API_URL =
   'https://script.google.com/macros/s/AKfycbz7CVrbddXxIvd86Z3PeMyM9MT6q7QBe7EJ5n1uQU7pTkwCYgc-4gjcg7EmRmz5itDSJQ/exec';
 
@@ -1356,10 +1367,7 @@ document.getElementById(
 ).value =
   '👤 一般成員';
 
-  document.getElementById(
-  'memberLoginFields'
-).style.display =
-  '';
+  toggleMemberAccountType();
   
   document.getElementById(
     'memberContact'
@@ -1689,34 +1697,34 @@ function renderMembers(members) {
               <div class="trade-body">
 
                 <div class="trade-name">
-  👤 ${item.name || '未命名成員'}
+  👤 ${fanflowEscapeHtml(item.name || '未命名成員')}
 </div>
 
 <div class="trade-detail">
-  ✨ 顯示名稱：${item.displayName || '未設定'}
+  ✨ 顯示名稱：${fanflowEscapeHtml(item.displayName || '未設定')}
 </div>
 
 <div class="trade-detail">
-  ${item.type || '🏷️ 未設定類型'}
+  ${fanflowEscapeHtml(item.type || '🏷️ 未設定類型')}
 </div>
 
                 <div class="trade-detail">
-                  📱 聯絡方式：${item.contact || '未設定'}
+                  📱 聯絡方式：${fanflowEscapeHtml(item.contact || '未設定')}
                 </div>
 
                 <div class="trade-detail">
-                  📦 取貨方式：${item.deliveryMethod || '未設定'}
+                  📦 取貨方式：${fanflowEscapeHtml(item.deliveryMethod || '未設定')}
                 </div>
 
                 <div class="trade-detail">
-                  📮 寄送資訊：${item.shippingInfo || '未設定'}
+                  📮 寄送資訊：${fanflowEscapeHtml(item.shippingInfo || '未設定')}
                 </div>
 
                 ${
                   item.note
                     ? `
                       <div class="trade-detail">
-                        📝 ${item.note}
+                        📝 ${fanflowEscapeHtml(item.note)}
                       </div>
                     `
                     : ''

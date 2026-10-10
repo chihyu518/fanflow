@@ -780,6 +780,17 @@
   
   <script>
 
+
+// 將 Notion 資料安全轉成文字，避免插入 HTML
+function fanflowEscapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
     const API_URL =
   'https://script.google.com/macros/s/AKfycbz7CVrbddXxIvd86Z3PeMyM9MT6q7QBe7EJ5n1uQU7pTkwCYgc-4gjcg7EmRmz5itDSJQ/exec';
 
@@ -1361,7 +1372,7 @@ const filteredItems =
               "
             >
               ${item.icon}
-              ${item.title}
+              ${fanflowEscapeHtml(item.title)}
             </div>
 
             <div
@@ -1371,7 +1382,7 @@ const filteredItems =
                 margin-bottom: 10px;
               "
             >
-              ${item.detail || '—'}
+              ${fanflowEscapeHtml(item.detail || '—')}
             </div>
 
             <div
@@ -1390,7 +1401,7 @@ const filteredItems =
                 font-size: 14px;
               "
             >
-              ${item.status}
+              ${fanflowEscapeHtml(item.status)}
             </div>
 
           </div>
