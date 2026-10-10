@@ -1319,6 +1319,11 @@ function openMemberModal() {
 
   editingMemberId = '';
 
+  // 🔓 新增模式允許選擇帳號類型
+  document.getElementById(
+    'memberAccountType'
+  ).disabled = false;
+
   document.getElementById(
     'memberModalTitle'
   ).textContent =
@@ -1780,6 +1785,21 @@ function editMember(id) {
   editingMemberId =
     item.id;
 
+  // 🔐 編輯時顯示原本的帳號類型
+  const accountTypeSelect =
+    document.getElementById('memberAccountType');
+
+  accountTypeSelect.value =
+    item.accountType ||
+    (item.userId ? '👤 網站成員' : '🛍️ 外部買家');
+
+  // 🔒 編輯時禁止切換帳號類型
+  accountTypeSelect.disabled = true;
+
+  // 🛍️ 帶入原本的購買來源
+  document.getElementById(
+    'memberPurchaseSource'
+  ).value = item.purchaseSource || '';
 
   document.getElementById(
     'memberModalTitle'
