@@ -1896,14 +1896,14 @@ async function deleteMemberItem(
           method:
             'POST',
 
-          body:
-            JSON.stringify({
-              action:
-                'deleteMember',
+          
+body:
+  JSON.stringify({
+    action: 'deleteMember',
+    token: fanflowSessionToken,
+    id: id
+  })
 
-              id:
-                id
-            })
         }
       );
 
