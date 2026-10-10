@@ -1283,6 +1283,13 @@ function openMemberModal() {
   ).textContent =
     '＋ 新增成員';
 
+  // 🔐 新增時預設為網站成員
+  document.getElementById(
+    'memberAccountType'
+  ).value = '👤 網站成員';
+
+  // 🔄 同步更新登入欄位顯示
+  toggleMemberAccountType();
 
   document.getElementById(
     'memberName'
