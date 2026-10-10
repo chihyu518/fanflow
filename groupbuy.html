@@ -2788,6 +2788,13 @@ const response =
         )
       );
 
+    // 🔐 訂單管理權限
+    // 管理員或此代購建立者可以管理訂單
+    const canManageOrders =
+      canManageCurrentGroupBuy(
+        window.currentGroupBuyId
+      );
+
     
     // =========================
 // 📊 訂單統計
