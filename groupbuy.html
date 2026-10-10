@@ -3272,6 +3272,17 @@ if (searchText) {
 
 ` + filteredOrders.map(function(order) {
 
+  // 🔐 判斷是否可以編輯這筆訂單
+  const canEditThisOrder =
+    canManageOrders ||
+    Boolean(
+      currentUser &&
+      currentUser.memberId &&
+      order.memberId &&
+      String(currentUser.memberId) ===
+        String(order.memberId)
+    );
+
         return `
           <div class="product-card">
 
