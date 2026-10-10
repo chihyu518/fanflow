@@ -1239,6 +1239,40 @@ let currentMemberFilter = 'all';
 let currentMemberSearch = '';
     
 
+// 🔐 切換網站成員／外部買家
+function toggleMemberAccountType() {
+
+  const accountType =
+    document.getElementById(
+      'memberAccountType'
+    ).value;
+
+  const loginFields =
+    document.getElementById(
+      'memberLoginFields'
+    );
+
+  // 外部買家不需要登入帳號
+  if (accountType === '🛍️ 外部買家') {
+
+    loginFields.style.display = 'none';
+
+    document.getElementById(
+      'memberLogin'
+    ).value = '';
+
+    document.getElementById(
+      'memberPassword'
+    ).value = '';
+
+  } else {
+
+    loginFields.style.display = '';
+
+  }
+
+}
+
 
 function openMemberModal() {
 
