@@ -1801,6 +1801,11 @@ function editMember(id) {
     'memberPurchaseSource'
   ).value = item.purchaseSource || '';
 
+  // 🔒 編輯購買者時，不顯示登入帳號設定
+  document.getElementById(
+    'memberLoginFields'
+  ).style.display = 'none';
+
   document.getElementById(
     'memberModalTitle'
   ).textContent =
