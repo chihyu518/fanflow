@@ -1849,10 +1849,11 @@ groupBuySearch.addEventListener(
     // 開啟代購詳細資料
     // =========================
 
+
 function canManageCurrentGroupBuy(groupBuyId) {
 
   const currentUser = JSON.parse(
-    localStorage.getItem('fanflowUser') || 'null'
+    sessionStorage.getItem('fanflowUser') || 'null'
   );
 
   if (!currentUser || !currentUser.id) {
@@ -1866,126 +1867,12 @@ function canManageCurrentGroupBuy(groupBuyId) {
     return false;
   }
 
-  if (currentUser.role === '👑 管理員') {
-    return true;
-  }
-
+  // 🔐 不區分管理員或一般成員
+  // 只有活動建立者可以管理
   return Boolean(groupBuy.creatorId) &&
     String(groupBuy.creatorId) === String(currentUser.id);
+
 }
-
-    function openGroupBuyDetail(id) {
-
-      const item =
-        window.currentGroupBuys.find(
-          function(groupBuy) {
-
-            return groupBuy.id === id;
-
-          }
-        );
-
-
-      if (!item) {
-
-        alert(
-          '找不到這筆代購資料'
-        );
-
-        return;
-
-      }
-
-
-      window.currentGroupBuyId = id;
-
-const canManage = canManageCurrentGroupBuy(id);
-
-document.getElementById('addProductButton').style.display =
-  canManage ? '' : 'none';
-
-document.getElementById('editGroupBuyButton').style.display =
-  canManage ? '' : 'none';
-
-document.getElementById('deleteGroupBuyButton').style.display =
-  canManage ? '' : 'none';
-
-
-      const modal =
-        document.getElementById(
-          'groupBuyDetailModal'
-        );
-
-
-      const content =
-        document.getElementById(
-          'groupBuyDetailContent'
-        );
-
-
-      const imageHtml =
-        item.imageUrl
-          ? `
-            <img
-              src="${item.imageUrl}"
-              alt="${item.name}"
-              style="
-                width: 100%;
-                max-height: 320px;
-                object-fit: cover;
-                border-radius: 14px;
-                margin-bottom: 20px;
-              ">
-          `
-          : '';
-
-
-      content.innerHTML = `
-
-        ${imageHtml}
-
-        <div
-          style="
-            font-size: 22px;
-            font-weight: 800;
-            margin-bottom: 18px;
-          ">
-          ${item.name}
-        </div>
-
-        <div style="margin-bottom: 12px;">
-          🎤 ${item.group || '未設定團體／活動'}
-        </div>
-
-        <div style="margin-bottom: 12px;">
-          📅 登記截止：
-          ${item.deadline || '未設定'}
-        </div>
-
-        <div style="margin-bottom: 12px;">
-          ${item.status || '未設定狀態'}
-        </div>
-
-        <div
-          style="
-            margin-top: 18px;
-            line-height: 1.7;
-          ">
-          📝 ${item.note || '沒有備註'}
-        </div>
-
-      `;
-
-
-      modal.style.display =
-        'block';
-
-
-      loadProducts(id);
-loadOrders(item.name);
-
-    }
-
 
     // =========================
     // 📦 開啟新增商品
