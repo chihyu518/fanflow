@@ -2462,142 +2462,170 @@ document.getElementById(
 // 🔍 顯示小卡列表
 // =========================
 
+
 function renderCardTrades(trades) {
 
   const list =
-    document.getElementById(
-      'cardTradeList'
+    document.getElementById('cardTradeList');
+
+  if (!list) return;
+
+  // 🔐 使用目前登入者資料
+  let currentUser = null;
+
+  try {
+    currentUser = JSON.parse(
+      sessionStorage.getItem('fanflowUser') || 'null'
     );
+  } catch (error) {
+    currentUser = null;
+  }
 
-  if (trades.length === 0) {
+  // 🛡️ 避免輸入內容被當成 HTML 執行
+  const escapeHtml = function(value) {
+    return String(value ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  };
 
+  if (!trades.length) {
     list.innerHTML =
-      `
-        <div class="empty-box">
-          🔍 找不到符合條件的小卡
-        </div>
-      `;
-
+      '<div class="empty-box">🔍 找不到符合條件的小卡</div>';
     return;
   }
 
+  list.innerHTML = trades.map(function(item) {
 
-  list.innerHTML =
-    trades
-      .map(
-        function(item) {
+    // 🔐 不區分管理員或一般成員
+    const isOwner = Boolean(
+      currentUser &&
+      currentUser.id &&
+      item.creatorId &&
+      String(currentUser.id) ===
+        String(item.creatorId)
+    );
 
-          const imageHtml =
-            item.imageUrl
-              ? `
-                <img
-                  class="trade-image"
-                  src="${item.imageUrl}"
-                  alt=""
-                >
-              `
-              : `
-                <div
-                  class="trade-placeholder"
-                >
-                  🃏
-                </div>
-              `;
+    const id = escapeHtml(item.id);
 
+    const imageHtml = item.imageUrl
+      ? `
+        <img
+          class="trade-image"
+          src="${escapeHtml(item.imageUrl)}"
+          alt=""
+        >
+      `
+      : `
+        <div class="trade-placeholder">🃏</div>
+      `;
 
-          return `
-            <div class="trade-card">
+    const actionsHtml = isOwner
+      ? `
+        <div class="trade-actions">
 
-              ${imageHtml}
+          <button
+            type="button"
+            class="edit-trade-button"
+            data-trade-id="${id}"
+          >
+            ✏️ 編輯
+          </button>
 
-              <div class="trade-body">
+          <button
+            type="button"
+            class="delete-trade-button"
+            data-trade-id="${id}"
+          >
+            🗑️ 刪除
+          </button>
 
-                <div class="trade-name">
-                  ${item.name || '未命名小卡'}
-                </div>
+        </div>
+      `
+      : '';
 
-                <div class="trade-detail">
-                  ${item.tradeType || ''}
-                </div>
+    return `
+      <div class="trade-card">
 
-                <div class="trade-detail">
-                  🎤 ${item.group || '未設定'}
-                </div>
+        ${imageHtml}
 
-                <div class="trade-detail">
-                  👤 ${item.member || '未設定'}
-                </div>
+        <div class="trade-body">
 
-                <div class="trade-detail">
-                  🏷️ ${item.version || '未設定'}
-                </div>
+          <div class="trade-name">
+            ${escapeHtml(item.name || '未命名小卡')}
+          </div>
 
-                <div class="trade-detail">
-                  💰 NT$ ${
-                    Number(
-                      item.price
-                    ).toLocaleString()
-                  }
-                </div>
+          <div class="trade-detail">
+            ${escapeHtml(item.tradeType || '')}
+          </div>
 
-                <div class="trade-detail">
-                  🔢 數量：${item.quantity || 0}
-                </div>
+          <div class="trade-detail">
+            🎤 ${escapeHtml(item.group || '未設定')}
+          </div>
 
-                <div
-  class="trade-detail status-clickable"
-  onclick="toggleCardTradeStatus('${item.id}')"
-  title="點一下切換交易狀態"
->
-  ${item.tradeStatus || '🟡 交易中'}
-</div>
+          <div class="trade-detail">
+            👤 ${escapeHtml(item.member || '未設定')}
+          </div>
 
-                <div
-  class="trade-detail status-clickable"
-  onclick="toggleCardPaymentStatus('${item.id}')"
-  title="點一下切換付款狀態"
->
-  ${item.paymentStatus || '🔴 未付款'}
-</div>
+          <div class="trade-detail">
+            🏷️ ${escapeHtml(item.version || '未設定')}
+          </div>
 
-                <div
-  class="trade-detail status-clickable"
-  onclick="toggleCardShippingStatus('${item.id}')"
-  title="點一下切換寄送狀態"
->
-  ${item.shippingStatus || '⚪ 未寄出'}
-</div>
+          <div class="trade-detail">
+            💰 NT$ ${Number(item.price || 0).toLocaleString()}
+          </div>
 
-                <div class="trade-actions">
+          <div class="trade-detail">
+            🔢 數量：${Number(item.quantity || 0)}
+          </div>
 
-                  <button
-                    type="button"
-                    class="edit-trade-button"
-                    onclick="editCardTrade('${item.id}')"
-                  >
-                    ✏️ 編輯
-                  </button>
+          <div class="trade-detail">
+            ${escapeHtml(item.tradeStatus || '狀態未設定')}
+          </div>
 
-                  <button
-                    type="button"
-                    class="delete-trade-button"
-                    onclick="deleteCardTrade('${item.id}', '${item.name || '未命名小卡'}')"
-                  >
-                    🗑️ 刪除
-                  </button>
+          ${actionsHtml}
 
-                </div>
+        </div>
 
-              </div>
+      </div>
+    `;
 
-            </div>
-          `;
+  }).join('');
 
-        }
-      )
-      .join('');
+  // ✏️ 只有建立者會有編輯按鈕
+  list.querySelectorAll('.edit-trade-button')
+    .forEach(function(button) {
+
+      button.addEventListener('click', function() {
+        editCardTrade(button.dataset.tradeId);
+      });
+
+    });
+
+  // 🗑️ 只有建立者會有刪除按鈕
+  list.querySelectorAll('.delete-trade-button')
+    .forEach(function(button) {
+
+      button.addEventListener('click', function() {
+
+        const trade = trades.find(function(item) {
+          return String(item.id) ===
+            String(button.dataset.tradeId);
+        });
+
+        deleteCardTrade(
+          button.dataset.tradeId,
+          trade?.name || '未命名小卡'
+        );
+
+      });
+
+    });
 
 }
+
     
   async function loadCardTrades() {
 
