@@ -2117,14 +2117,13 @@ async function deleteCardTrade(
         {
           method: 'POST',
 
-          body:
-            JSON.stringify({
-              action:
-                'deleteCardTrade',
+          
+body: JSON.stringify({
+  action: 'deleteCardTrade',
+  pageId: id,
+  token: fanflowSessionToken
+})
 
-              pageId:
-                id
-            })
         }
       );
 
