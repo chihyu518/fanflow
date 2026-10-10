@@ -3401,7 +3401,9 @@ ${
 }
 
 ${
-  order.paymentStatus === '🔴 未付款'
+  canManageOrders
+    ? (
+      order.paymentStatus === '🔴 未付款'
     ? `
       <div style="margin-top: 10px;">
         <button
@@ -3423,8 +3425,11 @@ ${
           ↩️ 改回未付款
         </button>
       </div>
-    `
+        `
+  )
+  : ''
 }
+
 <div style="margin-top: 8px; display: flex; gap: 8px;">
 
   <button
