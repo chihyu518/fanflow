@@ -1605,93 +1605,89 @@ if (
 // ✏️ 編輯小卡
 // =========================
 
-function editCardTrade(id) {
 
-  const item =
-    cardTradesData.find(
-      function(trade) {
-        return trade.id === id;
-      }
+async function editCardTrade(id) {
+
+  try {
+
+    // 🔐 向 GAS 取得本人有權編輯的完整交易
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        action: 'getMyCardTrade',
+        token: fanflowSessionToken,
+        id: id
+      })
+    });
+
+    const result = await response.json();
+
+    if (!result.success) {
+      throw new Error(
+        result.message || '無法讀取小卡交易'
+      );
+    }
+
+    const item = result.data;
+
+    if (!item || String(item.id) !== String(id)) {
+      throw new Error('交易資料不一致');
+    }
+
+    // 完整資料成功讀取後才進入編輯模式
+    editingCardTradeId = item.id;
+
+    document.getElementById(
+      'cardTradeModalTitle'
+    ).textContent = '✏️ 編輯小卡';
+
+    document.getElementById('cardName').value =
+      item.name || '';
+
+    document.getElementById('cardTradeType').value =
+      item.tradeType || '🔵 出售';
+
+    document.getElementById('cardGroup').value =
+      item.group || '';
+
+    document.getElementById('cardMember').value =
+      item.member || '';
+
+    document.getElementById('cardVersion').value =
+      item.version || '';
+
+    document.getElementById('cardPrice').value =
+      item.price ?? 0;
+
+    document.getElementById('cardQuantity').value =
+      item.quantity ?? 1;
+
+    document.getElementById('cardPartner').value =
+      item.partner || '';
+
+    document.getElementById('cardNote').value =
+      item.note || '';
+
+    // 保留完整資料，供後續儲存功能使用
+    window.editingCardTradeData = item;
+
+    document.getElementById(
+      'cardTradeModal'
+    ).classList.add('show');
+
+  } catch (error) {
+
+    console.error('讀取小卡編輯資料失敗：', error);
+
+    alert(
+      '⚠️ 無法編輯小卡\n' +
+      error.message
     );
 
-
-  if (!item) {
-    alert('找不到這筆小卡資料');
-    return;
   }
 
-
-  editingCardTradeId =
-    item.id;
-
-  
-
-  document.getElementById(
-    'cardTradeModalTitle'
-  ).textContent =
-    '✏️ 編輯小卡';
-
-
-  document.getElementById(
-    'cardName'
-  ).value =
-    item.name || '';
-
-
-  document.getElementById(
-    'cardTradeType'
-  ).value =
-    item.tradeType ||
-    '🔵 出售';
-
-
-  document.getElementById(
-    'cardGroup'
-  ).value =
-    item.group || '';
-
-
-  document.getElementById(
-    'cardMember'
-  ).value =
-    item.member || '';
-
-
-  document.getElementById(
-    'cardVersion'
-  ).value =
-    item.version || '';
-
-
-  document.getElementById(
-    'cardPrice'
-  ).value =
-    item.price || 0;
-
-
-  document.getElementById(
-    'cardQuantity'
-  ).value =
-    item.quantity || 1;
-
-
-  document.getElementById(
-    'cardPartner'
-  ).value =
-    item.partner || '';
-
-
-  document.getElementById(
-    'cardNote'
-  ).value =
-    item.note || '';
-
-
-  document.getElementById(
-    'cardTradeModal'
-  ).classList.add('show');
-
 }
+
 
     // =========================
 // 💳 切換小卡付款狀態
